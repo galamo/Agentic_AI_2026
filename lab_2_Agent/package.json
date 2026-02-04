@@ -1,0 +1,26 @@
+{
+  "name": "lab-2-agent-house-sale",
+  "version": "1.0.0",
+  "description": "Multi-agent system for house sale with tax calculation using LangGraph",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js"
+  },
+  "keywords": [
+    "agentic-ai",
+    "langgraph",
+    "multi-agent",
+    "real-estate",
+    "tax-calculation"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@langchain/core": "^0.3.0",
+    "@langchain/openai": "^0.3.0",
+    "@langchain/langgraph": "^0.2.0",
+    "dotenv": "^16.4.5"
+  }
+}
