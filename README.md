@@ -23,7 +23,7 @@ The project is in an early setup phase. As the codebase and architecture evolve,
 
 
 
-# How to run the Labs:
+# How to run the Labs - labs/lab1-travel-planner
 1. in the root folder run `npm i `
 2. create .env file inside the relevant folder
 3. add the relevant keys 
