@@ -1,5 +1,9 @@
 ## Agentic AI 2026
 
+### Lecture:
+https://gamma.app/docs/AI-Agents-hlgj38btkim0stw?mode=doc
+
+
 This repository is a playground for experimenting with **agentic AI** patterns and tools in 2026, using Cursor as the primary development environment.
 
 ### Getting started
