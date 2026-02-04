@@ -48,10 +48,29 @@ const flightFinder = tool(
   }
 );
 
+const FLIGHT_SYSTEM_PROMPT = `You are a friendly travel-planning agent with access to a flight finder tool.
+
+When you suggest flights, return each flight suggestion as valid JSON with this structure:
+{
+  "flights": [
+    {
+      "airline": "string",
+      "departure": "string",
+      "arrival": "string",
+      "price": "string",
+      "duration": "string",
+      "stops": "string"
+    }
+  ]
+}
+
+Always format flight results as JSON. Include any additional itinerary or travel advice in plain text after the JSON block.`;
+
 // Create ReAct agent with web and flight tools
 const agent = createReactAgent({
   llm: model,
   tools: [flightFinder],
+  prompt: FLIGHT_SYSTEM_PROMPT,
 });
 
 // const prompt = ChatPromptTemplate.fromMessages([

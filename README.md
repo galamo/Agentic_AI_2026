@@ -20,3 +20,16 @@ The project is in an early setup phase. As the codebase and architecture evolve,
 - **How to run tests**
 - **Deployment / CI details**
 - **Agent behaviors and workflows**
+
+
+
+# How to run the Labs:
+1. in the root folder run `npm i `
+2. create .env file inside the relevant folder
+3. add the relevant keys 
+```javascript
+OPENROUTER_API_KEY=sk-or-v1-b8d261bc18XXXXXXXX7cf8
+TAVILY_API_KEY=tvly-dev-b8d261bc18XXXXXXXX7cf8
+
+```
+4. run `node agent.js` from the relevant folder
