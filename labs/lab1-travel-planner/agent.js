@@ -3,7 +3,8 @@ import jwt from "jsonwebtoken";
 import { ChatOpenAI } from "@langchain/openai";
 import { ChatPromptTemplate } from "@langchain/core/prompts";
 import { TavilySearch } from "@langchain/tavily";
-import { createReactAgent } from "@langchain/langgraph/prebuilt";
+import { createAgent } from "langchain";
+
 import { tool } from "@langchain/core/tools";
 import { z } from "zod";
 
@@ -73,7 +74,7 @@ const FLIGHT_SYSTEM_PROMPT = `You are a friendly travel-planning agent with acce
 
 TOOLS:
 - flight_finder: Search for flights between cities. Use this to find flights, prices, and airlines.
-- currency_exchange: Convert USD prices to NIS/ILS. Use this when the user asks for prices in shekels, NIS, or ILS, or when planning travel for someone in Israel. Convert only if the user ask it
+- currency_exchange: Convert USD prices to NIS/ILS. Use this when the user asks for prices in shekels.
 
 When you suggest flights, return each flight suggestion as valid JSON with this structure:
 {
@@ -91,17 +92,15 @@ When you suggest flights, return each flight suggestion as valid JSON with this 
 
 IMPORTANT: 
 - Always format flight results as JSON.
-- When showing prices to a user who prefers NIS/ILS, use the currency_exchange tool to convert USD prices to shekels.
+- When showing prices to a user who prefers NIS/ILS, use the currency_exchange tool to convert USD prices to shekels ONLY IF THE USER ASK FOR IT.
 - Include any additional itinerary or travel advice in plain text after the JSON block.`;
 
-// Create ReAct agent with web and flight tools
-const agent = createReactAgent({
-  llm: model,
+// Create ReAct agent with web and flight tools (createAgent is the replacement for deprecated createReactAgent)
+const agent = createAgent({
+  model,
   tools: [flightFinder, currencyExchange],
-  prompt: FLIGHT_SYSTEM_PROMPT,
-  
+  systemPrompt: FLIGHT_SYSTEM_PROMPT,
 });
-
 
 
 export async function runTravelPlanner() {
@@ -120,8 +119,7 @@ export async function runTravelPlanner() {
   }
 
   // interact with client ? 
-  const userInput =
-    "Plan a 3-day trip from Tel Aviv to New-York. Style: food + culture, light walking. Budget: high. Interests: sails at rivers, small galleries, hidden viewpoints. Use the flight finder to check flights and show me all prices in NIS/ILS.";
+  const userInput = `Plan a 3-day trip from Tel Aviv to New-York. Style: food + culture, light walking. Budget: high. Interests: sails at rivers, small galleries, hidden viewpoints. Use the flight finder to check flights, show me prices in NIS/ILS`;
 
   const result = await agent.invoke({
     messages: [
