@@ -7,6 +7,8 @@ import { ChatPromptTemplate } from "@langchain/core/prompts";
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+const db = {config: {url:"localhost:3306"}}
+console.log(db.config.url)
 // Middleware
 app.use(cors());
 app.use(express.json());
@@ -79,5 +81,6 @@ app.get("/api/health", (req, res) => {
 app.listen(PORT, () => {
   console.log(`🚀 Travel Planner API server running on http://localhost:${PORT}`);
   console.log(`📍 API endpoint: http://localhost:${PORT}/api/chat`);
+  console.log(`H API endpoint: http://localhost:${PORT}/api/health`);
 });
 
