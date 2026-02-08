@@ -1,0 +1,26 @@
+{
+  "name": "lab_5_agenttool",
+  "version": "1.0.0",
+  "description": "LangChain Agent with Google Calendar Tool Integration",
+  "main": "agent.js",
+  "type": "module",
+  "scripts": {
+    "start": "node agent.js",
+    "dev": "node --watch agent.js"
+  },
+  "keywords": [
+    "langchain",
+    "agent",
+    "google-calendar",
+    "ai"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@langchain/core": "^0.3.0",
+    "@langchain/openai": "^0.3.0",
+    "dotenv": "^16.4.5",
+    "googleapis": "^144.0.0",
+    "langchain": "^0.3.0"
+  }
+}

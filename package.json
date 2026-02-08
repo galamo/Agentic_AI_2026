@@ -10,7 +10,8 @@
     "lab2": "node labs/lab2-finance-coach/agent.js",
     "lab3": "node labs/lab3-quest-designer/agent.js",
     "chatbot:server": "node lab_3_Chat_Bot/server.js",
-    "chatbot:client": "cd lab_3_Chat_Bot/client && npm run dev"
+    "chatbot:client": "cd lab_3_Chat_Bot/client && npm run dev",
+    "lab4": "node lab_4_RAG/index.js"
   },
   "keywords": [],
   "author": "",
