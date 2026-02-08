@@ -177,12 +177,21 @@ export async function runTravelPlanner() {
   return lastMessage.content;
 }
 
-runTravelPlanner().then((message)=>{
-  console.log("#######HIS IS AI RESULT########")
-  console.log(message)
-  console.log("#######HIS IS AI RESULT########")
-}).catch((err) => {
-    console.error(err);
-    process.exit(1);
- });
+// Export agent for use by server.js
+export { agent };
+
+// Run standalone when executed directly (e.g. node agent_new.js)
+const isMain = process.argv[1]?.endsWith("agent_new.js");
+if (isMain) {
+  runTravelPlanner()
+    .then((message) => {
+      console.log("#######HIS IS AI RESULT########");
+      console.log(message);
+      console.log("#######HIS IS AI RESULT########");
+    })
+    .catch((err) => {
+      console.error(err);
+      process.exit(1);
+    });
+}
 
