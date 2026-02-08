@@ -7,13 +7,14 @@ import { createReactAgent } from "@langchain/langgraph/prebuilt";
 import { tool } from "@langchain/core/tools";
 import { z } from "zod";
 
+// calude, sonet , gemini ? 
 const model = new ChatOpenAI({
   model: "openai/gpt-4o-mini", // OpenRouter model with tool calling support
   temperature: 0.2,
 
   // IMPORTANT: OpenRouter base URL
   configuration: {
-    baseURL: "https://openrouter.ai/api/v1",
+    baseURL: "https://openrouter.ai/api/v1", // antropic / google / openai ... 
     apiKey: process.env.OPENROUTER_API_KEY,
   },
 });
@@ -54,12 +55,12 @@ When you suggest flights, return each flight suggestion as valid JSON with this 
 {
   "flights": [
     {
-      "airline": "string",
-      "departure": "string",
-      "arrival": "string",
-      "price": "string",
-      "duration": "string",
-      "stops": "string"
+      "airline": "string", 
+      "departure": "string",  
+      "arrival": "string", 
+      "price": "string", 
+      "duration": "string", 
+      "stops": "string" 
     }
   ]
 }
@@ -92,7 +93,6 @@ export async function runTravelPlanner() {
     console.error("Missing OPENROUTER_API_KEY in environment.");
     // process.exit(1);
   }
-  console.log("111111")
 
   if (!process.env.TAVILY_API_KEY) {
     console.error(
