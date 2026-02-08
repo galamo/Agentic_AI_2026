@@ -11,11 +11,13 @@ import { z } from "zod";
 const model = new ChatOpenAI({
   model: "openai/gpt-4o-mini", // OpenRouter model with tool calling support
   temperature: 0.2,
+  
   // streaming:true,
   // IMPORTANT: OpenRouter base URL
   configuration: {
     baseURL: "https://openrouter.ai/api/v1", // antropic / google / openai ... 
     apiKey: process.env.OPENROUTER_API_KEY,
+    
   },
 });
 
@@ -32,7 +34,7 @@ const flightFinder = tool(
       ? `flights from ${origin} to ${destination} on ${date}`
       : `flights from ${origin} to ${destination}`;
     const results = await webSearch.invoke({ query });
-    console.log(typeof results)
+    console.log(JSON.stringify(results)) // print in dollar all the text!!!!!
     return typeof results === "string" ? results : JSON.stringify(results);
   },
   {
@@ -50,19 +52,28 @@ const flightFinder = tool(
   }
 );
 
-const currencyExchange = tool(({priceInDollar})=>{
-  // convert the Price into NIS/ILS 
-  // complete the tool to convert the Currency exchange!!! use as part of the user prompt the new tool
-  // change system prompt, user prompt 
+const currencyExchange = tool(({ priceInDollar }) => {
+  // replace? parseInt
+  const price = parseFloat(priceInDollar);
+  if (isNaN(price)) return "Invalid price. Please provide a numeric value in USD.";
+  const priceInNIS = Math.round(price * 3.2);
+  return `${price} USD = ${priceInNIS} NIS/ILS`;
 }, {
   name: "currency_exchange",
-  description: "what is the description? ",
+  description: "Convert a price from US Dollars (USD) to Israeli New Shekel (NIS/ILS). Use this when the user asks for prices in NIS, shekels, or ILS, or when showing flight/hotel prices to someone who prefers Israeli currency. Exchange rate: 1 USD ≈ 3.2 NIS.",
   schema: z.object({
-    priceInDollar: z.string().describe("Price in Dollar"),
-  })
-})
+    priceInDollar: z.string().describe("Price in US Dollars to convert to NIS/ILS"),
+  }),
+});
 
-const FLIGHT_SYSTEM_PROMPT = `You are a friendly travel-planning agent with access to a flight finder tool.
+// tool exchange to all currnecies ( MCP/openapi sepcification)
+
+
+const FLIGHT_SYSTEM_PROMPT = `You are a friendly travel-planning agent with access to a flight finder tool
+
+TOOLS:
+- flight_finder: Search for flights between cities. Use this to find flights, prices, and airlines.
+- currency_exchange: Convert USD prices to NIS/ILS. Use this when the user asks for prices in shekels, NIS, or ILS, or when planning travel for someone in Israel. Convert only if the user ask it
 
 When you suggest flights, return each flight suggestion as valid JSON with this structure:
 {
@@ -78,14 +89,17 @@ When you suggest flights, return each flight suggestion as valid JSON with this 
   ]
 }
 
-IMPORTANT: Always format flight results as JSON.
-Include any additional itinerary or travel advice in plain text after the JSON block.`;
+IMPORTANT: 
+- Always format flight results as JSON.
+- When showing prices to a user who prefers NIS/ILS, use the currency_exchange tool to convert USD prices to shekels.
+- Include any additional itinerary or travel advice in plain text after the JSON block.`;
 
 // Create ReAct agent with web and flight tools
 const agent = createReactAgent({
   llm: model,
-  tools: [flightFinder],
+  tools: [flightFinder, currencyExchange],
   prompt: FLIGHT_SYSTEM_PROMPT,
+  
 });
 
 
@@ -107,17 +121,62 @@ export async function runTravelPlanner() {
 
   // interact with client ? 
   const userInput =
-    "Plan a 3-day trip from Tel Aviv to New-York. Style: food + culture, light walking. Budget: high. Interests: sails at rivers, small galleries, hidden viewpoints. Use the flight finder to check flights.";
+    "Plan a 3-day trip from Tel Aviv to New-York. Style: food + culture, light walking. Budget: high. Interests: sails at rivers, small galleries, hidden viewpoints. Use the flight finder to check flights and show me all prices in NIS/ILS.";
 
   const result = await agent.invoke({
     messages: [
       // { role: "system", content: "RETURN A JSON STRUCTURE FROM THE LIST FLIGHTS" },
       { role: "user", content: userInput }],
   });
-  // locked?
+
+  // Print agent execution trace: reasoning and tool usage
+  console.log("\n========== AGENT EXECUTION TRACE (reasoning + tools) ==========\n");
+  let step = 0;
+  for (const msg of result.messages) {
+    const role = (msg._getType?.() ?? msg.constructor?.name ?? "Message").toLowerCase();
+    if (role.includes("human")) continue; // skip user message
+
+    if (role.includes("ai")) {
+      step += 1;
+      const content = typeof msg.content === "string" ? msg.content : JSON.stringify(msg.content);
+      if (content && content !== "[]" && content !== "{}") {
+        console.log(`--- Step ${step} [AI reasoning] ---`);
+        console.log(content.slice(0, 1500) + (content.length > 1500 ? "\n... (truncated)" : ""));
+        console.log("");
+      }
+      const toolCalls = msg.tool_calls ?? msg.additional_kwargs?.tool_calls ?? [];
+      if (Array.isArray(toolCalls) && toolCalls.length > 0) {
+        console.log(`--- Step ${step} [Tools called] ---`);
+        for (const tc of toolCalls) {
+          const name = tc.name ?? tc.function?.name ?? "unknown";
+          let args = tc.args;
+          if (args === undefined && tc.function?.arguments) {
+            try {
+              args = JSON.parse(tc.function.arguments);
+            } catch {
+              args = tc.function.arguments;
+            }
+          }
+          console.log(`  • ${name}`, args ?? {});
+        }
+        console.log("");
+      }
+    }
+
+    if (role.includes("tool")) {
+      const name = msg.name ?? "tool";
+      const content = typeof msg.content === "string" ? msg.content : JSON.stringify(msg.content);
+      const preview = content.length > 400 ? content.slice(0, 400) + "..." : content;
+      console.log(`--- Tool result [${name}] ---`);
+      console.log(preview);
+      console.log("");
+    }
+  }
+  console.log("========== END AGENT TRACE ==========\n");
+
   // Get the final AI response from messages
   const lastMessage = result.messages[result.messages.length - 1];
-  return lastMessage.content
+  return lastMessage.content;
 }
 
 runTravelPlanner().then((message)=>{
@@ -129,7 +188,3 @@ runTravelPlanner().then((message)=>{
     process.exit(1);
  });
 
-
- for (let index = 0; index < 50; index++) {
-  console.log("Do something...")
- }
