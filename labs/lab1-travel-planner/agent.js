@@ -11,7 +11,7 @@ import { z } from "zod";
 const model = new ChatOpenAI({
   model: "openai/gpt-4o-mini", // OpenRouter model with tool calling support
   temperature: 0.2,
-
+  // streaming:true,
   // IMPORTANT: OpenRouter base URL
   configuration: {
     baseURL: "https://openrouter.ai/api/v1", // antropic / google / openai ... 
@@ -32,6 +32,7 @@ const flightFinder = tool(
       ? `flights from ${origin} to ${destination} on ${date}`
       : `flights from ${origin} to ${destination}`;
     const results = await webSearch.invoke({ query });
+    console.log(typeof results)
     return typeof results === "string" ? results : JSON.stringify(results);
   },
   {
@@ -49,6 +50,18 @@ const flightFinder = tool(
   }
 );
 
+const currencyExchange = tool(({priceInDollar})=>{
+  // convert the Price into NIS/ILS 
+  // complete the tool to convert the Currency exchange!!! use as part of the user prompt the new tool
+  // change system prompt, user prompt 
+}, {
+  name: "currency_exchange",
+  description: "what is the description? ",
+  schema: z.object({
+    priceInDollar: z.string().describe("Price in Dollar"),
+  })
+})
+
 const FLIGHT_SYSTEM_PROMPT = `You are a friendly travel-planning agent with access to a flight finder tool.
 
 When you suggest flights, return each flight suggestion as valid JSON with this structure:
@@ -65,7 +78,8 @@ When you suggest flights, return each flight suggestion as valid JSON with this 
   ]
 }
 
-Always format flight results as JSON. Include any additional itinerary or travel advice in plain text after the JSON block.`;
+IMPORTANT: Always format flight results as JSON.
+Include any additional itinerary or travel advice in plain text after the JSON block.`;
 
 // Create ReAct agent with web and flight tools
 const agent = createReactAgent({
@@ -74,21 +88,11 @@ const agent = createReactAgent({
   prompt: FLIGHT_SYSTEM_PROMPT,
 });
 
-// const prompt = ChatPromptTemplate.fromMessages([
-//   [
-//     "system",
-//     "You are a friendly travel-planning agent. You design 3-day itineraries that balance sightseeing, food, and local culture. Always ask 2 quick clarifying questions if information is missing. You have access to web search and flight finder tools – use them to look up real flights, hotel info, attractions, and current travel details when helpful.",
-//   ],
-//   [
-//     "human",
-//     "Plan a 3-day trip.\n\nDeparture city: {departure}\nDestination city: {destination}\nTravel style: {style}\nBudget level: {budget}\nSpecial interests: {interests}",
-//   ],
-// ]);
 
-// const chain = prompt.pipe(model);
 
 export async function runTravelPlanner() {
-  console.log("111111")
+
+  // API keys validation
   if (!process.env.OPENROUTER_API_KEY) {
     console.error("Missing OPENROUTER_API_KEY in environment.");
     // process.exit(1);
@@ -98,29 +102,34 @@ export async function runTravelPlanner() {
     console.error(
       "Missing TAVILY_API_KEY. Get one at https://app.tavily.com and add to .env"
     );
-  console.log("111111")
-
     // process.exit(1);
   }
 
+  // interact with client ? 
   const userInput =
-    "Plan a 3-day trip from San Francisco to Tokyo. Style: food + culture, light walking. Budget: medium. Interests: neighborhood cafes, small galleries, hidden viewpoints. Use the flight finder to check flights.";
+    "Plan a 3-day trip from Tel Aviv to New-York. Style: food + culture, light walking. Budget: high. Interests: sails at rivers, small galleries, hidden viewpoints. Use the flight finder to check flights.";
 
   const result = await agent.invoke({
     messages: [
       // { role: "system", content: "RETURN A JSON STRUCTURE FROM THE LIST FLIGHTS" },
       { role: "user", content: userInput }],
   });
-
+  // locked?
   // Get the final AI response from messages
   const lastMessage = result.messages[result.messages.length - 1];
-  console.log(lastMessage.content);
+  return lastMessage.content
 }
-console.log("star")
-// if (import.meta.main) {
-  runTravelPlanner().catch((err) => {
 
+runTravelPlanner().then((message)=>{
+  console.log("#######HIS IS AI RESULT########")
+  console.log(message)
+  console.log("#######HIS IS AI RESULT########")
+}).catch((err) => {
     console.error(err);
     process.exit(1);
-  });
-// }
+ });
+
+
+ for (let index = 0; index < 50; index++) {
+  console.log("Do something...")
+ }
