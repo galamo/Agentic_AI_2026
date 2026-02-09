@@ -36,4 +36,7 @@ TAVILY_API_KEY = tvly - dev - b8d261bc18XXXXXXXX7cf8;
 
 # Homework 8.2.2026
 
-// TBD
+- Client: Add an option to present the flights Array as cards located at the right side of the page
+
+- New Tool, add new tool to the eco-system, based on the fligts city - get → latitude/longitude of the relevant city
+LangChain Tool (JS) — city → latitude/longitude (Open-Meteo, no key)
