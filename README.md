@@ -40,3 +40,6 @@ TAVILY_API_KEY = tvly - dev - b8d261bc18XXXXXXXX7cf8;
 
 - New Tool, add new tool to the eco-system, based on the fligts city - get → latitude/longitude of the relevant city
 LangChain Tool (JS) — city → latitude/longitude (Open-Meteo, no key)
+exmple:
+https://geocoding-api.open-meteo.com/v1/search?
+name=Ashdod,Israel&count=1&language=en&format=json
