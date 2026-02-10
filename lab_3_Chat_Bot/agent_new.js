@@ -76,8 +76,12 @@ TOOLS:
 - flight_finder: Search for flights between cities. Use this to find flights, prices, and airlines.
 - currency_exchange: Convert USD prices to NIS/ILS. Use this when the user asks for prices in shekels.
 
-When you suggest flights, return each flight suggestion as valid JSON with this structure:
+IMPORTANT: 
+plan a travel
+your response should be valid JSON without wrappers, the response need to be ready for parse.
+the response will contain message - the trip planning based on the requested days & flights array as presented here:
 {
+  "message":"string"
   "flights": [
     {
       "airline": "string", 
@@ -90,10 +94,9 @@ When you suggest flights, return each flight suggestion as valid JSON with this 
   ]
 }
 
-IMPORTANT: 
-- Always format flight results as JSON.
+
 - When showing prices to a user who prefers NIS/ILS, use the currency_exchange tool to convert USD prices to shekels ONLY IF THE USER ASK FOR IT.
-- Include any additional itinerary or travel advice in plain text after the JSON block.`;
+`;
 
 // Create ReAct agent with web and flight tools (createAgent is the replacement for deprecated createReactAgent)
 const agent = createAgent({

@@ -3,14 +3,15 @@ import './App.css';
 
 function App() {
   const [messages, setMessages] = useState([]);
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState('plan a trip to tokyo');
   const [loading, setLoading] = useState(false);
+  const [flights, setFlights] = useState([]);
   const [formData, setFormData] = useState({
-    departure: '',
-    destination: '',
-    style: '',
-    budget: '',
-    interests: '',
+    departure: 'tel aviv',
+    destination: 'tokyo',
+    style: 'food + culture, light walking',
+    budget: 'high',
+    interests: 'sails at rivers, small galleries, hidden viewpoints',
   });
 
   const sendMessage = async (e) => {
@@ -43,12 +44,17 @@ function App() {
       const data = await response.json();
 
       if (data.success) {
+        const response = data.response;
+        const messageText = typeof response.message === 'string' ? response.message : JSON.stringify(response.message ?? '');
         const assistantMessage = {
           role: 'assistant',
-          content: data.response,
+          content: messageText,
           timestamp: new Date().toISOString(),
         };
         setMessages((prev) => [...prev, assistantMessage]);
+        if (Array.isArray(response.flights) && response.flights.length > 0) {
+          setFlights(response.flights);
+        }
       } else {
         throw new Error(data.error || 'Failed to get response');
       }
@@ -75,7 +81,8 @@ function App() {
 
   return (
     <div className="app">
-      <div className="container">
+      <div className="app-layout">
+        <div className="container">
         <header className="header">
           <h1>🌍 Travel Planner Chat Bot</h1>
           <p>Plan your perfect 3-day trip with AI assistance</p>
@@ -165,6 +172,30 @@ function App() {
             </button>
           </form>
         </div>
+        </div>
+
+        {flights.length > 0 && (
+          <aside className="flights-sidebar">
+            <h3 className="flights-sidebar-title">✈️ Flights</h3>
+            <div className="flights-list">
+              {flights.map((flight, index) => (
+                <div key={index} className="flight-card">
+                  <div className="flight-airline">{flight.airline ?? '—'}</div>
+                  <div className="flight-route">
+                    <span className="flight-departure">{flight.departure ?? '—'}</span>
+                    <span className="flight-arrow">→</span>
+                    <span className="flight-arrival">{flight.arrival ?? '—'}</span>
+                  </div>
+                  <div className="flight-details">
+                    <span className="flight-price">{flight.price ?? '—'}</span>
+                    <span className="flight-duration">{flight.duration ?? '—'}</span>
+                    <span className="flight-stops">{flight.stops ?? '—'}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </aside>
+        )}
       </div>
     </div>
   );

@@ -34,15 +34,17 @@ app.post("/api/chat", async (req, res) => {
     const result = await agent.invoke({
       messages: [{ role: "user", content: fullMessage }],
     });
-
+    console.log("!!!!!")
+    console.log(result)
+    console.log("!!!!!")
     const lastMessage = result.messages[result.messages.length - 1];
     const responseContent = typeof lastMessage.content === "string"
       ? lastMessage.content
       : JSON.stringify(lastMessage.content);
-
+    
     res.json({
       success: true,
-      response: responseContent,
+      response: JSON.parse(responseContent),
     });
   } catch (error) {
     console.error("Error processing chat request:", error);
