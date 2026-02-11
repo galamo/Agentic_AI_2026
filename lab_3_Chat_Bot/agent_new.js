@@ -85,6 +85,7 @@ async function fetchCoordinates(name) {
   return { lat: first.latitude, lon: first.longitude, name: first.name };
 }
 
+
 const geocodeFromTo = tool(
   async ({ from: fromPlace, to: toPlace }) => {
     const [fromCoords, toCoords] = await Promise.all([
@@ -156,7 +157,7 @@ const agent = createAgent({
   systemPrompt: FLIGHT_SYSTEM_PROMPT,
 });
 
-
+// test/main 
 export async function runTravelPlanner() {
 
   // API keys validation
@@ -180,6 +181,10 @@ export async function runTravelPlanner() {
       // { role: "system", content: "RETURN A JSON STRUCTURE FROM THE LIST FLIGHTS" },
       { role: "user", content: userInput }],
   });
+
+
+
+
 
   // Print agent execution trace: reasoning and tool usage
   console.log("\n========== AGENT EXECUTION TRACE (reasoning + tools) ==========\n");

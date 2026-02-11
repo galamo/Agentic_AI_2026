@@ -67,3 +67,15 @@ app.listen(PORT, () => {
   console.log(`H API endpoint: http://localhost:${PORT}/api/health`);
 });
 
+// async function testTools() {
+//   const result2hardcoded = await agent.invoke({
+//     messages: [
+//       // { role: "system", content: "RETURN A JSON STRUCTURE FROM THE LIST FLIGHTS" },
+//       { role: "user", content: "what are the tools you have avilable to use?" }],
+//   });
+//   console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
+//   console.log(result2hardcoded)
+//   console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
+  
+// }
+// testTools()
