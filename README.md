@@ -52,3 +52,9 @@ TAVILY_API_KEY = tvly - dev - b8d261bc18XXXXXXXX7cf8;
 - Show the flag in the UI - as icon on the map.
 - response from tool r[0].flags.png
 - https://restcountries.com/v3.1/name/uae?fields=flags
+
+### How to Run the project
+
+1. run `npm install` in the folders `Agentic_AI_2026/lab_3_Chat_Bot/client` and `Agentic_AI_2026/lab_3_Chat_Bot`
+2. run `npm run dev` in the folder `Agentic_AI_2026/lab_3_Chat_Bot`
+3. Open browser in `http://localhost:5173`

@@ -41,6 +41,7 @@ npm install
 ```
 
 This installs:
+
 - `@langchain/openai`
 - `@langchain/core`
 - `dotenv`
@@ -93,6 +94,7 @@ The React app will start on `http://localhost:5173` (or another port if 5173 is 
 Send a chat message to the travel planner agent.
 
 **Request Body:**
+
 ```json
 {
   "message": "Plan a trip to Paris",
@@ -105,6 +107,7 @@ Send a chat message to the travel planner agent.
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -117,6 +120,7 @@ Send a chat message to the travel planner agent.
 Health check endpoint.
 
 **Response:**
+
 ```json
 {
   "status": "ok",
@@ -157,10 +161,7 @@ Edit the system message in `server.js`:
 
 ```javascript
 const prompt = ChatPromptTemplate.fromMessages([
-  [
-    "system",
-    "Your custom system prompt here...",
-  ],
+  ["system", "Your custom system prompt here..."],
   ["human", "{message}"],
 ]);
 ```
@@ -182,6 +183,7 @@ Verify your `.env` file is in the project root and contains a valid `OPENROUTER_
 ### Port Conflicts
 
 If port 3001 or 5173 is already in use, you can change them:
+
 - Backend: Set `PORT` in `.env`
 - Frontend: Vite will automatically use the next available port
 
@@ -209,3 +211,9 @@ Ensure both the backend and frontend servers are running in separate terminals.
 ## 📝 License
 
 MIT
+
+# How to Run the project
+
+1. run `npm install` in the folders `Agentic_AI_2026/lab_3_Chat_Bot/client` and `Agentic_AI_2026/lab_3_Chat_Bot`
+2. run `npm run dev` in the folder `Agentic_AI_2026/lab_3_Chat_Bot`
+3. Open browser in `http://localhost:5173`
