@@ -39,7 +39,14 @@ TAVILY_API_KEY = tvly - dev - b8d261bc18XXXXXXXX7cf8;
 - Client: Add an option to present the flights Array as cards located at the right side of the page
 
 - New Tool, add new tool to the eco-system, based on the fligts city - get → latitude/longitude of the relevant city
-LangChain Tool (JS) — city → latitude/longitude (Open-Meteo, no key)
-exmple:
-https://geocoding-api.open-meteo.com/v1/search?
-name=Ashdod,Israel&count=1&language=en&format=json
+  LangChain Tool (JS) — city → latitude/longitude (Open-Meteo, no key)
+  exmple:
+  https://geocoding-api.open-meteo.com/v1/search?
+  name=Ashdod,Israel&count=1&language=en&format=json
+
+# EX 11.2.2026
+
+- Using the Rest countries API
+- https://restcountries.com/
+- Create a Tool that will get country name and return the flag svg link image.
+- Show the flag in the UI - as icon on the map.
