@@ -1,40 +1,16 @@
 import "dotenv/config";
 import express from "express";
 import cors from "cors";
-import { ChatOpenAI } from "@langchain/openai";
-import { ChatPromptTemplate } from "@langchain/core/prompts";
+import { agent } from "./agent_new.js";
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-const db = {config: {url:"localhost:3306"}}
-console.log(db.config.url)
 // Middleware
 app.use(cors());
 app.use(express.json());
 
-// Initialize the model
-const model = new ChatOpenAI({
-  model: "mistralai/mistral-7b-instruct",
-  temperature: 0.2,
-  configuration: {
-    baseURL: "https://openrouter.ai/api/v1",
-    apiKey: process.env.OPENROUTER_API_KEY,
-  },
-});
-
-// Create the prompt template
-const prompt = ChatPromptTemplate.fromMessages([
-  [
-    "system",
-    "You are a friendly travel-planning agent. You design 3-day itineraries that balance sightseeing, food, and local culture. Always ask 2 quick clarifying questions if information is missing.",
-  ],
-  ["human", "{message}"],
-]);
-
-const chain = prompt.pipe(model);
-
-// API endpoint for chat
+// API endpoint for chat – uses agent_new (flight finder + currency exchange)
 app.post("/api/chat", async (req, res) => {
   try {
     const { message, departure, destination, style, budget, interests } = req.body;
@@ -55,13 +31,20 @@ app.post("/api/chat", async (req, res) => {
       fullMessage += `\nAdditional request: ${message}`;
     }
 
-    const response = await chain.invoke({
-      message: fullMessage,
+    const result = await agent.invoke({
+      messages: [{ role: "user", content: fullMessage }],
     });
-
+    console.log("!!!!!")
+    console.log(result)
+    console.log("!!!!!")
+    const lastMessage = result.messages[result.messages.length - 1];
+    const responseContent = typeof lastMessage.content === "string"
+      ? lastMessage.content
+      : JSON.stringify(lastMessage.content);
+    
     res.json({
       success: true,
-      response: response.content,
+      response: JSON.parse(responseContent),
     });
   } catch (error) {
     console.error("Error processing chat request:", error);

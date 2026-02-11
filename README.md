@@ -1,8 +1,8 @@
 ## Agentic AI 2026
 
 ### Lecture:
-https://gamma.app/docs/AI-Agents-hlgj38btkim0stw
 
+https://gamma.app/docs/AI-Agents-hlgj38btkim0stw
 
 This repository is a playground for experimenting with **agentic AI** patterns and tools in 2026, using Cursor as the primary development environment.
 
@@ -21,15 +21,25 @@ The project is in an early setup phase. As the codebase and architecture evolve,
 - **Deployment / CI details**
 - **Agent behaviors and workflows**
 
-
-
 # How to run the Labs - labs/lab1-travel-planner
+
 1. in the root folder run `npm i `
 2. create .env file inside the relevant folder
-3. add the relevant keys 
-```javascript
-OPENROUTER_API_KEY=sk-or-v1-b8d261bc18XXXXXXXX7cf8
-TAVILY_API_KEY=tvly-dev-b8d261bc18XXXXXXXX7cf8
+3. add the relevant keys
 
+```javascript
+OPENROUTER_API_KEY = sk - or - v1 - b8d261bc18XXXXXXXX7cf8;
+TAVILY_API_KEY = tvly - dev - b8d261bc18XXXXXXXX7cf8;
 ```
+
 4. run `node agent.js` from the relevant folder
+
+# Homework 8.2.2026
+
+- Client: Add an option to present the flights Array as cards located at the right side of the page
+
+- New Tool, add new tool to the eco-system, based on the fligts city - get → latitude/longitude of the relevant city
+LangChain Tool (JS) — city → latitude/longitude (Open-Meteo, no key)
+exmple:
+https://geocoding-api.open-meteo.com/v1/search?
+name=Ashdod,Israel&count=1&language=en&format=json

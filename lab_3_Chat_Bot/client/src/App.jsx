@@ -1,16 +1,38 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { MapContainer, TileLayer, Polyline, CircleMarker, Popup, useMap } from 'react-leaflet';
+import L from 'leaflet';
 import './App.css';
+
+function FitRouteBounds({ from, to }) {
+  const map = useMap();
+  useEffect(() => {
+    const bounds = L.latLngBounds([from.lat, from.lng], [to.lat, to.lng]);
+    map.fitBounds(bounds.pad(0.3));
+  }, [map, from, to]);
+  return null;
+}
+
+// Normalize from/to objects: API may return long or lon
+function coordsFromPlace(place) {
+  if (!place || (place.lat == null && place.latitude == null)) return null;
+  const lat = place.lat ?? place.latitude;
+  const lng = place.long ?? place.lon ?? place.longitude;
+  if (lat == null || lng == null) return null;
+  return { lat: Number(lat), lng: Number(lng), name: place.name ?? '' };
+}
 
 function App() {
   const [messages, setMessages] = useState([]);
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState('plan a trip to tokyo');
   const [loading, setLoading] = useState(false);
+  const [flights, setFlights] = useState([]);
+  const [route, setRoute] = useState(null); // { from: { lat, lng, name }, to: { lat, lng, name } }
   const [formData, setFormData] = useState({
-    departure: '',
-    destination: '',
-    style: '',
-    budget: '',
-    interests: '',
+    departure: 'tel aviv',
+    destination: 'tokyo',
+    style: 'food + culture, light walking',
+    budget: 'high',
+    interests: 'sails at rivers, small galleries, hidden viewpoints',
   });
 
   const sendMessage = async (e) => {
@@ -43,12 +65,24 @@ function App() {
       const data = await response.json();
 
       if (data.success) {
+        const response = data.response;
+        console.log(response);
+
+        const messageText = typeof response.message === 'string' ? response.message : JSON.stringify(response.message ?? '');
         const assistantMessage = {
           role: 'assistant',
-          content: data.response,
+          content: messageText,
           timestamp: new Date().toISOString(),
         };
         setMessages((prev) => [...prev, assistantMessage]);
+        if (Array.isArray(response.flights) && response.flights.length > 0) {
+          setFlights(response.flights);
+        }
+        const fromCoords = coordsFromPlace(response.from);
+        const toCoords = coordsFromPlace(response.to);
+        if (fromCoords && toCoords) {
+          setRoute({ from: fromCoords, to: toCoords });
+        }
       } else {
         throw new Error(data.error || 'Failed to get response');
       }
@@ -75,7 +109,8 @@ function App() {
 
   return (
     <div className="app">
-      <div className="container">
+      <div className="app-layout">
+        <div className="container">
         <header className="header">
           <h1>🌍 Travel Planner Chat Bot</h1>
           <p>Plan your perfect 3-day trip with AI assistance</p>
@@ -165,7 +200,64 @@ function App() {
             </button>
           </form>
         </div>
+        </div>
+
+        {flights.length > 0 && (
+          <aside className="flights-sidebar">
+            <h3 className="flights-sidebar-title">✈️ Flights</h3>
+            <div className="flights-list">
+              {flights.map((flight, index) => (
+                <div key={index} className="flight-card">
+                  <div className="flight-airline">{flight.airline ?? '—'}</div>
+                  <div className="flight-route">
+                    <span className="flight-departure">{flight.departure ?? '—'}</span>
+                    <span className="flight-arrow">→</span>
+                    <span className="flight-arrival">{flight.arrival ?? '—'}</span>
+                  </div>
+                  <div className="flight-details">
+                    <span className="flight-price">{flight.price ?? '—'}</span>
+                    <span className="flight-duration">{flight.duration ?? '—'}</span>
+                    <span className="flight-stops">{flight.stops ?? '—'}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </aside>
+        )}
       </div>
+
+      {route && (
+        <section className="route-map-section">
+          <h3 className="route-map-title">📍 Route</h3>
+          <div className="route-map-wrapper">
+            <MapContainer
+              center={[(route.from.lat + route.to.lat) / 2, (route.from.lng + route.to.lng) / 2]}
+              zoom={3}
+              className="route-map"
+              scrollWheelZoom={true}
+            >
+              <FitRouteBounds from={route.from} to={route.to} />
+              <TileLayer
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              />
+              <Polyline
+                positions={[
+                  [route.from.lat, route.from.lng],
+                  [route.to.lat, route.to.lng],
+                ]}
+                pathOptions={{ color: '#2563eb', weight: 3 }}
+              />
+              <CircleMarker center={[route.from.lat, route.from.lng]} pathOptions={{ color: '#059669', fillColor: '#10b981', fillOpacity: 1, weight: 2 }} radius={8}>
+                <Popup>{route.from.name || 'Origin'}</Popup>
+              </CircleMarker>
+              <CircleMarker center={[route.to.lat, route.to.lng]} pathOptions={{ color: '#dc2626', fillColor: '#ef4444', fillOpacity: 1, weight: 2 }} radius={8}>
+                <Popup>{route.to.name || 'Destination'}</Popup>
+              </CircleMarker>
+            </MapContainer>
+          </div>
+        </section>
+      )}
     </div>
   );
 }

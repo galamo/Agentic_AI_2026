@@ -1,0 +1,19 @@
+{
+  "name": "mcp-calculator",
+  "version": "1.0.0",
+  "description": "MCP server exposing a calculator tool over Streamable HTTP (Express), for use with LangChain agents",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "agent": "node agent.js"
+  },
+  "dependencies": {
+    "@langchain/core": "^1.1.22",
+    "@langchain/openai": "^1.2.7",
+    "@modelcontextprotocol/sdk": "^1.26.0",
+    "dotenv": "^17.2.4",
+    "langchain": "^1.2.21",
+    "zod": "^3.25.0"
+  }
+}
