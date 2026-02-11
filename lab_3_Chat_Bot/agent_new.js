@@ -67,6 +67,53 @@ const currencyExchange = tool(({ priceInDollar }) => {
   }),
 });
 
+// Geocoding tool – get latitude/longitude for from & to (for map positioning)
+const GEOCODING_BASE = "https://geocoding-api.open-meteo.com/v1/search";
+async function fetchCoordinates(name) {
+  const params = new URLSearchParams({
+    name: name.trim(),
+    count: "1",
+    language: "en",
+    format: "json",
+  });
+  const res = await fetch(`${GEOCODING_BASE}?${params}`);
+  if (!res.ok) throw new Error(`Geocoding API error: ${res.status}`);
+  const data = await res.json();
+  const results = data.results;
+  if (!results || results.length === 0) return null;
+  const first = results[0];
+  return { lat: first.latitude, lon: first.longitude, name: first.name };
+}
+
+const geocodeFromTo = tool(
+  async ({ from: fromPlace, to: toPlace }) => {
+    const [fromCoords, toCoords] = await Promise.all([
+      fetchCoordinates(fromPlace),
+      fetchCoordinates(toPlace),
+    ]);
+    const out = {
+      from: fromCoords
+        ? { lat: fromCoords.lat, lon: fromCoords.lon, name: fromCoords.name }
+        : null,
+      to: toCoords
+        ? { lat: toCoords.lat, lon: toCoords.lon, name: toCoords.name }
+        : null,
+    };
+    if (!fromCoords) out.error = `Could not find coordinates for: ${fromPlace}`;
+    if (!toCoords) out.error = (out.error ? out.error + "; " : "") + `Could not find coordinates for: ${toPlace}`;
+    return JSON.stringify(out);
+  },
+  {
+    name: "geocode_from_to",
+    description:
+      "Get latitude and longitude for two places (from and to). Use this to get map coordinates for trip origin and destination, e.g. for displaying a route on a map. Pass city and country like 'Tel Aviv, Israel' or 'New York, USA'.",
+    schema: z.object({
+      from: z.string().describe("Origin place: city and country (e.g. Tel Aviv, Israel)"),
+      to: z.string().describe("Destination place: city and country (e.g. New York, USA)"),
+    }),
+  }
+);
+
 // tool exchange to all currnecies ( MCP/openapi sepcification)
 
 
@@ -75,12 +122,16 @@ const FLIGHT_SYSTEM_PROMPT = `You are a friendly travel-planning agent with acce
 TOOLS:
 - flight_finder: Search for flights between cities. Use this to find flights, prices, and airlines.
 - currency_exchange: Convert USD prices to NIS/ILS. Use this when the user asks for prices in shekels.
+- geocode_from_to: Get latitude/longitude for origin and destination. Use this when the user wants map positions or coordinates for from/to cities (e.g. to show a route on a map).
 
 IMPORTANT: 
 plan a travel
 your response should be valid JSON without wrappers, the response need to be ready for parse.
 the response will contain message - the trip planning based on the requested days & flights array as presented here:
+use the tool geocode_from_to to get the country from and to coordinates, return the coordinats as object inside from and to keys.
 {
+  "from": { long: number, lat: number, name: string },
+  "to": { long: number, lat: number, name: string },
   "message":"string"
   "flights": [
     {
@@ -101,7 +152,7 @@ the response will contain message - the trip planning based on the requested day
 // Create ReAct agent with web and flight tools (createAgent is the replacement for deprecated createReactAgent)
 const agent = createAgent({
   model,
-  tools: [flightFinder, currencyExchange],
+  tools: [flightFinder, currencyExchange, geocodeFromTo],
   systemPrompt: FLIGHT_SYSTEM_PROMPT,
 });
 

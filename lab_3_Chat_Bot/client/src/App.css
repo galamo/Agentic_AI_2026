@@ -9,6 +9,9 @@
   width: 100%;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
   font-family:
     -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
     "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
@@ -18,7 +21,8 @@
   display: flex;
   gap: 12px;
   width: 100%;
-  height: calc(100vh - 24px);
+  flex: 1;
+  min-height: 0;
   align-items: stretch;
 }
 
@@ -357,6 +361,35 @@
 .flights-list::-webkit-scrollbar-thumb {
   background: #ccc;
   border-radius: 3px;
+}
+
+/* Route map (bottom) */
+.route-map-section {
+  width: 100%;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.route-map-title {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 12px 20px;
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.route-map-wrapper {
+  height: 280px;
+  width: 100%;
+}
+
+.route-map {
+  height: 100%;
+  width: 100%;
+  z-index: 0;
 }
 
 /* Responsive design */
