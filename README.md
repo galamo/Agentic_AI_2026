@@ -50,3 +50,4 @@ TAVILY_API_KEY = tvly - dev - b8d261bc18XXXXXXXX7cf8;
 - https://restcountries.com/
 - Create a Tool that will get country name and return the flag svg link image.
 - Show the flag in the UI - as icon on the map.
+- response from tool r[0].flags.png
