@@ -392,6 +392,11 @@
   z-index: 0;
 }
 
+.route-map .flag-marker {
+  background: none !important;
+  border: none !important;
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
   .app-layout {

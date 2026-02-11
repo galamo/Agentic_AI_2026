@@ -115,6 +115,40 @@ const geocodeFromTo = tool(
   }
 );
 
+// Country flags tool – get PNG flag URLs by ISO 3166-1 alpha-3 country code
+const REST_COUNTRIES_BASE = "https://restcountries.com/v3.1/alpha";
+async function fetchFlagPng(alpha3Code) {
+  const code = (alpha3Code || "").trim().toUpperCase();
+  if (!code) return null;
+  const res = await fetch(`${REST_COUNTRIES_BASE}/${code}?fields=flags`);
+  if (!res.ok) return null;
+  const data = await res.json();
+  const first = Array.isArray(data) ? data[0] : data;
+  return first?.flags?.png ?? null;
+}
+
+const countryFlagsFromTo = tool(
+  async ({ from: fromCode, to: toCode }) => {
+    const [fromPng, toPng] = await Promise.all([
+      fetchFlagPng(fromCode),
+      fetchFlagPng(toCode),
+    ]);
+    const out = { from: fromPng, to: toPng };
+    if (!fromPng) out.error = (out.error ? out.error + "; " : "") + `No flag found for country code: ${fromCode}`;
+    if (!toPng) out.error = (out.error ? out.error + "; " : "") + `No flag found for country code: ${toCode}`;
+    return JSON.stringify(out);
+  },
+  {
+    name: "country_flags_from_to",
+    description:
+      "Get the PNG flag image URLs for two countries by their ISO 3166-1 alpha-3 codes (e.g. ARE for UAE, USA for United States, ISR for Israel). Use this when the user wants flag images for origin and destination countries.",
+    schema: z.object({
+      from: z.string().describe("Origin country ISO 3166-1 alpha-3 code (e.g. ARE, ISR)"),
+      to: z.string().describe("Destination country ISO 3166-1 alpha-3 code (e.g. USA, GBR)"),
+    }),
+  }
+);
+
 // tool exchange to all currnecies ( MCP/openapi sepcification)
 
 
@@ -124,15 +158,17 @@ TOOLS:
 - flight_finder: Search for flights between cities. Use this to find flights, prices, and airlines.
 - currency_exchange: Convert USD prices to NIS/ILS. Use this when the user asks for prices in shekels.
 - geocode_from_to: Get latitude/longitude for origin and destination. Use this when the user wants map positions or coordinates for from/to cities (e.g. to show a route on a map).
+- country_flags_from_to: Get PNG flag image URLs for two countries by their alpha-3 codes (e.g. ARE, USA, ISR). Use this when the user wants flag images for from/to countries.
 
 IMPORTANT: 
 plan a travel
 your response should be valid JSON without wrappers, the response need to be ready for parse.
 the response will contain message - the trip planning based on the requested days & flights array as presented here:
 use the tool geocode_from_to to get the country from and to coordinates, return the coordinats as object inside from and to keys.
+use the country_flags_from_to , to get flags, find out what is the alpha-3 code for the relevant cities and send to the tool, place the response in the flag key
 {
-  "from": { long: number, lat: number, name: string },
-  "to": { long: number, lat: number, name: string },
+  "from": { long: number, lat: number, name: string, flag: string },
+  "to": { long: number, lat: number, name: string , flag: string},
   "message":"string"
   "flights": [
     {
@@ -153,7 +189,7 @@ use the tool geocode_from_to to get the country from and to coordinates, return 
 // Create ReAct agent with web and flight tools (createAgent is the replacement for deprecated createReactAgent)
 const agent = createAgent({
   model,
-  tools: [flightFinder, currencyExchange, geocodeFromTo],
+  tools: [flightFinder, currencyExchange, geocodeFromTo, countryFlagsFromTo],
   systemPrompt: FLIGHT_SYSTEM_PROMPT,
 });
 

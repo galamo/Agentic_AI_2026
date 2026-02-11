@@ -71,10 +71,22 @@ export async function buildPricingRAG(pricingFilePath = DEFAULT_PRICING_PATH, em
   const docs = await loadPricingFile(pricingFilePath);
   const splitDocs = await splitDocuments(docs);
 
-  const embeddings = new OpenAIEmbeddings({
-    model: "text-embedding-3-small",
-    ...embeddingOptions,
-  });
+  const openRouterKey = process.env.OPENROUTER_API_KEY;
+  const openaiKey = process.env.OPENAI_API_KEY;
+  const apiKey = openRouterKey || openaiKey;
+  if (!apiKey) {
+    throw new Error("Set OPENAI_API_KEY or OPENROUTER_API_KEY in .env");
+  }
+
+  const useOpenRouter = Boolean(openRouterKey);
+  const embeddings = new OpenAIEmbeddings(
+    {
+      model: useOpenRouter ? "openai/text-embedding-3-small" : "text-embedding-3-small",
+      apiKey,
+      ...embeddingOptions,
+    },
+    useOpenRouter ? { basePath: "https://openrouter.ai/api/v1" } : undefined
+  );
 
   const vectorStore = await MemoryVectorStore.fromDocuments(splitDocs, embeddings);
   const retriever = vectorStore.asRetriever({ k: 6 });

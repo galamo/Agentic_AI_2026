@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { MapContainer, TileLayer, Polyline, CircleMarker, Popup, useMap } from 'react-leaflet';
+import { MapContainer, TileLayer, Polyline, CircleMarker, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import './App.css';
 
@@ -81,7 +81,10 @@ function App() {
         const fromCoords = coordsFromPlace(response.from);
         const toCoords = coordsFromPlace(response.to);
         if (fromCoords && toCoords) {
-          setRoute({ from: fromCoords, to: toCoords });
+          setRoute({
+            from: { ...fromCoords, flag: response.from?.flag ?? null },
+            to: { ...toCoords, flag: response.to?.flag ?? null },
+          });
         }
       } else {
         throw new Error(data.error || 'Failed to get response');
@@ -248,12 +251,40 @@ function App() {
                 ]}
                 pathOptions={{ color: '#2563eb', weight: 3 }}
               />
-              <CircleMarker center={[route.from.lat, route.from.lng]} pathOptions={{ color: '#059669', fillColor: '#10b981', fillOpacity: 1, weight: 2 }} radius={8}>
-                <Popup>{route.from.name || 'Origin'}</Popup>
-              </CircleMarker>
-              <CircleMarker center={[route.to.lat, route.to.lng]} pathOptions={{ color: '#dc2626', fillColor: '#ef4444', fillOpacity: 1, weight: 2 }} radius={8}>
-                <Popup>{route.to.name || 'Destination'}</Popup>
-              </CircleMarker>
+              {route.from.flag ? (
+                <Marker
+                  position={[route.from.lat, route.from.lng]}
+                  icon={L.divIcon({
+                    className: 'flag-marker',
+                    html: `<img src="${route.from.flag}" alt="Origin" width="28" height="20" style="border-radius:2px;border:2px solid #059669;object-fit:cover;" />`,
+                    iconSize: [28, 20],
+                    iconAnchor: [14, 10],
+                  })}
+                >
+                  <Popup>{route.from.name || 'Origin'}</Popup>
+                </Marker>
+              ) : (
+                <CircleMarker center={[route.from.lat, route.from.lng]} pathOptions={{ color: '#059669', fillColor: '#10b981', fillOpacity: 1, weight: 2 }} radius={8}>
+                  <Popup>{route.from.name || 'Origin'}</Popup>
+                </CircleMarker>
+              )}
+              {route.to.flag ? (
+                <Marker
+                  position={[route.to.lat, route.to.lng]}
+                  icon={L.divIcon({
+                    className: 'flag-marker',
+                    html: `<img src="${route.to.flag}" alt="Destination" width="28" height="20" style="border-radius:2px;border:2px solid #dc2626;object-fit:cover;" />`,
+                    iconSize: [28, 20],
+                    iconAnchor: [14, 10],
+                  })}
+                >
+                  <Popup>{route.to.name || 'Destination'}</Popup>
+                </Marker>
+              ) : (
+                <CircleMarker center={[route.to.lat, route.to.lng]} pathOptions={{ color: '#dc2626', fillColor: '#ef4444', fillOpacity: 1, weight: 2 }} radius={8}>
+                  <Popup>{route.to.name || 'Destination'}</Popup>
+                </CircleMarker>
+              )}
             </MapContainer>
           </div>
         </section>
