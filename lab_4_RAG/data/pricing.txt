@@ -1,6 +1,7 @@
 # Construction & Renovation Pricing (per unit unless noted)
 
 ## Demolition & Removal
+
 Remove non-load-bearing wall (per linear metre)	         $120 - $180
 Remove load-bearing wall (per linear metre)	                 $280 - $450
 Remove complete bathroom (strip to studs, remove fixtures)	 $1,800 - $3,200

@@ -58,3 +58,13 @@ TAVILY_API_KEY = tvly - dev - b8d261bc18XXXXXXXX7cf8;
 1. run `npm install` in the folders `Agentic_AI_2026/lab_3_Chat_Bot/client` and `Agentic_AI_2026/lab_3_Chat_Bot`
 2. run `npm run dev` in the folder `Agentic_AI_2026/lab_3_Chat_Bot`
 3. Open browser in `http://localhost:5173`
+
+# Homework 14.2.2026
+
+1. install docker https://docs.docker.com/engine/install/
+2. then navigate to db folder: `cd db `
+3. run from terminal `docker compose up`
+4. open browser and browse to: `http://localhost:5050/browser/`
+5. login with the docker componse credentials
+6. username: admin@example.com
+7. password: admin

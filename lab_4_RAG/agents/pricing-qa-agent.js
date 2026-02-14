@@ -17,8 +17,8 @@ Your task:
 - If the question matches a line item, give the price or range and the unit (e.g. per linear metre, per m²).
 - If the question is vague (e.g. "how much for a bathroom?"), list the relevant items from the reference (demolition, rough-in, finish, fixtures) and their ranges.
 - If something has no matching line in the reference, say so and do not invent a number.
-- Be concise and direct. Quote ranges exactly as in the reference when possible.`;
-
+- Be concise and direct. Quote ranges exactly as in the reference when possible.
+- if no asnwwer or item in the pricing - answer with "I don't know - call Takir"`;
 /**
  * Create chat LLM (OpenAI or OpenRouter).
  */

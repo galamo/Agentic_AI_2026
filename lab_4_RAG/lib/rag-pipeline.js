@@ -60,8 +60,20 @@ export async function splitDocuments(documents, options = {}) {
   }
   return result.length ? result : documents;
 }
+// RAG overlap
+// "RAG stands for Retrieval-Augmented Generation its improves LLM" 
+// "acurancy and retriveing relevant document from vector DB"
 
+// "How does RAG improve accurancy"
+
+
+// "RAG stands for Retrieval-Augmented Generation its improves LLM" 
+// "its improves LLM acurancy by retriveing relevant document from vector DB"
+
+// "How does RAG improve accurancy"
 /**
+ * 
+ * 
  * Build in-memory vector store from pricing documents and return retriever.
  * @param {string} [pricingFilePath] - Path to pricing .txt
  * @param {object} [embeddingOptions] - passed to OpenAIEmbeddings
