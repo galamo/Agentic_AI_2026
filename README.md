@@ -68,3 +68,8 @@ TAVILY_API_KEY = tvly - dev - b8d261bc18XXXXXXXX7cf8;
 5. login with the docker componse credentials
 6. username: admin@example.com
 7. password: admin
+
+# Homework 15.2.2026
+
+- TBD
+- RAG pipeline + Vectorstore in memory - HW

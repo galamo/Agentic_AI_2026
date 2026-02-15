@@ -10,8 +10,8 @@
 
 import { HumanMessage, SystemMessage } from "@langchain/core/messages";
 import { ChatOpenAI } from "@langchain/openai";
-import { buildPricingRAG, getRelevantPricing } from "../lib/rag-pipeline.js";
-import { imageToBase64DataUrl } from "../lib/vision.js";
+import { buildPricingRAG, getRelevantPricing } from "../../lib/rag-pipeline.js";
+import { imageToBase64DataUrl } from "../../lib/vision.js";
 
 const VISION_SYSTEM_PROMPT = `You are a construction cost estimator. You receive:
 1. A construction/renovation image (floor plan, photo, or markup) where the client has marked what they want done (e.g. walls to remove, bathroom to demolish, areas to rebuild).

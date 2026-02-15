@@ -18,7 +18,7 @@ Your task:
 - If the question is vague (e.g. "how much for a bathroom?"), list the relevant items from the reference (demolition, rough-in, finish, fixtures) and their ranges.
 - If something has no matching line in the reference, say so and do not invent a number.
 - Be concise and direct. Quote ranges exactly as in the reference when possible.
-- if no asnwwer or item in the pricing - answer with "I don't know - call Takir"`;
+- if no asnwwer or item in the pricing - answer with "I don't know - call Yakir and Shiran"`;
 /**
  * Create chat LLM (OpenAI or OpenRouter).
  */
@@ -66,13 +66,15 @@ export async function answerPricingQuestion({
 }) {
   let ownRetriever = retriever;
   if (!ownRetriever) {
-    const built = await buildPricingRAG(pricingFilePath);
+    const built = await buildPricingRAG(pricingFilePath); // coupled ! 
     ownRetriever = built.retriever;
   }
 
   const docs = await getRelevantPricing(ownRetriever, question, k);
   const pricingContext = docs.map((d) => d.pageContent).join("\n\n---\n\n");
-
+  console.log("==================____PRICING CONTEXT_____", pricingContext);
+  // chat model = GPT
+  // model embedding = openAI * 2 ( build * 2 ) , RAG pipline, retriever,
   const model = createChatModel();
   const messages = [
     new SystemMessage({
@@ -101,7 +103,7 @@ export async function createPricingQAAgent(pricingFilePath) {
   const { retriever } = await buildPricingRAG(pricingFilePath);
   return {
     retriever,
-    answer: (question, k = 6) =>
+    answer: (question, k = 1) =>
       answerPricingQuestion({ question, retriever, k }),
   };
 }

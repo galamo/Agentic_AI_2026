@@ -103,7 +103,7 @@ export async function buildPricingRAG(pricingFilePath = DEFAULT_PRICING_PATH, em
   );
 
   const vectorStore = await MemoryVectorStore.fromDocuments(splitDocs, embeddings);
-  const retriever = vectorStore.asRetriever({ k: 6 });
+  const retriever = vectorStore.asRetriever({ k: 1 });
 
   return { vectorStore, retriever };
 }

@@ -12,7 +12,7 @@
 
 import "dotenv/config";
 import path from "path";
-import { runConstructionPricingAgent } from "./agents/construction-pricing-agent.js";
+import { runConstructionPricingAgent } from "./agents/next/construction-pricing-agent.js";
 
 async function main() {
   const imagePath = process.argv[2];
