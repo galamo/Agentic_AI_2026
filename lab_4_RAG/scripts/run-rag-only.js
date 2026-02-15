@@ -33,3 +33,8 @@ main().catch((e) => {
   console.error(e);
   process.exit(1);
 });
+
+
+
+// data - unstructured data - pricing.txt
+// index - Memory ?! 

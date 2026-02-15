@@ -1,0 +1,21 @@
+{
+  "name": "lab-6-rag-pgvector-pipeline",
+  "version": "1.0.0",
+  "description": "RAG pipeline: index TXT files (e.g. constructor pricing) into pgvector",
+  "type": "module",
+  "scripts": {
+    "index": "node scripts/index-to-pgvector.js",
+    "run:index": "node scripts/index-to-pgvector.js"
+  },
+  "keywords": ["rag", "pgvector", "langchain", "construction", "pricing"],
+  "license": "ISC",
+  "dependencies": {
+    "@langchain/community": "^0.3.0",
+    "@langchain/core": "^0.3.0",
+    "@langchain/openai": "^0.3.0",
+    "dotenv": "^16.4.5",
+    "pg": "^8.13.0",
+    "uuid": "^10.0.0",
+    "langchain": "^0.3.0"
+  }
+}

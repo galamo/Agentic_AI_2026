@@ -7,7 +7,8 @@
   "scripts": {
     "start": "node index.js",
     "run:agent": "node index.js",
-    "run:rag-only": "node scripts/run-rag-only.js"
+    "run:rag-only": "node scripts/run-rag-only.js",
+    "test": "node --test test/"
   },
   "keywords": ["rag", "langchain", "construction", "pricing", "vision"],
   "author": "",

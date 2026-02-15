@@ -9,7 +9,7 @@
  *
  * Requires: OPENAI_API_KEY or OPENROUTER_API_KEY in .env
  */
-
+// node scripts/run-pricing-qa.js "How much to remove a load-bearing wall?"
 import "dotenv/config";
 import readline from "readline";
 import { createPricingQAAgent } from "../agents/pricing-qa-agent.js";
