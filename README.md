@@ -2,7 +2,9 @@
 
 ### Lecture:
 
-https://gamma.app/docs/AI-Agents-hlgj38btkim0stw
+- rag on images
+- rag db
+  https://gamma.app/docs/AI-Agents-hlgj38btkim0stw
 
 This repository is a playground for experimenting with **agentic AI** patterns and tools in 2026, using Cursor as the primary development environment.
 
@@ -71,5 +73,14 @@ TAVILY_API_KEY = tvly - dev - b8d261bc18XXXXXXXX7cf8;
 
 # Homework 15.2.2026
 
-- TBD
-- RAG pipeline + Vectorstore in memory - HW
+- Create A new Folder Project with the following structure
+- /agent
+  /scripts
+  /data
+
+- inside agent folder create agent.js which will answer question about the OAuth documenation guide
+- inside scritps create rag-process which will index the file hw_materials/the-modern-guide-to-oauth.pdf as in vector memory
+- the rag process will occure on every request inside the memory
+- write the code in a way that the RAG injestion process will not be coupled to the request - QandA
+- use a what ever model you prefered.
+- /data will contain the PDF
