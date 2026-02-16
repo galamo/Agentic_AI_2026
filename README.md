@@ -85,4 +85,5 @@ TAVILY_API_KEY = tvly - dev - b8d261bc18XXXXXXXX7cf8;
 - use a what ever model you prefered.
 - /data will contain the PDF
 
-Good Luck!
+Good Luck in the HW!
+
