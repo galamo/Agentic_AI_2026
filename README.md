@@ -84,3 +84,5 @@ TAVILY_API_KEY = tvly - dev - b8d261bc18XXXXXXXX7cf8;
 - write the code in a way that the RAG injestion process will not be coupled to the request - QandA
 - use a what ever model you prefered.
 - /data will contain the PDF
+
+Good Luck!
