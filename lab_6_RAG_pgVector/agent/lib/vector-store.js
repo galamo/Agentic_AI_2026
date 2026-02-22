@@ -65,6 +65,6 @@ export async function getVectorStore() {
  * @returns {Promise<VectorStoreRetriever>}
  */
 export async function getRetriever(k = 6) {
-  const vectorStore = await getVectorStore();
+  const vectorStore = await getVectorStore(); // pgvector store
   return vectorStore.asRetriever(k);
 }

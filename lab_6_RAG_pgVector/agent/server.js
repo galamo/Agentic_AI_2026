@@ -16,7 +16,7 @@ app.use(express.json());
 app.get("/health", (_req, res) => {
   res.json({ status: "ok" });
 });
-
+const agent =  createQAAgent(6)
 app.post("/ask", async (req, res) => {
   const message = req.body?.message;
   if (!message || typeof message !== "string") {

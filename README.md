@@ -87,3 +87,9 @@ TAVILY_API_KEY = tvly - dev - b8d261bc18XXXXXXXX7cf8;
 
 Good Luck in the HW!
 
+# Ex 22.2.2026
+
+- Use the Agent instead of the `answer`
+- Add an extra information to the pricing.txt file.
+- Run the RAG process again, dont forget to cleanup before
+- Try it!
