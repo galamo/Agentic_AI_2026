@@ -93,3 +93,25 @@ Good Luck in the HW!
 - Add an extra information to the pricing.txt file.
 - Run the RAG process again, dont forget to cleanup before
 - Try it!
+
+# Homework 22.2.2026
+
+- “Local Government Services Agent” (Web-to-RAG + Summaries)
+
+Goal: Build a small RAG corpus from public web pages.
+
+- RAG data sources:
+  A city/municipality website: waste disposal, parking permits, opening hours
+  Download pages as HTML → convert to text/markdown for example: (https://www.ashdod.muni.il/he-il/%d7%90%d7%aa%d7%a8-%d7%94%d7%a2%d7%99%d7%a8/)
+  use chromaDB or pgVector
+
+- Agent tool: new_request_for_goverment(description) , description for exmaple "i would like to schedule an appointment in the city office to pay my bills"
+- Agent tool: get_request_status(id)
+- Agent Must save the requests in the DB sql.
+- Option client that will expose the data
+
+The project must include
+
+- Server ( agents )
+- RAG process
+- Script to execute the different flows / client
