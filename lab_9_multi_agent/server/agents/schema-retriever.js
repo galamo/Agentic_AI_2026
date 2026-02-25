@@ -7,7 +7,7 @@ import { getSchemaRetriever } from "../lib/schema-vector-store.js";
 
 export async function retrieveSchemaContext(question, k = 8) {
   const retriever = await getSchemaRetriever(k);
-  const docs = await retriever.invoke(question); // all the relevant chunks from the vector store
+  const docs = await retriever.invoke(question);
   const parts = docs.map((d) => d.pageContent);
   const notes = docs.length
     ? "Relevant schema excerpts (tables, columns, relations):"

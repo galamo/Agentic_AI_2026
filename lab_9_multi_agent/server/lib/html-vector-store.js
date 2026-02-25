@@ -1,12 +1,11 @@
 /**
- * Vector store for schema RAG: retrieve relevant schema chunks by user question.
- * Uses table schema_vectors in sso_db (pgvector).
+ * Vector store for HTML RAG: retrieve relevant HTML-derived chunks by user question.
+ * Uses table html_vectors in the same DB (pgvector).
  */
 import { OpenAIEmbeddings } from "@langchain/openai";
 import { PGVectorStore } from "@langchain/community/vectorstores/pgvector";
 
-
-const TABLE_NAME = "schema_vectors";
+const TABLE_NAME = "html_vectors";
 
 function getEmbeddings() {
   const apiKey = process.env.OPENROUTER_API_KEY || process.env.OPENAI_API_KEY;
@@ -21,7 +20,7 @@ function getEmbeddings() {
   );
 }
 
-export async function getSchemaVectorStore() {
+export async function getHtmlVectorStore() {
   const store = await PGVectorStore.initialize(getEmbeddings(), {
     postgresConnectionOptions: {
       type: "postgres",
@@ -31,7 +30,7 @@ export async function getSchemaVectorStore() {
       password: process.env.PG_PASSWORD || "sso_pass",
       database: process.env.PG_DATABASE || "sso_db",
     },
-    tableName: TABLE_NAME, // all the sschemas vector table 
+    tableName: TABLE_NAME,
     columns: {
       idColumnName: "id",
       vectorColumnName: "vector",
@@ -42,7 +41,7 @@ export async function getSchemaVectorStore() {
   return store;
 }
 
-export async function getSchemaRetriever(k = 8) {
-  const store = await getSchemaVectorStore();
+export async function getHtmlRetriever(k = 6) {
+  const store = await getHtmlVectorStore();
   return store.asRetriever(k);
 }

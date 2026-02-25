@@ -1,10 +1,11 @@
 /**
- * Answer Agent
- * Inputs: question + rows + (optional) SQL
- * Output: natural-language answer, with optional citations to query/results
+ * HTML RAG Agent: answer simple questions using retrieved HTML content.
+ * Input: user question
+ * Output: natural-language answer based on retrieved chunks
  */
 import { HumanMessage, SystemMessage } from "@langchain/core/messages";
 import { ChatOpenAI } from "@langchain/openai";
+import { getHtmlRetriever } from "../lib/html-vector-store.js";
 
 function createModel() {
   const openRouterKey = process.env.OPENROUTER_API_KEY;
@@ -23,22 +24,20 @@ function createModel() {
 }
 
 /**
+ * Answer a simple question using HTML RAG context.
  * @param {string} question
- * @param {object} execution - { rows, rowCount } or { error }
- * @param {string} [sql]
+ * @param {number} [k] - number of chunks to retrieve
  * @returns {Promise<string>}
  */
-export async function answer(question, execution, sql) {
-  const model = createModel();
-  const hasError = "error" in execution;
-  const dataSummary = hasError
-    ? `Query failed: ${execution.error}`
-    : `Query returned ${execution.rowCount} row(s). Sample:\n${JSON.stringify((execution.rows || []).slice(0, 15), null, 2)}`;
+export async function answerWithHtmlRag(question, k = 6) {
+  const retriever = await getHtmlRetriever(k);
+  const docs = await retriever.invoke(question);
+  const context = docs.map((d) => d.pageContent).join("\n\n---\n\n") || "No relevant content found.";
 
-  const systemContent =
-    "You are a helpful data assistant. Answer the user's question in natural language based on the query results. Be concise. If they asked for counts or lists, summarize clearly. If there was an error, explain it in plain language and suggest what might be wrong (e.g. column name).";
-  const userContent = `User question: ${question}\n\n${dataSummary}${sql ? `\n\nSQL used:\n${sql}` : ""}`;
-  
+  const model = createModel();
+  const systemContent = `You are a helpful assistant. Answer the user's question in natural language using ONLY the following context from documentation or web content. Be concise. If the context does not contain the answer, say so. Do not make up information.`;
+  const userContent = `Context:\n${context}\n\nQuestion: ${question}`;
+
   const messages = [
     new SystemMessage({ content: systemContent }),
     new HumanMessage({ content: userContent }),

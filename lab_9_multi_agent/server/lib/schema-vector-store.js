@@ -5,7 +5,6 @@
 import { OpenAIEmbeddings } from "@langchain/openai";
 import { PGVectorStore } from "@langchain/community/vectorstores/pgvector";
 
-
 const TABLE_NAME = "schema_vectors";
 
 function getEmbeddings() {
@@ -31,7 +30,7 @@ export async function getSchemaVectorStore() {
       password: process.env.PG_PASSWORD || "sso_pass",
       database: process.env.PG_DATABASE || "sso_db",
     },
-    tableName: TABLE_NAME, // all the sschemas vector table 
+    tableName: TABLE_NAME,
     columns: {
       idColumnName: "id",
       vectorColumnName: "vector",

@@ -23,7 +23,14 @@ app.post("/query", async (req, res) => {
     return res.status(400).json({ error: "Missing or invalid 'question' in body" });
   }
 
+  const mapAgentToContext = {
+    "agent_1": { table: "schemas_vector" }, 
+    "agent_2": { table: "html_city_page" }
+  }
+
   try {
+    // agent? answer? or ask DB 
+
     // 1. Schema Retriever (RAG)
     const { schemaContext } = await retrieveSchemaContext(question);
 
@@ -47,9 +54,9 @@ app.post("/query", async (req, res) => {
     res.json({
       answer: naturalAnswer,
       sql,
-      rows: "rows" in execution ? execution.rows : null,
-      rowCount: "rowCount" in execution ? execution.rowCount : null,
-      error: "error" in execution ? execution.error : null,
+      rows: execution?.rows,
+      rowCount:  execution?.rowCount ,
+      error: execution?.error
     });
   } catch (err) {
     console.error(err);

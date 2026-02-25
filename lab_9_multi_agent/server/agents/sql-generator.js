@@ -21,11 +21,6 @@ function createModel() {
   }
   throw new Error("Set OPENAI_API_KEY or OPENROUTER_API_KEY in .env");
 }
-const permission = "permission_viewer"
-const permissionsPrompt = {
-  permission_admin: "You  can create INSERT UPDATE AND DELETE QURYES",
-  permissions_viewer: "Do not use INSERT, UPDATE, DELETE, or DDL. Only SELECT"
-}
 
 const SYSTEM_PROMPT = `You are a PostgreSQL expert. Given a user question and the relevant database schema, output ONLY a valid PostgreSQL SELECT query. No explanation, no markdown, no code block wrapper.
 Rules:
@@ -33,9 +28,7 @@ Rules:
 - Prefer JOINs over subqueries when listing related data.
 - Use table aliases if helpful (e.g. u for users, p for permissions).
 - Return only one SQL statement.
-${permissionsPrompt[permission]}`
-
-
+- Do not use INSERT, UPDATE, DELETE, or DDL. Only SELECT.`;
 
 /**
  * @param {string} question

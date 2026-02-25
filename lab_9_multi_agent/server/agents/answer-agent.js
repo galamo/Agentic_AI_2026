@@ -38,7 +38,7 @@ export async function answer(question, execution, sql) {
   const systemContent =
     "You are a helpful data assistant. Answer the user's question in natural language based on the query results. Be concise. If they asked for counts or lists, summarize clearly. If there was an error, explain it in plain language and suggest what might be wrong (e.g. column name).";
   const userContent = `User question: ${question}\n\n${dataSummary}${sql ? `\n\nSQL used:\n${sql}` : ""}`;
-  
+
   const messages = [
     new SystemMessage({ content: systemContent }),
     new HumanMessage({ content: userContent }),
