@@ -1,6 +1,5 @@
--- Seed data for SSO schema (20+ rows per table)
+-- Seed data for SSO schema (same as lab_7)
 
--- Users (25 rows)
 INSERT INTO users (email, display_name, is_active) VALUES
 ('alice@example.com', 'Alice Smith', true),
 ('bob@example.com', 'Bob Jones', true),
@@ -28,7 +27,6 @@ INSERT INTO users (email, display_name, is_active) VALUES
 ('xavier@example.com', 'Xavier Adams', false),
 ('yara@example.com', 'Yara Nelson', true);
 
--- Permissions (24 rows)
 INSERT INTO permissions (code, name, description) VALUES
 ('read_reports', 'Read Reports', 'View standard reports'),
 ('write_reports', 'Write Reports', 'Create and edit reports'),
@@ -55,7 +53,6 @@ INSERT INTO permissions (code, name, description) VALUES
 ('backup_restore', 'Backup Restore', 'Trigger backup/restore'),
 ('system_config', 'System Config', 'Change system configuration');
 
--- Users_permissions (25 rows: various user-permission links)
 INSERT INTO users_permissions (user_id, permission_id, granted_by) VALUES
 (1, 1, 1),   (1, 2, 1),   (1, 6, 1),
 (2, 1, 1),   (2, 5, 1),
@@ -83,7 +80,6 @@ INSERT INTO users_permissions (user_id, permission_id, granted_by) VALUES
 (24, 1, 1),
 (25, 1, 1),  (25, 2, 1), (25, 3, 1), (25, 4, 1);
 
--- Audit_login (25 rows: mix of success/failure)
 INSERT INTO audit_login (user_id, email_used, ip_address, success, created_at) VALUES
 (1, 'alice@example.com', '192.168.1.10', true, NOW() - INTERVAL '1 day'),
 (2, 'bob@example.com', '192.168.1.11', true, NOW() - INTERVAL '2 days'),
@@ -111,42 +107,3 @@ INSERT INTO audit_login (user_id, email_used, ip_address, success, created_at) V
 (23, 'wendy@example.com', '192.168.1.101', true, NOW() - INTERVAL '16 days'),
 (24, 'xavier@example.com', '10.0.0.40', true, NOW() - INTERVAL '17 days'),
 (25, 'yara@example.com', '172.16.0.40', true, NOW() - INTERVAL '18 days');
-
--- Resources (10+ rows: sports – football, tennis, basketball)
-INSERT INTO resource (name, type) VALUES
-('school_football', 'football'),
-('arena_stadium', 'football'),
-('city_pitch', 'football'),
-('main_tennis_court', 'tennis'),
-('indoor_tennis_centre', 'tennis'),
-('park_tennis_courts', 'tennis'),
-('school_basketball', 'basketball'),
-('community_gym_court', 'basketball'),
-('arena_basketball_hall', 'basketball'),
-('outdoor_hoops', 'basketball'),
-('university_football', 'football');
-
--- Resource bookings (20+ rows: resource_id, user_id, start_time, end_time)
-INSERT INTO resource_booking (resource_id, user_id, start_time, end_time) VALUES
-(1, 1, NOW() - INTERVAL '2 days' + TIME '09:00', NOW() - INTERVAL '2 days' + TIME '10:30'),
-(1, 3, NOW() - INTERVAL '1 day' + TIME '14:00', NOW() - INTERVAL '1 day' + TIME '15:30'),
-(2, 5, NOW() + TIME '10:00', NOW() + TIME '12:00'),
-(2, 7, NOW() + INTERVAL '1 day' + TIME '18:00', NOW() + INTERVAL '1 day' + TIME '19:30'),
-(3, 2, NOW() - INTERVAL '3 days' + TIME '11:00', NOW() - INTERVAL '3 days' + TIME '12:30'),
-(4, 4, NOW() + TIME '08:00', NOW() + TIME '09:00'),
-(4, 9, NOW() + INTERVAL '2 days' + TIME '16:00', NOW() + INTERVAL '2 days' + TIME '17:00'),
-(5, 6, NOW() - INTERVAL '5 days' + TIME '13:00', NOW() - INTERVAL '5 days' + TIME '14:30'),
-(5, 8, NOW() + INTERVAL '1 day' + TIME '10:00', NOW() + INTERVAL '1 day' + TIME '11:30'),
-(6, 10, NOW() + TIME '15:00', NOW() + TIME '16:30'),
-(7, 11, NOW() - INTERVAL '1 day' + TIME '17:00', NOW() - INTERVAL '1 day' + TIME '18:30'),
-(7, 12, NOW() + INTERVAL '3 days' + TIME '09:00', NOW() + INTERVAL '3 days' + TIME '10:30'),
-(8, 13, NOW() + TIME '19:00', NOW() + TIME '20:30'),
-(8, 15, NOW() - INTERVAL '4 days' + TIME '14:00', NOW() - INTERVAL '4 days' + TIME '15:30'),
-(9, 14, NOW() + INTERVAL '1 day' + TIME '12:00', NOW() + INTERVAL '1 day' + TIME '13:30'),
-(9, 16, NOW() - INTERVAL '2 days' + TIME '16:00', NOW() - INTERVAL '2 days' + TIME '17:30'),
-(10, 17, NOW() + TIME '07:30', NOW() + TIME '09:00'),
-(11, 18, NOW() + INTERVAL '2 days' + TIME '11:00', NOW() + INTERVAL '2 days' + TIME '12:30'),
-(3, 19, NOW() + INTERVAL '1 day' + TIME '08:00', NOW() + INTERVAL '1 day' + TIME '09:30'),
-(6, 20, NOW() - INTERVAL '6 days' + TIME '10:00', NOW() - INTERVAL '6 days' + TIME '11:00'),
-(1, 21, NOW() + INTERVAL '4 days' + TIME '14:00', NOW() + INTERVAL '4 days' + TIME '15:30'),
-(4, 22, NOW() + TIME '17:00', NOW() + TIME '18:00');

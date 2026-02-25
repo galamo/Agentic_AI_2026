@@ -1,0 +1,22 @@
+{
+  "name": "lab8-sql-api",
+  "version": "1.0.0",
+  "description": "API with PostgreSQL agent (MCP over HTTP or stdio)",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "agent:http": "node agents/run-postgres-agent-http.js",
+    "agent:stdio": "node agents/run-postgres-agent-stdio.js"
+  },
+  "dependencies": {
+    "@langchain/core": "^0.3.0",
+    "@langchain/openai": "^0.3.0",
+    "@modelcontextprotocol/sdk": "^1.26.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "langchain": "^0.3.0",
+    "zod": "^3.25.0",
+    "cors": "^2.8.5"
+  }
+}

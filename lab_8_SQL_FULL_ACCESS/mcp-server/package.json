@@ -1,0 +1,18 @@
+{
+  "name": "postgres-mcp-server",
+  "version": "1.0.0",
+  "description": "MCP server exposing PostgreSQL introspection and execution tools (Streamable HTTP + stdio)",
+  "type": "module",
+  "main": "server-http.js",
+  "scripts": {
+    "start": "node server-http.js",
+    "stdio": "node server-stdio.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.26.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "pg": "^8.13.0",
+    "zod": "^3.25.0"
+  }
+}
