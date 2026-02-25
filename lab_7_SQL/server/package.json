@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "node index.js",
+    "dev": "nodemon index.js",
     "index-schema": "node scripts/index-schema.js",
     "load-schema": "node scripts/load-schema.js",
     "load-data": "node scripts/load-data.js",
@@ -14,11 +15,12 @@
     "@langchain/community": "^0.3.0",
     "@langchain/core": "^0.3.0",
     "@langchain/openai": "^0.3.0",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.21.0",
-    "pg": "^8.13.0",
     "langchain": "^0.3.0",
-    "uuid": "^10.0.0",
-    "cors": "^2.8.5"
+    "nodemon": "^3.1.14",
+    "pg": "^8.13.0",
+    "uuid": "^10.0.0"
   }
 }

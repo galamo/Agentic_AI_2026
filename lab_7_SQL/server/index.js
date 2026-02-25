@@ -9,9 +9,9 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import { retrieveSchemaContext } from "./agents/schema-retriever.js";
-import { generateSQL } from "./agents/sql-generator.js";
 import { runQuery } from "./agents/db-executor.js";
 import { answer } from "./agents/answer-agent.js";
+import { generateSQLWithAgent } from "./agents/sql-agent.js";
 
 const app = express();
 app.use(cors());
@@ -35,7 +35,7 @@ app.post("/query", async (req, res) => {
     const { schemaContext } = await retrieveSchemaContext(question);
 
     // 2. SQL Generator
-    const { sql } = await generateSQL(question, schemaContext);
+    const { sql } = await generateSQLWithAgent(question, schemaContext);
     if (!sql) {
       return res.json({
         answer: "I couldn't generate a SQL query for that question.",

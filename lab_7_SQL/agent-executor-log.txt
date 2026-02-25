@@ -1,0 +1,2833 @@
+
+=== Executor run 2026-02-25T19:10:46.661Z | question: how much resources you have? ===
+[chain/start] [**1:chain:AgentExecutor**] Entering Chain run with input: {
+  "input": "how much resources you have?"
+}
+[chain/start] [1:chain:AgentExecutor > **2:chain:ToolCallingAgent**] Entering Chain run with input: {
+  "input": "how much resources you have?",
+  "steps": []
+}
+[chain/start] [1:chain:AgentExecutor > 2:chain:ToolCallingAgent > **3:chain:RunnableAssign**] Entering Chain run with input: {
+  "input": ""
+}
+[chain/start] [1:chain:AgentExecutor > 2:chain:ToolCallingAgent > 3:chain:RunnableAssign > **4:chain:RunnableMap**] Entering Chain run with input: {
+  "input": ""
+}
+[chain/start] [1:chain:AgentExecutor > 2:chain:ToolCallingAgent > 3:chain:RunnableAssign > 4:chain:RunnableMap > **5:chain:RunnableLambda**] Entering Chain run with input: {
+  "input": ""
+}
+[chain/end] [1:chain:AgentExecutor > 2:chain:ToolCallingAgent > 3:chain:RunnableAssign > 4:chain:RunnableMap > **5:chain:RunnableLambda**] [2ms] Exiting Chain run with output: {
+  "output": []
+}
+[chain/end] [1:chain:AgentExecutor > 2:chain:ToolCallingAgent > 3:chain:RunnableAssign > **4:chain:RunnableMap**] [2ms] Exiting Chain run with output: {
+  "agent_scratchpad": []
+}
+[chain/end] [1:chain:AgentExecutor > 2:chain:ToolCallingAgent > **3:chain:RunnableAssign**] [3ms] Exiting Chain run with output: {
+  "input": "how much resources you have?",
+  "steps": [],
+  "agent_scratchpad": []
+}
+[chain/start] [1:chain:AgentExecutor > 2:chain:ToolCallingAgent > **4:prompt:ChatPromptTemplate**] Entering Chain run with input: {
+  "input": "how much resources you have?",
+  "steps": [],
+  "agent_scratchpad": []
+}
+[chain/end] [1:chain:AgentExecutor > 2:chain:ToolCallingAgent > **4:prompt:ChatPromptTemplate**] [2ms] Exiting Chain run with output: {
+  "lc": 1,
+  "type": "constructor",
+  "id": [
+    "langchain_core",
+    "prompt_values",
+    "ChatPromptValue"
+  ],
+  "kwargs": {
+    "messages": [
+      {
+        "lc": 1,
+        "type": "constructor",
+        "id": [
+          "langchain_core",
+          "messages",
+          "SystemMessage"
+        ],
+        "kwargs": {
+          "content": "You are a PostgreSQL expert. Your job is to write a valid PostgreSQL SELECT query for the user's question.\n\nYou have access to these tools:\n- get_schema: use it to retrieve the relevant database schema (tables and columns).\n- get_current_datetime: use it when the question involves \"today\", \"now\", \"current date/time\", \"tomorrow\", \"yesterday\", or any relative date/time. It returns the actual current date and time so you can write correct WHERE conditions.\n\nAfter using the tools you need, write exactly one SELECT statement.\n\nRules:\n- Use only tables/columns from the schema returned by get_schema.\n- For date/time filters, call get_current_datetime and use the returned values (e.g. date_today, date_tomorrow, datetime_now) in your SQL—do not guess or invent dates.\n- Prefer JOINs over subqueries when listing related data.\n- Use table aliases if helpful (e.g. u for users, p for permissions).\n- Your final answer must be ONLY the SQL statement: no explanation, no markdown, no code block wrapper.\n- Do not use INSERT, UPDATE, DELETE, or DDL. Only SELECT.",
+          "additional_kwargs": {},
+          "response_metadata": {}
+        }
+      },
+      {
+        "lc": 1,
+        "type": "constructor",
+        "id": [
+          "langchain_core",
+          "messages",
+          "HumanMessage"
+        ],
+        "kwargs": {
+          "content": "how much resources you have?",
+          "additional_kwargs": {},
+          "response_metadata": {}
+        }
+      }
+    ]
+  }
+}
+[llm/start] [1:chain:AgentExecutor > 2:chain:ToolCallingAgent > **6:llm:ChatOpenAI**] Entering LLM run with input: {
+  "messages": [
+    [
+      {
+        "lc": 1,
+        "type": "constructor",
+        "id": [
+          "langchain_core",
+          "messages",
+          "SystemMessage"
+        ],
+        "kwargs": {
+          "content": "You are a PostgreSQL expert. Your job is to write a valid PostgreSQL SELECT query for the user's question.\n\nYou have access to these tools:\n- get_schema: use it to retrieve the relevant database schema (tables and columns).\n- get_current_datetime: use it when the question involves \"today\", \"now\", \"current date/time\", \"tomorrow\", \"yesterday\", or any relative date/time. It returns the actual current date and time so you can write correct WHERE conditions.\n\nAfter using the tools you need, write exactly one SELECT statement.\n\nRules:\n- Use only tables/columns from the schema returned by get_schema.\n- For date/time filters, call get_current_datetime and use the returned values (e.g. date_today, date_tomorrow, datetime_now) in your SQL—do not guess or invent dates.\n- Prefer JOINs over subqueries when listing related data.\n- Use table aliases if helpful (e.g. u for users, p for permissions).\n- Your final answer must be ONLY the SQL statement: no explanation, no markdown, no code block wrapper.\n- Do not use INSERT, UPDATE, DELETE, or DDL. Only SELECT.",
+          "additional_kwargs": {},
+          "response_metadata": {}
+        }
+      },
+      {
+        "lc": 1,
+        "type": "constructor",
+        "id": [
+          "langchain_core",
+          "messages",
+          "HumanMessage"
+        ],
+        "kwargs": {
+          "content": "how much resources you have?",
+          "additional_kwargs": {},
+          "response_metadata": {}
+        }
+      }
+    ]
+  ]
+}
+[llm/end] [1:chain:AgentExecutor > 2:chain:ToolCallingAgent > **6:llm:ChatOpenAI**] [1.35s] Exiting LLM run with output: {
+  "generations": [
+    [
+      {
+        "text": "",
+        "generationInfo": {
+          "prompt": 0,
+          "completion": 0,
+          "finish_reason": "tool_calls",
+          "system_fingerprint": "fp_3ee6fe3e89",
+          "model_name": "openai/gpt-4o-mini"
+        },
+        "message": {
+          "lc": 1,
+          "type": "constructor",
+          "id": [
+            "langchain_core",
+            "messages",
+            "AIMessageChunk"
+          ],
+          "kwargs": {
+            "content": "",
+            "additional_kwargs": {
+              "tool_calls": [
+                {
+                  "index": 0,
+                  "id": "call_uGaImuoOFtYMBBbo1OD4dwhw",
+                  "type": "function",
+                  "function": {
+                    "name": "get_schema",
+                    "arguments": "{\"input\":\"resources\"}"
+                  }
+                }
+              ]
+            },
+            "response_metadata": {
+              "prompt": 0,
+              "completion": 0,
+              "usage": {
+                "prompt_tokens": 386,
+                "completion_tokens": 14,
+                "total_tokens": 400,
+                "cost": 0.0000663,
+                "is_byok": false,
+                "prompt_tokens_details": {
+                  "cached_tokens": 0,
+                  "audio_tokens": 0
+                },
+                "cost_details": {
+                  "upstream_inference_cost": 0.0000663,
+                  "upstream_inference_prompt_cost": 0.0000579,
+                  "upstream_inference_completions_cost": 0.0000084
+                },
+                "completion_tokens_details": {
+                  "reasoning_tokens": 0,
+                  "audio_tokens": 0
+                }
+              },
+              "finish_reason": "tool_calls",
+              "system_fingerprint": "fp_3ee6fe3e89",
+              "model_name": "openai/gpt-4o-mini"
+            },
+            "tool_call_chunks": [
+              {
+                "name": "get_schema",
+                "args": "{\"input\":\"resources\"}",
+                "id": "call_uGaImuoOFtYMBBbo1OD4dwhw",
+                "index": 0,
+                "type": "tool_call_chunk"
+              }
+            ],
+            "id": "gen-1772046646-YPUlOAe7BM2VB4wpkaWW",
+            "usage_metadata": {
+              "input_tokens": 386,
+              "output_tokens": 14,
+              "total_tokens": 400,
+              "input_token_details": {
+                "audio": 0,
+                "cache_read": 0
+              },
+              "output_token_details": {
+                "audio": 0,
+                "reasoning": 0
+              }
+            },
+            "tool_calls": [
+              {
+                "name": "get_schema",
+                "args": {
+                  "input": "resources"
+                },
+                "id": "call_uGaImuoOFtYMBBbo1OD4dwhw",
+                "type": "tool_call"
+              }
+            ],
+            "invalid_tool_calls": []
+          }
+        }
+      }
+    ]
+  ],
+  "llmOutput": {
+    "tokenUsage": {
+      "promptTokens": 386,
+      "completionTokens": 14,
+      "totalTokens": 400
+    }
+  }
+}
+[chain/start] [1:chain:AgentExecutor > 2:chain:ToolCallingAgent > **7:parser:ToolCallingAgentOutputParser**] Entering Chain run with input: {
+  "lc": 1,
+  "type": "constructor",
+  "id": [
+    "langchain_core",
+    "messages",
+    "AIMessageChunk"
+  ],
+  "kwargs": {
+    "content": "",
+    "additional_kwargs": {
+      "tool_calls": [
+        {
+          "index": 0,
+          "id": "call_uGaImuoOFtYMBBbo1OD4dwhw",
+          "type": "function",
+          "function": {
+            "name": "get_schema",
+            "arguments": "{\"input\":\"resources\"}"
+          }
+        }
+      ]
+    },
+    "response_metadata": {
+      "prompt": 0,
+      "completion": 0,
+      "usage": {
+        "prompt_tokens": 386,
+        "completion_tokens": 14,
+        "total_tokens": 400,
+        "cost": 0.0000663,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.0000663,
+          "upstream_inference_prompt_cost": 0.0000579,
+          "upstream_inference_completions_cost": 0.0000084
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0
+        }
+      },
+      "finish_reason": "tool_calls",
+      "system_fingerprint": "fp_3ee6fe3e89",
+      "model_name": "openai/gpt-4o-mini"
+    },
+    "tool_call_chunks": [
+      {
+        "name": "get_schema",
+        "args": "{\"input\":\"resources\"}",
+        "id": "call_uGaImuoOFtYMBBbo1OD4dwhw",
+        "index": 0,
+        "type": "tool_call_chunk"
+      }
+    ],
+    "id": "gen-1772046646-YPUlOAe7BM2VB4wpkaWW",
+    "usage_metadata": {
+      "input_tokens": 386,
+      "output_tokens": 14,
+      "total_tokens": 400,
+      "input_token_details": {
+        "audio": 0,
+        "cache_read": 0
+      },
+      "output_token_details": {
+        "audio": 0,
+        "reasoning": 0
+      }
+    },
+    "tool_calls": [
+      {
+        "name": "get_schema",
+        "args": {
+          "input": "resources"
+        },
+        "id": "call_uGaImuoOFtYMBBbo1OD4dwhw",
+        "type": "tool_call"
+      }
+    ],
+    "invalid_tool_calls": []
+  }
+}
+[chain/end] [1:chain:AgentExecutor > 2:chain:ToolCallingAgent > **7:parser:ToolCallingAgentOutputParser**] [0ms] Exiting Chain run with output: {
+  "output": [
+    {
+      "tool": "get_schema",
+      "toolInput": {
+        "input": "resources"
+      },
+      "toolCallId": "call_uGaImuoOFtYMBBbo1OD4dwhw",
+      "log": "Invoking \"get_schema\" with {\"input\":\"resources\"}\n",
+      "messageLog": [
+        {
+          "lc": 1,
+          "type": "constructor",
+          "id": [
+            "langchain_core",
+            "messages",
+            "AIMessageChunk"
+          ],
+          "kwargs": {
+            "content": "",
+            "additional_kwargs": {
+              "tool_calls": [
+                {
+                  "index": 0,
+                  "id": "call_uGaImuoOFtYMBBbo1OD4dwhw",
+                  "type": "function",
+                  "function": {
+                    "name": "get_schema",
+                    "arguments": "{\"input\":\"resources\"}"
+                  }
+                }
+              ]
+            },
+            "response_metadata": {
+              "prompt": 0,
+              "completion": 0,
+              "usage": {
+                "prompt_tokens": 386,
+                "completion_tokens": 14,
+                "total_tokens": 400,
+                "cost": 0.0000663,
+                "is_byok": false,
+                "prompt_tokens_details": {
+                  "cached_tokens": 0,
+                  "audio_tokens": 0
+                },
+                "cost_details": {
+                  "upstream_inference_cost": 0.0000663,
+                  "upstream_inference_prompt_cost": 0.0000579,
+                  "upstream_inference_completions_cost": 0.0000084
+                },
+                "completion_tokens_details": {
+                  "reasoning_tokens": 0,
+                  "audio_tokens": 0
+                }
+              },
+              "finish_reason": "tool_calls",
+              "system_fingerprint": "fp_3ee6fe3e89",
+              "model_name": "openai/gpt-4o-mini"
+            },
+            "tool_call_chunks": [
+              {
+                "name": "get_schema",
+                "args": "{\"input\":\"resources\"}",
+                "id": "call_uGaImuoOFtYMBBbo1OD4dwhw",
+                "index": 0,
+                "type": "tool_call_chunk"
+              }
+            ],
+            "id": "gen-1772046646-YPUlOAe7BM2VB4wpkaWW",
+            "usage_metadata": {
+              "input_tokens": 386,
+              "output_tokens": 14,
+              "total_tokens": 400,
+              "input_token_details": {
+                "audio": 0,
+                "cache_read": 0
+              },
+              "output_token_details": {
+                "audio": 0,
+                "reasoning": 0
+              }
+            },
+            "tool_calls": [
+              {
+                "name": "get_schema",
+                "args": {
+                  "input": "resources"
+                },
+                "id": "call_uGaImuoOFtYMBBbo1OD4dwhw",
+                "type": "tool_call"
+              }
+            ],
+            "invalid_tool_calls": []
+          }
+        }
+      ]
+    }
+  ]
+}
+[chain/end] [1:chain:AgentExecutor > **2:chain:ToolCallingAgent**] [1.35s] Exiting Chain run with output: {
+  "output": [
+    {
+      "tool": "get_schema",
+      "toolInput": {
+        "input": "resources"
+      },
+      "toolCallId": "call_uGaImuoOFtYMBBbo1OD4dwhw",
+      "log": "Invoking \"get_schema\" with {\"input\":\"resources\"}\n",
+      "messageLog": [
+        {
+          "lc": 1,
+          "type": "constructor",
+          "id": [
+            "langchain_core",
+            "messages",
+            "AIMessageChunk"
+          ],
+          "kwargs": {
+            "content": "",
+            "additional_kwargs": {
+              "tool_calls": [
+                {
+                  "index": 0,
+                  "id": "call_uGaImuoOFtYMBBbo1OD4dwhw",
+                  "type": "function",
+                  "function": {
+                    "name": "get_schema",
+                    "arguments": "{\"input\":\"resources\"}"
+                  }
+                }
+              ]
+            },
+            "response_metadata": {
+              "prompt": 0,
+              "completion": 0,
+              "usage": {
+                "prompt_tokens": 386,
+                "completion_tokens": 14,
+                "total_tokens": 400,
+                "cost": 0.0000663,
+                "is_byok": false,
+                "prompt_tokens_details": {
+                  "cached_tokens": 0,
+                  "audio_tokens": 0
+                },
+                "cost_details": {
+                  "upstream_inference_cost": 0.0000663,
+                  "upstream_inference_prompt_cost": 0.0000579,
+                  "upstream_inference_completions_cost": 0.0000084
+                },
+                "completion_tokens_details": {
+                  "reasoning_tokens": 0,
+                  "audio_tokens": 0
+                }
+              },
+              "finish_reason": "tool_calls",
+              "system_fingerprint": "fp_3ee6fe3e89",
+              "model_name": "openai/gpt-4o-mini"
+            },
+            "tool_call_chunks": [
+              {
+                "name": "get_schema",
+                "args": "{\"input\":\"resources\"}",
+                "id": "call_uGaImuoOFtYMBBbo1OD4dwhw",
+                "index": 0,
+                "type": "tool_call_chunk"
+              }
+            ],
+            "id": "gen-1772046646-YPUlOAe7BM2VB4wpkaWW",
+            "usage_metadata": {
+              "input_tokens": 386,
+              "output_tokens": 14,
+              "total_tokens": 400,
+              "input_token_details": {
+                "audio": 0,
+                "cache_read": 0
+              },
+              "output_token_details": {
+                "audio": 0,
+                "reasoning": 0
+              }
+            },
+            "tool_calls": [
+              {
+                "name": "get_schema",
+                "args": {
+                  "input": "resources"
+                },
+                "id": "call_uGaImuoOFtYMBBbo1OD4dwhw",
+                "type": "tool_call"
+              }
+            ],
+            "invalid_tool_calls": []
+          }
+        }
+      ]
+    }
+  ]
+}
+[agent/action] [**1:chain:AgentExecutor**] Agent selected action: {
+  "tool": "get_schema",
+  "toolInput": {
+    "input": "resources"
+  },
+  "toolCallId": "call_uGaImuoOFtYMBBbo1OD4dwhw",
+  "log": "Invoking \"get_schema\" with {\"input\":\"resources\"}\n",
+  "messageLog": [
+    {
+      "lc": 1,
+      "type": "constructor",
+      "id": [
+        "langchain_core",
+        "messages",
+        "AIMessageChunk"
+      ],
+      "kwargs": {
+        "content": "",
+        "additional_kwargs": {
+          "tool_calls": [
+            {
+              "index": 0,
+              "id": "call_uGaImuoOFtYMBBbo1OD4dwhw",
+              "type": "function",
+              "function": {
+                "name": "get_schema",
+                "arguments": "{\"input\":\"resources\"}"
+              }
+            }
+          ]
+        },
+        "response_metadata": {
+          "prompt": 0,
+          "completion": 0,
+          "usage": {
+            "prompt_tokens": 386,
+            "completion_tokens": 14,
+            "total_tokens": 400,
+            "cost": 0.0000663,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.0000663,
+              "upstream_inference_prompt_cost": 0.0000579,
+              "upstream_inference_completions_cost": 0.0000084
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "finish_reason": "tool_calls",
+          "system_fingerprint": "fp_3ee6fe3e89",
+          "model_name": "openai/gpt-4o-mini"
+        },
+        "tool_call_chunks": [
+          {
+            "name": "get_schema",
+            "args": "{\"input\":\"resources\"}",
+            "id": "call_uGaImuoOFtYMBBbo1OD4dwhw",
+            "index": 0,
+            "type": "tool_call_chunk"
+          }
+        ],
+        "id": "gen-1772046646-YPUlOAe7BM2VB4wpkaWW",
+        "usage_metadata": {
+          "input_tokens": 386,
+          "output_tokens": 14,
+          "total_tokens": 400,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 0
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 0
+          }
+        },
+        "tool_calls": [
+          {
+            "name": "get_schema",
+            "args": {
+              "input": "resources"
+            },
+            "id": "call_uGaImuoOFtYMBBbo1OD4dwhw",
+            "type": "tool_call"
+          }
+        ],
+        "invalid_tool_calls": []
+      }
+    }
+  ]
+}
+[tool/start] [1:chain:AgentExecutor > **8:tool:get_schema**] Entering Tool run with input: "{"input":"resources"}"
+[tool/end] [1:chain:AgentExecutor > **8:tool:get_schema**] [1ms] Exiting Tool run with output: "CREATE TABLE resource (
+    id          SERIAL PRIMARY KEY,
+    name        VARCHAR(255) NOT NULL,
+    type        VARCHAR(100) NOT NULL,
+    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+);
+
+---
+
+CREATE TABLE resource_booking (
+    id          SERIAL PRIMARY KEY,
+    resource_id INTEGER NOT NULL REFERENCES resource(id) ON DELETE CASCADE,
+    user_id     INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    start_time  TIMESTAMPTZ NOT NULL,
+    end_time    TIMESTAMPTZ NOT NULL,
+    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+);
+
+---
+
+-- SSO application schema for lab_7_SQL
+-- Tables: users, permissions, users_permissions, audit_login
+
+-- Required for schema RAG (vector embeddings)
+CREATE EXTENSION IF NOT EXISTS vector;
+-- CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+-- Drop tables if they exist (reverse dependency order for clean rerun)
+DROP TABLE IF EXISTS resource_booking;
+DROP TABLE IF EXISTS resource;
+DROP TABLE IF EXISTS audit_login;
+DROP TABLE IF EXISTS users_permissions;
+DROP TABLE IF EXISTS permissions;
+DROP TABLE IF EXISTS users;
+
+-- Users: core identity for SSO
+CREATE TABLE users (
+    id              SERIAL PRIMARY KEY,
+    email           VARCHAR(255) NOT NULL UNIQUE,
+    display_name    VARCHAR(255),
+    password_hash   VARCHAR(255),
+    is_active       BOOLEAN DEFAULT true,
+    created_at      TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    updated_at      TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_users_email ON users(email);
+CREATE INDEX idx_users_is_active ON users(is_active);
+CREATE INDEX idx_users_created_at ON users(created_at);
+
+-- Permissions: granular permissions (e.g. read_reports, admin_users)
+CREATE TABLE permissions (
+    id          SERIAL PRIMARY KEY,
+    code        VARCHAR(100) NOT NULL UNIQUE,
+    name        VARCHAR(255) NOT NULL,
+    description TEXT,
+    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_permissions_code ON permissions(code);
+
+-- Users <-> Permissions: many-to-many
+CREATE TABLE users_permissions (
+    id            SERIAL PRIMARY KEY,
+    user_id       INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    permission_id INTEGER NOT NULL REFERENCES permissions(id) ON DELETE CASCADE,
+    granted_at    TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    granted_by    INTEGER REFERENCES users(id) ON DELETE SET NULL,
+    UNIQUE (user_id, permission_id)
+);
+
+CREATE INDEX idx_users_permissions_user_id ON users_permissions(user_id);
+CREATE INDEX idx_users_permissions_permission_id ON users_permissions(permission_id);
+CREATE INDEX idx_users_permissions_granted_at ON users_permissions(granted_at);
+
+-- Audit: login attempts (success/failure) for security
+CREATE TABLE audit_login (
+    id         SERIAL PRIMARY KEY,
+    user_id    INTEGER REFERENCES users(id) ON DELETE SET NULL,
+    email_used VARCHAR(255),
+    ip_address INET,
+    user_agent TEXT,
+    success    BOOLEAN NOT NULL,
+    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_audit_login_user_id ON audit_login(user_id);
+CREATE INDEX idx_audit_login_email ON audit_login(email_used);
+CREATE INDEX idx_audit_login_success ON audit_login(success);
+CREATE INDEX idx_audit_login_created_at ON audit_login(created_at);
+
+-- Resource: sports facilities (football, tennis, basketball)
+CREATE TABLE resource (
+    id          SERIAL PRIMARY KEY,
+    name        VARCHAR(255) NOT NULL,
+    type        VARCHAR(100) NOT NULL,
+    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_resource_type ON resource(type);
+CREATE INDEX idx_resource_name ON resource(name);
+
+-- Resource booking: user bookings for resources (start/end time)
+CREATE TABLE resource_booking (
+    id          SERIAL PRIMARY KEY,
+    resource_id INTEGER NOT NULL REFERENCES resource(id) ON DELETE CASCADE,
+    user_id     INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    start_time  TIMESTAMPTZ NOT NULL,
+    end_time    TIMESTAMPTZ NOT NULL,
+    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_resource_booking_resource_id ON resource_booking(resource_id);
+CREATE INDEX idx_resource_booking_user_id ON resource_booking(user_id);
+CREATE INDEX idx_resource_booking_start_time ON resource_booking(start_time);
+
+-- Comment for RAG: tables and relationships
+COMMENT ON TABLE users IS 'SSO users: email, display_name, active flag';
+COMMENT ON TABLE permissions IS 'Permission definitions: code (e.g. admin_users), name, description';
+COMMENT ON TABLE users_permissions IS 'Junction: which user has which permission; granted_at, granted_by';
+COMMENT ON TABLE audit_login IS 'Login audit: user_id, email_used, ip, success, created_at';
+COMMENT ON TABLE resource IS 'Sports resources: name, type (football, tennis, basketball)';
+COMMENT ON TABLE resource_booking IS 'Bookings: resource_id, user_id, start_time, end_time';
+
+
+---
+
+Table resource: Sports resources: name, type (football, tennis, basketball)
+
+---
+
+Table resource_booking: Bookings: resource_id, user_id, start_time, end_time
+
+---
+
+-- SSO application schema for lab_7_SQL
+-- Tables: users, permissions, users_permissions, audit_login
+
+-- Required for schema RAG (vector embeddings)
+CREATE EXTENSION IF NOT EXISTS vector;
+-- CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+-- Users: core identity for SSO
+CREATE TABLE users (
+    id              SERIAL PRIMARY KEY,
+    email           VARCHAR(255) NOT NULL UNIQUE,
+    display_name    VARCHAR(255),
+    password_hash   VARCHAR(255),
+    is_active       BOOLEAN DEFAULT true,
+    created_at      TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    updated_at      TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_users_email ON users(email);
+CREATE INDEX idx_users_is_active ON users(is_active);
+CREATE INDEX idx_users_created_at ON users(created_at);
+
+-- Permissions: granular permissions (e.g. read_reports, admin_users)
+CREATE TABLE permissions (
+    id          SERIAL PRIMARY KEY,
+    code        VARCHAR(100) NOT NULL UNIQUE,
+    name        VARCHAR(255) NOT NULL,
+    description TEXT,
+    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_permissions_code ON permissions(code);
+
+-- Users <-> Permissions: many-to-many
+CREATE TABLE users_permissions (
+    id            SERIAL PRIMARY KEY,
+    user_id       INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    permission_id INTEGER NOT NULL REFERENCES permissions(id) ON DELETE CASCADE,
+    granted_at    TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    granted_by    INTEGER REFERENCES users(id) ON DELETE SET NULL,
+    UNIQUE (user_id, permission_id)
+);
+
+CREATE INDEX idx_users_permissions_user_id ON users_permissions(user_id);
+CREATE INDEX idx_users_permissions_permission_id ON users_permissions(permission_id);
+CREATE INDEX idx_users_permissions_granted_at ON users_permissions(granted_at);
+
+-- Audit: login attempts (success/failure) for security
+CREATE TABLE audit_login (
+    id         SERIAL PRIMARY KEY,
+    user_id    INTEGER REFERENCES users(id) ON DELETE SET NULL,
+    email_used VARCHAR(255),
+    ip_address INET,
+    user_agent TEXT,
+    success    BOOLEAN NOT NULL,
+    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_audit_login_user_id ON audit_login(user_id);
+CREATE INDEX idx_audit_login_email ON audit_login(email_used);
+CREATE INDEX idx_audit_login_success ON audit_login(success);
+CREATE INDEX idx_audit_login_created_at ON audit_login(created_at);
+
+-- Comment for RAG: tables and relationships
+COMMENT ON TABLE users IS 'SSO users: email, display_name, active flag';
+COMMENT ON TABLE permissions IS 'Permission definitions: code (e.g. admin_users), name, description';
+COMMENT ON TABLE users_permissions IS 'Junction: which user has which permission; granted_at, granted_by';
+COMMENT ON TABLE audit_login IS 'Login audit: user_id, email_used, ip, success, created_at';
+
+
+---
+
+CREATE TABLE permissions (
+    id          SERIAL PRIMARY KEY,
+    code        VARCHAR(100) NOT NULL UNIQUE,
+    name        VARCHAR(255) NOT NULL,
+    description TEXT,
+    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+);
+
+---
+
+CREATE TABLE permissions (
+    id          SERIAL PRIMARY KEY,
+    code        VARCHAR(100) NOT NULL UNIQUE,
+    name        VARCHAR(255) NOT NULL,
+    description TEXT,
+    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+);"
+[chain/start] [1:chain:AgentExecutor > **9:chain:ToolCallingAgent**] Entering Chain run with input: {
+  "input": "how much resources you have?",
+  "steps": [
+    {
+      "action": {
+        "tool": "get_schema",
+        "toolInput": {
+          "input": "resources"
+        },
+        "toolCallId": "call_uGaImuoOFtYMBBbo1OD4dwhw",
+        "log": "Invoking \"get_schema\" with {\"input\":\"resources\"}\n",
+        "messageLog": [
+          {
+            "lc": 1,
+            "type": "constructor",
+            "id": [
+              "langchain_core",
+              "messages",
+              "AIMessageChunk"
+            ],
+            "kwargs": {
+              "content": "",
+              "additional_kwargs": {
+                "tool_calls": [
+                  {
+                    "index": 0,
+                    "id": "call_uGaImuoOFtYMBBbo1OD4dwhw",
+                    "type": "function",
+                    "function": {
+                      "name": "get_schema",
+                      "arguments": "{\"input\":\"resources\"}"
+                    }
+                  }
+                ]
+              },
+              "response_metadata": {
+                "prompt": 0,
+                "completion": 0,
+                "usage": {
+                  "prompt_tokens": 386,
+                  "completion_tokens": 14,
+                  "total_tokens": 400,
+                  "cost": 0.0000663,
+                  "is_byok": false,
+                  "prompt_tokens_details": {
+                    "cached_tokens": 0,
+                    "audio_tokens": 0
+                  },
+                  "cost_details": {
+                    "upstream_inference_cost": 0.0000663,
+                    "upstream_inference_prompt_cost": 0.0000579,
+                    "upstream_inference_completions_cost": 0.0000084
+                  },
+                  "completion_tokens_details": {
+                    "reasoning_tokens": 0,
+                    "audio_tokens": 0
+                  }
+                },
+                "finish_reason": "tool_calls",
+                "system_fingerprint": "fp_3ee6fe3e89",
+                "model_name": "openai/gpt-4o-mini"
+              },
+              "tool_call_chunks": [
+                {
+                  "name": "get_schema",
+                  "args": "{\"input\":\"resources\"}",
+                  "id": "call_uGaImuoOFtYMBBbo1OD4dwhw",
+                  "index": 0,
+                  "type": "tool_call_chunk"
+                }
+              ],
+              "id": "gen-1772046646-YPUlOAe7BM2VB4wpkaWW",
+              "usage_metadata": {
+                "input_tokens": 386,
+                "output_tokens": 14,
+                "total_tokens": 400,
+                "input_token_details": {
+                  "audio": 0,
+                  "cache_read": 0
+                },
+                "output_token_details": {
+                  "audio": 0,
+                  "reasoning": 0
+                }
+              },
+              "tool_calls": [
+                {
+                  "name": "get_schema",
+                  "args": {
+                    "input": "resources"
+                  },
+                  "id": "call_uGaImuoOFtYMBBbo1OD4dwhw",
+                  "type": "tool_call"
+                }
+              ],
+              "invalid_tool_calls": []
+            }
+          }
+        ]
+      },
+      "observation": "CREATE TABLE resource (\n    id          SERIAL PRIMARY KEY,\n    name        VARCHAR(255) NOT NULL,\n    type        VARCHAR(100) NOT NULL,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\n---\n\nCREATE TABLE resource_booking (\n    id          SERIAL PRIMARY KEY,\n    resource_id INTEGER NOT NULL REFERENCES resource(id) ON DELETE CASCADE,\n    user_id     INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,\n    start_time  TIMESTAMPTZ NOT NULL,\n    end_time    TIMESTAMPTZ NOT NULL,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\n---\n\n-- SSO application schema for lab_7_SQL\n-- Tables: users, permissions, users_permissions, audit_login\n\n-- Required for schema RAG (vector embeddings)\nCREATE EXTENSION IF NOT EXISTS vector;\n-- CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\";\n\n-- Drop tables if they exist (reverse dependency order for clean rerun)\nDROP TABLE IF EXISTS resource_booking;\nDROP TABLE IF EXISTS resource;\nDROP TABLE IF EXISTS audit_login;\nDROP TABLE IF EXISTS users_permissions;\nDROP TABLE IF EXISTS permissions;\nDROP TABLE IF EXISTS users;\n\n-- Users: core identity for SSO\nCREATE TABLE users (\n    id              SERIAL PRIMARY KEY,\n    email           VARCHAR(255) NOT NULL UNIQUE,\n    display_name    VARCHAR(255),\n    password_hash   VARCHAR(255),\n    is_active       BOOLEAN DEFAULT true,\n    created_at      TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,\n    updated_at      TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_users_email ON users(email);\nCREATE INDEX idx_users_is_active ON users(is_active);\nCREATE INDEX idx_users_created_at ON users(created_at);\n\n-- Permissions: granular permissions (e.g. read_reports, admin_users)\nCREATE TABLE permissions (\n    id          SERIAL PRIMARY KEY,\n    code        VARCHAR(100) NOT NULL UNIQUE,\n    name        VARCHAR(255) NOT NULL,\n    description TEXT,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_permissions_code ON permissions(code);\n\n-- Users <-> Permissions: many-to-many\nCREATE TABLE users_permissions (\n    id            SERIAL PRIMARY KEY,\n    user_id       INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,\n    permission_id INTEGER NOT NULL REFERENCES permissions(id) ON DELETE CASCADE,\n    granted_at    TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,\n    granted_by    INTEGER REFERENCES users(id) ON DELETE SET NULL,\n    UNIQUE (user_id, permission_id)\n);\n\nCREATE INDEX idx_users_permissions_user_id ON users_permissions(user_id);\nCREATE INDEX idx_users_permissions_permission_id ON users_permissions(permission_id);\nCREATE INDEX idx_users_permissions_granted_at ON users_permissions(granted_at);\n\n-- Audit: login attempts (success/failure) for security\nCREATE TABLE audit_login (\n    id         SERIAL PRIMARY KEY,\n    user_id    INTEGER REFERENCES users(id) ON DELETE SET NULL,\n    email_used VARCHAR(255),\n    ip_address INET,\n    user_agent TEXT,\n    success    BOOLEAN NOT NULL,\n    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_audit_login_user_id ON audit_login(user_id);\nCREATE INDEX idx_audit_login_email ON audit_login(email_used);\nCREATE INDEX idx_audit_login_success ON audit_login(success);\nCREATE INDEX idx_audit_login_created_at ON audit_login(created_at);\n\n-- Resource: sports facilities (football, tennis, basketball)\nCREATE TABLE resource (\n    id          SERIAL PRIMARY KEY,\n    name        VARCHAR(255) NOT NULL,\n    type        VARCHAR(100) NOT NULL,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_resource_type ON resource(type);\nCREATE INDEX idx_resource_name ON resource(name);\n\n-- Resource booking: user bookings for resources (start/end time)\nCREATE TABLE resource_booking (\n    id          SERIAL PRIMARY KEY,\n    resource_id INTEGER NOT NULL REFERENCES resource(id) ON DELETE CASCADE,\n    user_id     INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,\n    start_time  TIMESTAMPTZ NOT NULL,\n    end_time    TIMESTAMPTZ NOT NULL,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_resource_booking_resource_id ON resource_booking(resource_id);\nCREATE INDEX idx_resource_booking_user_id ON resource_booking(user_id);\nCREATE INDEX idx_resource_booking_start_time ON resource_booking(start_time);\n\n-- Comment for RAG: tables and relationships\nCOMMENT ON TABLE users IS 'SSO users: email, display_name, active flag';\nCOMMENT ON TABLE permissions IS 'Permission definitions: code (e.g. admin_users), name, description';\nCOMMENT ON TABLE users_permissions IS 'Junction: which user has which permission; granted_at, granted_by';\nCOMMENT ON TABLE audit_login IS 'Login audit: user_id, email_used, ip, success, created_at';\nCOMMENT ON TABLE resource IS 'Sports resources: name, type (football, tennis, basketball)';\nCOMMENT ON TABLE resource_booking IS 'Bookings: resource_id, user_id, start_time, end_time';\n\n\n---\n\nTable resource: Sports resources: name, type (football, tennis, basketball)\n\n---\n\nTable resource_booking: Bookings: resource_id, user_id, start_time, end_time\n\n---\n\n-- SSO application schema for lab_7_SQL\n-- Tables: users, permissions, users_permissions, audit_login\n\n-- Required for schema RAG (vector embeddings)\nCREATE EXTENSION IF NOT EXISTS vector;\n-- CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\";\n\n-- Users: core identity for SSO\nCREATE TABLE users (\n    id              SERIAL PRIMARY KEY,\n    email           VARCHAR(255) NOT NULL UNIQUE,\n    display_name    VARCHAR(255),\n    password_hash   VARCHAR(255),\n    is_active       BOOLEAN DEFAULT true,\n    created_at      TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,\n    updated_at      TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_users_email ON users(email);\nCREATE INDEX idx_users_is_active ON users(is_active);\nCREATE INDEX idx_users_created_at ON users(created_at);\n\n-- Permissions: granular permissions (e.g. read_reports, admin_users)\nCREATE TABLE permissions (\n    id          SERIAL PRIMARY KEY,\n    code        VARCHAR(100) NOT NULL UNIQUE,\n    name        VARCHAR(255) NOT NULL,\n    description TEXT,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_permissions_code ON permissions(code);\n\n-- Users <-> Permissions: many-to-many\nCREATE TABLE users_permissions (\n    id            SERIAL PRIMARY KEY,\n    user_id       INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,\n    permission_id INTEGER NOT NULL REFERENCES permissions(id) ON DELETE CASCADE,\n    granted_at    TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,\n    granted_by    INTEGER REFERENCES users(id) ON DELETE SET NULL,\n    UNIQUE (user_id, permission_id)\n);\n\nCREATE INDEX idx_users_permissions_user_id ON users_permissions(user_id);\nCREATE INDEX idx_users_permissions_permission_id ON users_permissions(permission_id);\nCREATE INDEX idx_users_permissions_granted_at ON users_permissions(granted_at);\n\n-- Audit: login attempts (success/failure) for security\nCREATE TABLE audit_login (\n    id         SERIAL PRIMARY KEY,\n    user_id    INTEGER REFERENCES users(id) ON DELETE SET NULL,\n    email_used VARCHAR(255),\n    ip_address INET,\n    user_agent TEXT,\n    success    BOOLEAN NOT NULL,\n    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_audit_login_user_id ON audit_login(user_id);\nCREATE INDEX idx_audit_login_email ON audit_login(email_used);\nCREATE INDEX idx_audit_login_success ON audit_login(success);\nCREATE INDEX idx_audit_login_created_at ON audit_login(created_at);\n\n-- Comment for RAG: tables and relationships\nCOMMENT ON TABLE users IS 'SSO users: email, display_name, active flag';\nCOMMENT ON TABLE permissions IS 'Permission definitions: code (e.g. admin_users), name, description';\nCOMMENT ON TABLE users_permissions IS 'Junction: which user has which permission; granted_at, granted_by';\nCOMMENT ON TABLE audit_login IS 'Login audit: user_id, email_used, ip, success, created_at';\n\n\n---\n\nCREATE TABLE permissions (\n    id          SERIAL PRIMARY KEY,\n    code        VARCHAR(100) NOT NULL UNIQUE,\n    name        VARCHAR(255) NOT NULL,\n    description TEXT,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\n---\n\nCREATE TABLE permissions (\n    id          SERIAL PRIMARY KEY,\n    code        VARCHAR(100) NOT NULL UNIQUE,\n    name        VARCHAR(255) NOT NULL,\n    description TEXT,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);"
+    }
+  ]
+}
+[chain/start] [1:chain:AgentExecutor > 9:chain:ToolCallingAgent > **10:chain:RunnableAssign**] Entering Chain run with input: {
+  "input": ""
+}
+[chain/start] [1:chain:AgentExecutor > 9:chain:ToolCallingAgent > 10:chain:RunnableAssign > **11:chain:RunnableMap**] Entering Chain run with input: {
+  "input": ""
+}
+[chain/start] [1:chain:AgentExecutor > 9:chain:ToolCallingAgent > 10:chain:RunnableAssign > 11:chain:RunnableMap > **12:chain:RunnableLambda**] Entering Chain run with input: {
+  "input": ""
+}
+[chain/end] [1:chain:AgentExecutor > 9:chain:ToolCallingAgent > 10:chain:RunnableAssign > 11:chain:RunnableMap > **12:chain:RunnableLambda**] [1ms] Exiting Chain run with output: {
+  "output": [
+    {
+      "lc": 1,
+      "type": "constructor",
+      "id": [
+        "langchain_core",
+        "messages",
+        "AIMessageChunk"
+      ],
+      "kwargs": {
+        "content": "",
+        "additional_kwargs": {
+          "tool_calls": [
+            {
+              "index": 0,
+              "id": "call_uGaImuoOFtYMBBbo1OD4dwhw",
+              "type": "function",
+              "function": {
+                "name": "get_schema",
+                "arguments": "{\"input\":\"resources\"}"
+              }
+            }
+          ]
+        },
+        "response_metadata": {
+          "prompt": 0,
+          "completion": 0,
+          "usage": {
+            "prompt_tokens": 386,
+            "completion_tokens": 14,
+            "total_tokens": 400,
+            "cost": 0.0000663,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.0000663,
+              "upstream_inference_prompt_cost": 0.0000579,
+              "upstream_inference_completions_cost": 0.0000084
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "finish_reason": "tool_calls",
+          "system_fingerprint": "fp_3ee6fe3e89",
+          "model_name": "openai/gpt-4o-mini"
+        },
+        "tool_call_chunks": [
+          {
+            "name": "get_schema",
+            "args": "{\"input\":\"resources\"}",
+            "id": "call_uGaImuoOFtYMBBbo1OD4dwhw",
+            "index": 0,
+            "type": "tool_call_chunk"
+          }
+        ],
+        "id": "gen-1772046646-YPUlOAe7BM2VB4wpkaWW",
+        "usage_metadata": {
+          "input_tokens": 386,
+          "output_tokens": 14,
+          "total_tokens": 400,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 0
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 0
+          }
+        },
+        "tool_calls": [
+          {
+            "name": "get_schema",
+            "args": {
+              "input": "resources"
+            },
+            "id": "call_uGaImuoOFtYMBBbo1OD4dwhw",
+            "type": "tool_call"
+          }
+        ],
+        "invalid_tool_calls": []
+      }
+    },
+    {
+      "lc": 1,
+      "type": "constructor",
+      "id": [
+        "langchain_core",
+        "messages",
+        "ToolMessage"
+      ],
+      "kwargs": {
+        "tool_call_id": "call_uGaImuoOFtYMBBbo1OD4dwhw",
+        "content": "CREATE TABLE resource (\n    id          SERIAL PRIMARY KEY,\n    name        VARCHAR(255) NOT NULL,\n    type        VARCHAR(100) NOT NULL,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\n---\n\nCREATE TABLE resource_booking (\n    id          SERIAL PRIMARY KEY,\n    resource_id INTEGER NOT NULL REFERENCES resource(id) ON DELETE CASCADE,\n    user_id     INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,\n    start_time  TIMESTAMPTZ NOT NULL,\n    end_time    TIMESTAMPTZ NOT NULL,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\n---\n\n-- SSO application schema for lab_7_SQL\n-- Tables: users, permissions, users_permissions, audit_login\n\n-- Required for schema RAG (vector embeddings)\nCREATE EXTENSION IF NOT EXISTS vector;\n-- CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\";\n\n-- Drop tables if they exist (reverse dependency order for clean rerun)\nDROP TABLE IF EXISTS resource_booking;\nDROP TABLE IF EXISTS resource;\nDROP TABLE IF EXISTS audit_login;\nDROP TABLE IF EXISTS users_permissions;\nDROP TABLE IF EXISTS permissions;\nDROP TABLE IF EXISTS users;\n\n-- Users: core identity for SSO\nCREATE TABLE users (\n    id              SERIAL PRIMARY KEY,\n    email           VARCHAR(255) NOT NULL UNIQUE,\n    display_name    VARCHAR(255),\n    password_hash   VARCHAR(255),\n    is_active       BOOLEAN DEFAULT true,\n    created_at      TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,\n    updated_at      TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_users_email ON users(email);\nCREATE INDEX idx_users_is_active ON users(is_active);\nCREATE INDEX idx_users_created_at ON users(created_at);\n\n-- Permissions: granular permissions (e.g. read_reports, admin_users)\nCREATE TABLE permissions (\n    id          SERIAL PRIMARY KEY,\n    code        VARCHAR(100) NOT NULL UNIQUE,\n    name        VARCHAR(255) NOT NULL,\n    description TEXT,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_permissions_code ON permissions(code);\n\n-- Users <-> Permissions: many-to-many\nCREATE TABLE users_permissions (\n    id            SERIAL PRIMARY KEY,\n    user_id       INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,\n    permission_id INTEGER NOT NULL REFERENCES permissions(id) ON DELETE CASCADE,\n    granted_at    TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,\n    granted_by    INTEGER REFERENCES users(id) ON DELETE SET NULL,\n    UNIQUE (user_id, permission_id)\n);\n\nCREATE INDEX idx_users_permissions_user_id ON users_permissions(user_id);\nCREATE INDEX idx_users_permissions_permission_id ON users_permissions(permission_id);\nCREATE INDEX idx_users_permissions_granted_at ON users_permissions(granted_at);\n\n-- Audit: login attempts (success/failure) for security\nCREATE TABLE audit_login (\n    id         SERIAL PRIMARY KEY,\n    user_id    INTEGER REFERENCES users(id) ON DELETE SET NULL,\n    email_used VARCHAR(255),\n    ip_address INET,\n    user_agent TEXT,\n    success    BOOLEAN NOT NULL,\n    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_audit_login_user_id ON audit_login(user_id);\nCREATE INDEX idx_audit_login_email ON audit_login(email_used);\nCREATE INDEX idx_audit_login_success ON audit_login(success);\nCREATE INDEX idx_audit_login_created_at ON audit_login(created_at);\n\n-- Resource: sports facilities (football, tennis, basketball)\nCREATE TABLE resource (\n    id          SERIAL PRIMARY KEY,\n    name        VARCHAR(255) NOT NULL,\n    type        VARCHAR(100) NOT NULL,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_resource_type ON resource(type);\nCREATE INDEX idx_resource_name ON resource(name);\n\n-- Resource booking: user bookings for resources (start/end time)\nCREATE TABLE resource_booking (\n    id          SERIAL PRIMARY KEY,\n    resource_id INTEGER NOT NULL REFERENCES resource(id) ON DELETE CASCADE,\n    user_id     INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,\n    start_time  TIMESTAMPTZ NOT NULL,\n    end_time    TIMESTAMPTZ NOT NULL,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_resource_booking_resource_id ON resource_booking(resource_id);\nCREATE INDEX idx_resource_booking_user_id ON resource_booking(user_id);\nCREATE INDEX idx_resource_booking_start_time ON resource_booking(start_time);\n\n-- Comment for RAG: tables and relationships\nCOMMENT ON TABLE users IS 'SSO users: email, display_name, active flag';\nCOMMENT ON TABLE permissions IS 'Permission definitions: code (e.g. admin_users), name, description';\nCOMMENT ON TABLE users_permissions IS 'Junction: which user has which permission; granted_at, granted_by';\nCOMMENT ON TABLE audit_login IS 'Login audit: user_id, email_used, ip, success, created_at';\nCOMMENT ON TABLE resource IS 'Sports resources: name, type (football, tennis, basketball)';\nCOMMENT ON TABLE resource_booking IS 'Bookings: resource_id, user_id, start_time, end_time';\n\n\n---\n\nTable resource: Sports resources: name, type (football, tennis, basketball)\n\n---\n\nTable resource_booking: Bookings: resource_id, user_id, start_time, end_time\n\n---\n\n-- SSO application schema for lab_7_SQL\n-- Tables: users, permissions, users_permissions, audit_login\n\n-- Required for schema RAG (vector embeddings)\nCREATE EXTENSION IF NOT EXISTS vector;\n-- CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\";\n\n-- Users: core identity for SSO\nCREATE TABLE users (\n    id              SERIAL PRIMARY KEY,\n    email           VARCHAR(255) NOT NULL UNIQUE,\n    display_name    VARCHAR(255),\n    password_hash   VARCHAR(255),\n    is_active       BOOLEAN DEFAULT true,\n    created_at      TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,\n    updated_at      TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_users_email ON users(email);\nCREATE INDEX idx_users_is_active ON users(is_active);\nCREATE INDEX idx_users_created_at ON users(created_at);\n\n-- Permissions: granular permissions (e.g. read_reports, admin_users)\nCREATE TABLE permissions (\n    id          SERIAL PRIMARY KEY,\n    code        VARCHAR(100) NOT NULL UNIQUE,\n    name        VARCHAR(255) NOT NULL,\n    description TEXT,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_permissions_code ON permissions(code);\n\n-- Users <-> Permissions: many-to-many\nCREATE TABLE users_permissions (\n    id            SERIAL PRIMARY KEY,\n    user_id       INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,\n    permission_id INTEGER NOT NULL REFERENCES permissions(id) ON DELETE CASCADE,\n    granted_at    TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,\n    granted_by    INTEGER REFERENCES users(id) ON DELETE SET NULL,\n    UNIQUE (user_id, permission_id)\n);\n\nCREATE INDEX idx_users_permissions_user_id ON users_permissions(user_id);\nCREATE INDEX idx_users_permissions_permission_id ON users_permissions(permission_id);\nCREATE INDEX idx_users_permissions_granted_at ON users_permissions(granted_at);\n\n-- Audit: login attempts (success/failure) for security\nCREATE TABLE audit_login (\n    id         SERIAL PRIMARY KEY,\n    user_id    INTEGER REFERENCES users(id) ON DELETE SET NULL,\n    email_used VARCHAR(255),\n    ip_address INET,\n    user_agent TEXT,\n    success    BOOLEAN NOT NULL,\n    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_audit_login_user_id ON audit_login(user_id);\nCREATE INDEX idx_audit_login_email ON audit_login(email_used);\nCREATE INDEX idx_audit_login_success ON audit_login(success);\nCREATE INDEX idx_audit_login_created_at ON audit_login(created_at);\n\n-- Comment for RAG: tables and relationships\nCOMMENT ON TABLE users IS 'SSO users: email, display_name, active flag';\nCOMMENT ON TABLE permissions IS 'Permission definitions: code (e.g. admin_users), name, description';\nCOMMENT ON TABLE users_permissions IS 'Junction: which user has which permission; granted_at, granted_by';\nCOMMENT ON TABLE audit_login IS 'Login audit: user_id, email_used, ip, success, created_at';\n\n\n---\n\nCREATE TABLE permissions (\n    id          SERIAL PRIMARY KEY,\n    code        VARCHAR(100) NOT NULL UNIQUE,\n    name        VARCHAR(255) NOT NULL,\n    description TEXT,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\n---\n\nCREATE TABLE permissions (\n    id          SERIAL PRIMARY KEY,\n    code        VARCHAR(100) NOT NULL UNIQUE,\n    name        VARCHAR(255) NOT NULL,\n    description TEXT,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);",
+        "additional_kwargs": {
+          "name": "get_schema"
+        },
+        "response_metadata": {}
+      }
+    }
+  ]
+}
+[chain/end] [1:chain:AgentExecutor > 9:chain:ToolCallingAgent > 10:chain:RunnableAssign > **11:chain:RunnableMap**] [1ms] Exiting Chain run with output: {
+  "agent_scratchpad": [
+    {
+      "lc": 1,
+      "type": "constructor",
+      "id": [
+        "langchain_core",
+        "messages",
+        "AIMessageChunk"
+      ],
+      "kwargs": {
+        "content": "",
+        "additional_kwargs": {
+          "tool_calls": [
+            {
+              "index": 0,
+              "id": "call_uGaImuoOFtYMBBbo1OD4dwhw",
+              "type": "function",
+              "function": {
+                "name": "get_schema",
+                "arguments": "{\"input\":\"resources\"}"
+              }
+            }
+          ]
+        },
+        "response_metadata": {
+          "prompt": 0,
+          "completion": 0,
+          "usage": {
+            "prompt_tokens": 386,
+            "completion_tokens": 14,
+            "total_tokens": 400,
+            "cost": 0.0000663,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.0000663,
+              "upstream_inference_prompt_cost": 0.0000579,
+              "upstream_inference_completions_cost": 0.0000084
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "finish_reason": "tool_calls",
+          "system_fingerprint": "fp_3ee6fe3e89",
+          "model_name": "openai/gpt-4o-mini"
+        },
+        "tool_call_chunks": [
+          {
+            "name": "get_schema",
+            "args": "{\"input\":\"resources\"}",
+            "id": "call_uGaImuoOFtYMBBbo1OD4dwhw",
+            "index": 0,
+            "type": "tool_call_chunk"
+          }
+        ],
+        "id": "gen-1772046646-YPUlOAe7BM2VB4wpkaWW",
+        "usage_metadata": {
+          "input_tokens": 386,
+          "output_tokens": 14,
+          "total_tokens": 400,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 0
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 0
+          }
+        },
+        "tool_calls": [
+          {
+            "name": "get_schema",
+            "args": {
+              "input": "resources"
+            },
+            "id": "call_uGaImuoOFtYMBBbo1OD4dwhw",
+            "type": "tool_call"
+          }
+        ],
+        "invalid_tool_calls": []
+      }
+    },
+    {
+      "lc": 1,
+      "type": "constructor",
+      "id": [
+        "langchain_core",
+        "messages",
+        "ToolMessage"
+      ],
+      "kwargs": {
+        "tool_call_id": "call_uGaImuoOFtYMBBbo1OD4dwhw",
+        "content": "CREATE TABLE resource (\n    id          SERIAL PRIMARY KEY,\n    name        VARCHAR(255) NOT NULL,\n    type        VARCHAR(100) NOT NULL,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\n---\n\nCREATE TABLE resource_booking (\n    id          SERIAL PRIMARY KEY,\n    resource_id INTEGER NOT NULL REFERENCES resource(id) ON DELETE CASCADE,\n    user_id     INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,\n    start_time  TIMESTAMPTZ NOT NULL,\n    end_time    TIMESTAMPTZ NOT NULL,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\n---\n\n-- SSO application schema for lab_7_SQL\n-- Tables: users, permissions, users_permissions, audit_login\n\n-- Required for schema RAG (vector embeddings)\nCREATE EXTENSION IF NOT EXISTS vector;\n-- CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\";\n\n-- Drop tables if they exist (reverse dependency order for clean rerun)\nDROP TABLE IF EXISTS resource_booking;\nDROP TABLE IF EXISTS resource;\nDROP TABLE IF EXISTS audit_login;\nDROP TABLE IF EXISTS users_permissions;\nDROP TABLE IF EXISTS permissions;\nDROP TABLE IF EXISTS users;\n\n-- Users: core identity for SSO\nCREATE TABLE users (\n    id              SERIAL PRIMARY KEY,\n    email           VARCHAR(255) NOT NULL UNIQUE,\n    display_name    VARCHAR(255),\n    password_hash   VARCHAR(255),\n    is_active       BOOLEAN DEFAULT true,\n    created_at      TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,\n    updated_at      TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_users_email ON users(email);\nCREATE INDEX idx_users_is_active ON users(is_active);\nCREATE INDEX idx_users_created_at ON users(created_at);\n\n-- Permissions: granular permissions (e.g. read_reports, admin_users)\nCREATE TABLE permissions (\n    id          SERIAL PRIMARY KEY,\n    code        VARCHAR(100) NOT NULL UNIQUE,\n    name        VARCHAR(255) NOT NULL,\n    description TEXT,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_permissions_code ON permissions(code);\n\n-- Users <-> Permissions: many-to-many\nCREATE TABLE users_permissions (\n    id            SERIAL PRIMARY KEY,\n    user_id       INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,\n    permission_id INTEGER NOT NULL REFERENCES permissions(id) ON DELETE CASCADE,\n    granted_at    TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,\n    granted_by    INTEGER REFERENCES users(id) ON DELETE SET NULL,\n    UNIQUE (user_id, permission_id)\n);\n\nCREATE INDEX idx_users_permissions_user_id ON users_permissions(user_id);\nCREATE INDEX idx_users_permissions_permission_id ON users_permissions(permission_id);\nCREATE INDEX idx_users_permissions_granted_at ON users_permissions(granted_at);\n\n-- Audit: login attempts (success/failure) for security\nCREATE TABLE audit_login (\n    id         SERIAL PRIMARY KEY,\n    user_id    INTEGER REFERENCES users(id) ON DELETE SET NULL,\n    email_used VARCHAR(255),\n    ip_address INET,\n    user_agent TEXT,\n    success    BOOLEAN NOT NULL,\n    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_audit_login_user_id ON audit_login(user_id);\nCREATE INDEX idx_audit_login_email ON audit_login(email_used);\nCREATE INDEX idx_audit_login_success ON audit_login(success);\nCREATE INDEX idx_audit_login_created_at ON audit_login(created_at);\n\n-- Resource: sports facilities (football, tennis, basketball)\nCREATE TABLE resource (\n    id          SERIAL PRIMARY KEY,\n    name        VARCHAR(255) NOT NULL,\n    type        VARCHAR(100) NOT NULL,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_resource_type ON resource(type);\nCREATE INDEX idx_resource_name ON resource(name);\n\n-- Resource booking: user bookings for resources (start/end time)\nCREATE TABLE resource_booking (\n    id          SERIAL PRIMARY KEY,\n    resource_id INTEGER NOT NULL REFERENCES resource(id) ON DELETE CASCADE,\n    user_id     INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,\n    start_time  TIMESTAMPTZ NOT NULL,\n    end_time    TIMESTAMPTZ NOT NULL,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_resource_booking_resource_id ON resource_booking(resource_id);\nCREATE INDEX idx_resource_booking_user_id ON resource_booking(user_id);\nCREATE INDEX idx_resource_booking_start_time ON resource_booking(start_time);\n\n-- Comment for RAG: tables and relationships\nCOMMENT ON TABLE users IS 'SSO users: email, display_name, active flag';\nCOMMENT ON TABLE permissions IS 'Permission definitions: code (e.g. admin_users), name, description';\nCOMMENT ON TABLE users_permissions IS 'Junction: which user has which permission; granted_at, granted_by';\nCOMMENT ON TABLE audit_login IS 'Login audit: user_id, email_used, ip, success, created_at';\nCOMMENT ON TABLE resource IS 'Sports resources: name, type (football, tennis, basketball)';\nCOMMENT ON TABLE resource_booking IS 'Bookings: resource_id, user_id, start_time, end_time';\n\n\n---\n\nTable resource: Sports resources: name, type (football, tennis, basketball)\n\n---\n\nTable resource_booking: Bookings: resource_id, user_id, start_time, end_time\n\n---\n\n-- SSO application schema for lab_7_SQL\n-- Tables: users, permissions, users_permissions, audit_login\n\n-- Required for schema RAG (vector embeddings)\nCREATE EXTENSION IF NOT EXISTS vector;\n-- CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\";\n\n-- Users: core identity for SSO\nCREATE TABLE users (\n    id              SERIAL PRIMARY KEY,\n    email           VARCHAR(255) NOT NULL UNIQUE,\n    display_name    VARCHAR(255),\n    password_hash   VARCHAR(255),\n    is_active       BOOLEAN DEFAULT true,\n    created_at      TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,\n    updated_at      TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_users_email ON users(email);\nCREATE INDEX idx_users_is_active ON users(is_active);\nCREATE INDEX idx_users_created_at ON users(created_at);\n\n-- Permissions: granular permissions (e.g. read_reports, admin_users)\nCREATE TABLE permissions (\n    id          SERIAL PRIMARY KEY,\n    code        VARCHAR(100) NOT NULL UNIQUE,\n    name        VARCHAR(255) NOT NULL,\n    description TEXT,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_permissions_code ON permissions(code);\n\n-- Users <-> Permissions: many-to-many\nCREATE TABLE users_permissions (\n    id            SERIAL PRIMARY KEY,\n    user_id       INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,\n    permission_id INTEGER NOT NULL REFERENCES permissions(id) ON DELETE CASCADE,\n    granted_at    TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,\n    granted_by    INTEGER REFERENCES users(id) ON DELETE SET NULL,\n    UNIQUE (user_id, permission_id)\n);\n\nCREATE INDEX idx_users_permissions_user_id ON users_permissions(user_id);\nCREATE INDEX idx_users_permissions_permission_id ON users_permissions(permission_id);\nCREATE INDEX idx_users_permissions_granted_at ON users_permissions(granted_at);\n\n-- Audit: login attempts (success/failure) for security\nCREATE TABLE audit_login (\n    id         SERIAL PRIMARY KEY,\n    user_id    INTEGER REFERENCES users(id) ON DELETE SET NULL,\n    email_used VARCHAR(255),\n    ip_address INET,\n    user_agent TEXT,\n    success    BOOLEAN NOT NULL,\n    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_audit_login_user_id ON audit_login(user_id);\nCREATE INDEX idx_audit_login_email ON audit_login(email_used);\nCREATE INDEX idx_audit_login_success ON audit_login(success);\nCREATE INDEX idx_audit_login_created_at ON audit_login(created_at);\n\n-- Comment for RAG: tables and relationships\nCOMMENT ON TABLE users IS 'SSO users: email, display_name, active flag';\nCOMMENT ON TABLE permissions IS 'Permission definitions: code (e.g. admin_users), name, description';\nCOMMENT ON TABLE users_permissions IS 'Junction: which user has which permission; granted_at, granted_by';\nCOMMENT ON TABLE audit_login IS 'Login audit: user_id, email_used, ip, success, created_at';\n\n\n---\n\nCREATE TABLE permissions (\n    id          SERIAL PRIMARY KEY,\n    code        VARCHAR(100) NOT NULL UNIQUE,\n    name        VARCHAR(255) NOT NULL,\n    description TEXT,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\n---\n\nCREATE TABLE permissions (\n    id          SERIAL PRIMARY KEY,\n    code        VARCHAR(100) NOT NULL UNIQUE,\n    name        VARCHAR(255) NOT NULL,\n    description TEXT,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);",
+        "additional_kwargs": {
+          "name": "get_schema"
+        },
+        "response_metadata": {}
+      }
+    }
+  ]
+}
+[chain/end] [1:chain:AgentExecutor > 9:chain:ToolCallingAgent > **10:chain:RunnableAssign**] [4ms] Exiting Chain run with output: {
+  "input": "how much resources you have?",
+  "steps": [
+    {
+      "action": {
+        "tool": "get_schema",
+        "toolInput": {
+          "input": "resources"
+        },
+        "toolCallId": "call_uGaImuoOFtYMBBbo1OD4dwhw",
+        "log": "Invoking \"get_schema\" with {\"input\":\"resources\"}\n",
+        "messageLog": [
+          {
+            "lc": 1,
+            "type": "constructor",
+            "id": [
+              "langchain_core",
+              "messages",
+              "AIMessageChunk"
+            ],
+            "kwargs": {
+              "content": "",
+              "additional_kwargs": {
+                "tool_calls": [
+                  {
+                    "index": 0,
+                    "id": "call_uGaImuoOFtYMBBbo1OD4dwhw",
+                    "type": "function",
+                    "function": {
+                      "name": "get_schema",
+                      "arguments": "{\"input\":\"resources\"}"
+                    }
+                  }
+                ]
+              },
+              "response_metadata": {
+                "prompt": 0,
+                "completion": 0,
+                "usage": {
+                  "prompt_tokens": 386,
+                  "completion_tokens": 14,
+                  "total_tokens": 400,
+                  "cost": 0.0000663,
+                  "is_byok": false,
+                  "prompt_tokens_details": {
+                    "cached_tokens": 0,
+                    "audio_tokens": 0
+                  },
+                  "cost_details": {
+                    "upstream_inference_cost": 0.0000663,
+                    "upstream_inference_prompt_cost": 0.0000579,
+                    "upstream_inference_completions_cost": 0.0000084
+                  },
+                  "completion_tokens_details": {
+                    "reasoning_tokens": 0,
+                    "audio_tokens": 0
+                  }
+                },
+                "finish_reason": "tool_calls",
+                "system_fingerprint": "fp_3ee6fe3e89",
+                "model_name": "openai/gpt-4o-mini"
+              },
+              "tool_call_chunks": [
+                {
+                  "name": "get_schema",
+                  "args": "{\"input\":\"resources\"}",
+                  "id": "call_uGaImuoOFtYMBBbo1OD4dwhw",
+                  "index": 0,
+                  "type": "tool_call_chunk"
+                }
+              ],
+              "id": "gen-1772046646-YPUlOAe7BM2VB4wpkaWW",
+              "usage_metadata": {
+                "input_tokens": 386,
+                "output_tokens": 14,
+                "total_tokens": 400,
+                "input_token_details": {
+                  "audio": 0,
+                  "cache_read": 0
+                },
+                "output_token_details": {
+                  "audio": 0,
+                  "reasoning": 0
+                }
+              },
+              "tool_calls": [
+                {
+                  "name": "get_schema",
+                  "args": {
+                    "input": "resources"
+                  },
+                  "id": "call_uGaImuoOFtYMBBbo1OD4dwhw",
+                  "type": "tool_call"
+                }
+              ],
+              "invalid_tool_calls": []
+            }
+          }
+        ]
+      },
+      "observation": "CREATE TABLE resource (\n    id          SERIAL PRIMARY KEY,\n    name        VARCHAR(255) NOT NULL,\n    type        VARCHAR(100) NOT NULL,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\n---\n\nCREATE TABLE resource_booking (\n    id          SERIAL PRIMARY KEY,\n    resource_id INTEGER NOT NULL REFERENCES resource(id) ON DELETE CASCADE,\n    user_id     INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,\n    start_time  TIMESTAMPTZ NOT NULL,\n    end_time    TIMESTAMPTZ NOT NULL,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\n---\n\n-- SSO application schema for lab_7_SQL\n-- Tables: users, permissions, users_permissions, audit_login\n\n-- Required for schema RAG (vector embeddings)\nCREATE EXTENSION IF NOT EXISTS vector;\n-- CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\";\n\n-- Drop tables if they exist (reverse dependency order for clean rerun)\nDROP TABLE IF EXISTS resource_booking;\nDROP TABLE IF EXISTS resource;\nDROP TABLE IF EXISTS audit_login;\nDROP TABLE IF EXISTS users_permissions;\nDROP TABLE IF EXISTS permissions;\nDROP TABLE IF EXISTS users;\n\n-- Users: core identity for SSO\nCREATE TABLE users (\n    id              SERIAL PRIMARY KEY,\n    email           VARCHAR(255) NOT NULL UNIQUE,\n    display_name    VARCHAR(255),\n    password_hash   VARCHAR(255),\n    is_active       BOOLEAN DEFAULT true,\n    created_at      TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,\n    updated_at      TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_users_email ON users(email);\nCREATE INDEX idx_users_is_active ON users(is_active);\nCREATE INDEX idx_users_created_at ON users(created_at);\n\n-- Permissions: granular permissions (e.g. read_reports, admin_users)\nCREATE TABLE permissions (\n    id          SERIAL PRIMARY KEY,\n    code        VARCHAR(100) NOT NULL UNIQUE,\n    name        VARCHAR(255) NOT NULL,\n    description TEXT,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_permissions_code ON permissions(code);\n\n-- Users <-> Permissions: many-to-many\nCREATE TABLE users_permissions (\n    id            SERIAL PRIMARY KEY,\n    user_id       INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,\n    permission_id INTEGER NOT NULL REFERENCES permissions(id) ON DELETE CASCADE,\n    granted_at    TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,\n    granted_by    INTEGER REFERENCES users(id) ON DELETE SET NULL,\n    UNIQUE (user_id, permission_id)\n);\n\nCREATE INDEX idx_users_permissions_user_id ON users_permissions(user_id);\nCREATE INDEX idx_users_permissions_permission_id ON users_permissions(permission_id);\nCREATE INDEX idx_users_permissions_granted_at ON users_permissions(granted_at);\n\n-- Audit: login attempts (success/failure) for security\nCREATE TABLE audit_login (\n    id         SERIAL PRIMARY KEY,\n    user_id    INTEGER REFERENCES users(id) ON DELETE SET NULL,\n    email_used VARCHAR(255),\n    ip_address INET,\n    user_agent TEXT,\n    success    BOOLEAN NOT NULL,\n    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_audit_login_user_id ON audit_login(user_id);\nCREATE INDEX idx_audit_login_email ON audit_login(email_used);\nCREATE INDEX idx_audit_login_success ON audit_login(success);\nCREATE INDEX idx_audit_login_created_at ON audit_login(created_at);\n\n-- Resource: sports facilities (football, tennis, basketball)\nCREATE TABLE resource (\n    id          SERIAL PRIMARY KEY,\n    name        VARCHAR(255) NOT NULL,\n    type        VARCHAR(100) NOT NULL,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_resource_type ON resource(type);\nCREATE INDEX idx_resource_name ON resource(name);\n\n-- Resource booking: user bookings for resources (start/end time)\nCREATE TABLE resource_booking (\n    id          SERIAL PRIMARY KEY,\n    resource_id INTEGER NOT NULL REFERENCES resource(id) ON DELETE CASCADE,\n    user_id     INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,\n    start_time  TIMESTAMPTZ NOT NULL,\n    end_time    TIMESTAMPTZ NOT NULL,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_resource_booking_resource_id ON resource_booking(resource_id);\nCREATE INDEX idx_resource_booking_user_id ON resource_booking(user_id);\nCREATE INDEX idx_resource_booking_start_time ON resource_booking(start_time);\n\n-- Comment for RAG: tables and relationships\nCOMMENT ON TABLE users IS 'SSO users: email, display_name, active flag';\nCOMMENT ON TABLE permissions IS 'Permission definitions: code (e.g. admin_users), name, description';\nCOMMENT ON TABLE users_permissions IS 'Junction: which user has which permission; granted_at, granted_by';\nCOMMENT ON TABLE audit_login IS 'Login audit: user_id, email_used, ip, success, created_at';\nCOMMENT ON TABLE resource IS 'Sports resources: name, type (football, tennis, basketball)';\nCOMMENT ON TABLE resource_booking IS 'Bookings: resource_id, user_id, start_time, end_time';\n\n\n---\n\nTable resource: Sports resources: name, type (football, tennis, basketball)\n\n---\n\nTable resource_booking: Bookings: resource_id, user_id, start_time, end_time\n\n---\n\n-- SSO application schema for lab_7_SQL\n-- Tables: users, permissions, users_permissions, audit_login\n\n-- Required for schema RAG (vector embeddings)\nCREATE EXTENSION IF NOT EXISTS vector;\n-- CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\";\n\n-- Users: core identity for SSO\nCREATE TABLE users (\n    id              SERIAL PRIMARY KEY,\n    email           VARCHAR(255) NOT NULL UNIQUE,\n    display_name    VARCHAR(255),\n    password_hash   VARCHAR(255),\n    is_active       BOOLEAN DEFAULT true,\n    created_at      TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,\n    updated_at      TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_users_email ON users(email);\nCREATE INDEX idx_users_is_active ON users(is_active);\nCREATE INDEX idx_users_created_at ON users(created_at);\n\n-- Permissions: granular permissions (e.g. read_reports, admin_users)\nCREATE TABLE permissions (\n    id          SERIAL PRIMARY KEY,\n    code        VARCHAR(100) NOT NULL UNIQUE,\n    name        VARCHAR(255) NOT NULL,\n    description TEXT,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_permissions_code ON permissions(code);\n\n-- Users <-> Permissions: many-to-many\nCREATE TABLE users_permissions (\n    id            SERIAL PRIMARY KEY,\n    user_id       INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,\n    permission_id INTEGER NOT NULL REFERENCES permissions(id) ON DELETE CASCADE,\n    granted_at    TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,\n    granted_by    INTEGER REFERENCES users(id) ON DELETE SET NULL,\n    UNIQUE (user_id, permission_id)\n);\n\nCREATE INDEX idx_users_permissions_user_id ON users_permissions(user_id);\nCREATE INDEX idx_users_permissions_permission_id ON users_permissions(permission_id);\nCREATE INDEX idx_users_permissions_granted_at ON users_permissions(granted_at);\n\n-- Audit: login attempts (success/failure) for security\nCREATE TABLE audit_login (\n    id         SERIAL PRIMARY KEY,\n    user_id    INTEGER REFERENCES users(id) ON DELETE SET NULL,\n    email_used VARCHAR(255),\n    ip_address INET,\n    user_agent TEXT,\n    success    BOOLEAN NOT NULL,\n    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_audit_login_user_id ON audit_login(user_id);\nCREATE INDEX idx_audit_login_email ON audit_login(email_used);\nCREATE INDEX idx_audit_login_success ON audit_login(success);\nCREATE INDEX idx_audit_login_created_at ON audit_login(created_at);\n\n-- Comment for RAG: tables and relationships\nCOMMENT ON TABLE users IS 'SSO users: email, display_name, active flag';\nCOMMENT ON TABLE permissions IS 'Permission definitions: code (e.g. admin_users), name, description';\nCOMMENT ON TABLE users_permissions IS 'Junction: which user has which permission; granted_at, granted_by';\nCOMMENT ON TABLE audit_login IS 'Login audit: user_id, email_used, ip, success, created_at';\n\n\n---\n\nCREATE TABLE permissions (\n    id          SERIAL PRIMARY KEY,\n    code        VARCHAR(100) NOT NULL UNIQUE,\n    name        VARCHAR(255) NOT NULL,\n    description TEXT,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\n---\n\nCREATE TABLE permissions (\n    id          SERIAL PRIMARY KEY,\n    code        VARCHAR(100) NOT NULL UNIQUE,\n    name        VARCHAR(255) NOT NULL,\n    description TEXT,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);"
+    }
+  ],
+  "agent_scratchpad": [
+    {
+      "lc": 1,
+      "type": "constructor",
+      "id": [
+        "langchain_core",
+        "messages",
+        "AIMessageChunk"
+      ],
+      "kwargs": {
+        "content": "",
+        "additional_kwargs": {
+          "tool_calls": [
+            {
+              "index": 0,
+              "id": "call_uGaImuoOFtYMBBbo1OD4dwhw",
+              "type": "function",
+              "function": {
+                "name": "get_schema",
+                "arguments": "{\"input\":\"resources\"}"
+              }
+            }
+          ]
+        },
+        "response_metadata": {
+          "prompt": 0,
+          "completion": 0,
+          "usage": {
+            "prompt_tokens": 386,
+            "completion_tokens": 14,
+            "total_tokens": 400,
+            "cost": 0.0000663,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.0000663,
+              "upstream_inference_prompt_cost": 0.0000579,
+              "upstream_inference_completions_cost": 0.0000084
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "finish_reason": "tool_calls",
+          "system_fingerprint": "fp_3ee6fe3e89",
+          "model_name": "openai/gpt-4o-mini"
+        },
+        "tool_call_chunks": [
+          {
+            "name": "get_schema",
+            "args": "{\"input\":\"resources\"}",
+            "id": "call_uGaImuoOFtYMBBbo1OD4dwhw",
+            "index": 0,
+            "type": "tool_call_chunk"
+          }
+        ],
+        "id": "gen-1772046646-YPUlOAe7BM2VB4wpkaWW",
+        "usage_metadata": {
+          "input_tokens": 386,
+          "output_tokens": 14,
+          "total_tokens": 400,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 0
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 0
+          }
+        },
+        "tool_calls": [
+          {
+            "name": "get_schema",
+            "args": {
+              "input": "resources"
+            },
+            "id": "call_uGaImuoOFtYMBBbo1OD4dwhw",
+            "type": "tool_call"
+          }
+        ],
+        "invalid_tool_calls": []
+      }
+    },
+    {
+      "lc": 1,
+      "type": "constructor",
+      "id": [
+        "langchain_core",
+        "messages",
+        "ToolMessage"
+      ],
+      "kwargs": {
+        "tool_call_id": "call_uGaImuoOFtYMBBbo1OD4dwhw",
+        "content": "CREATE TABLE resource (\n    id          SERIAL PRIMARY KEY,\n    name        VARCHAR(255) NOT NULL,\n    type        VARCHAR(100) NOT NULL,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\n---\n\nCREATE TABLE resource_booking (\n    id          SERIAL PRIMARY KEY,\n    resource_id INTEGER NOT NULL REFERENCES resource(id) ON DELETE CASCADE,\n    user_id     INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,\n    start_time  TIMESTAMPTZ NOT NULL,\n    end_time    TIMESTAMPTZ NOT NULL,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\n---\n\n-- SSO application schema for lab_7_SQL\n-- Tables: users, permissions, users_permissions, audit_login\n\n-- Required for schema RAG (vector embeddings)\nCREATE EXTENSION IF NOT EXISTS vector;\n-- CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\";\n\n-- Drop tables if they exist (reverse dependency order for clean rerun)\nDROP TABLE IF EXISTS resource_booking;\nDROP TABLE IF EXISTS resource;\nDROP TABLE IF EXISTS audit_login;\nDROP TABLE IF EXISTS users_permissions;\nDROP TABLE IF EXISTS permissions;\nDROP TABLE IF EXISTS users;\n\n-- Users: core identity for SSO\nCREATE TABLE users (\n    id              SERIAL PRIMARY KEY,\n    email           VARCHAR(255) NOT NULL UNIQUE,\n    display_name    VARCHAR(255),\n    password_hash   VARCHAR(255),\n    is_active       BOOLEAN DEFAULT true,\n    created_at      TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,\n    updated_at      TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_users_email ON users(email);\nCREATE INDEX idx_users_is_active ON users(is_active);\nCREATE INDEX idx_users_created_at ON users(created_at);\n\n-- Permissions: granular permissions (e.g. read_reports, admin_users)\nCREATE TABLE permissions (\n    id          SERIAL PRIMARY KEY,\n    code        VARCHAR(100) NOT NULL UNIQUE,\n    name        VARCHAR(255) NOT NULL,\n    description TEXT,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_permissions_code ON permissions(code);\n\n-- Users <-> Permissions: many-to-many\nCREATE TABLE users_permissions (\n    id            SERIAL PRIMARY KEY,\n    user_id       INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,\n    permission_id INTEGER NOT NULL REFERENCES permissions(id) ON DELETE CASCADE,\n    granted_at    TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,\n    granted_by    INTEGER REFERENCES users(id) ON DELETE SET NULL,\n    UNIQUE (user_id, permission_id)\n);\n\nCREATE INDEX idx_users_permissions_user_id ON users_permissions(user_id);\nCREATE INDEX idx_users_permissions_permission_id ON users_permissions(permission_id);\nCREATE INDEX idx_users_permissions_granted_at ON users_permissions(granted_at);\n\n-- Audit: login attempts (success/failure) for security\nCREATE TABLE audit_login (\n    id         SERIAL PRIMARY KEY,\n    user_id    INTEGER REFERENCES users(id) ON DELETE SET NULL,\n    email_used VARCHAR(255),\n    ip_address INET,\n    user_agent TEXT,\n    success    BOOLEAN NOT NULL,\n    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_audit_login_user_id ON audit_login(user_id);\nCREATE INDEX idx_audit_login_email ON audit_login(email_used);\nCREATE INDEX idx_audit_login_success ON audit_login(success);\nCREATE INDEX idx_audit_login_created_at ON audit_login(created_at);\n\n-- Resource: sports facilities (football, tennis, basketball)\nCREATE TABLE resource (\n    id          SERIAL PRIMARY KEY,\n    name        VARCHAR(255) NOT NULL,\n    type        VARCHAR(100) NOT NULL,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_resource_type ON resource(type);\nCREATE INDEX idx_resource_name ON resource(name);\n\n-- Resource booking: user bookings for resources (start/end time)\nCREATE TABLE resource_booking (\n    id          SERIAL PRIMARY KEY,\n    resource_id INTEGER NOT NULL REFERENCES resource(id) ON DELETE CASCADE,\n    user_id     INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,\n    start_time  TIMESTAMPTZ NOT NULL,\n    end_time    TIMESTAMPTZ NOT NULL,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_resource_booking_resource_id ON resource_booking(resource_id);\nCREATE INDEX idx_resource_booking_user_id ON resource_booking(user_id);\nCREATE INDEX idx_resource_booking_start_time ON resource_booking(start_time);\n\n-- Comment for RAG: tables and relationships\nCOMMENT ON TABLE users IS 'SSO users: email, display_name, active flag';\nCOMMENT ON TABLE permissions IS 'Permission definitions: code (e.g. admin_users), name, description';\nCOMMENT ON TABLE users_permissions IS 'Junction: which user has which permission; granted_at, granted_by';\nCOMMENT ON TABLE audit_login IS 'Login audit: user_id, email_used, ip, success, created_at';\nCOMMENT ON TABLE resource IS 'Sports resources: name, type (football, tennis, basketball)';\nCOMMENT ON TABLE resource_booking IS 'Bookings: resource_id, user_id, start_time, end_time';\n\n\n---\n\nTable resource: Sports resources: name, type (football, tennis, basketball)\n\n---\n\nTable resource_booking: Bookings: resource_id, user_id, start_time, end_time\n\n---\n\n-- SSO application schema for lab_7_SQL\n-- Tables: users, permissions, users_permissions, audit_login\n\n-- Required for schema RAG (vector embeddings)\nCREATE EXTENSION IF NOT EXISTS vector;\n-- CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\";\n\n-- Users: core identity for SSO\nCREATE TABLE users (\n    id              SERIAL PRIMARY KEY,\n    email           VARCHAR(255) NOT NULL UNIQUE,\n    display_name    VARCHAR(255),\n    password_hash   VARCHAR(255),\n    is_active       BOOLEAN DEFAULT true,\n    created_at      TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,\n    updated_at      TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_users_email ON users(email);\nCREATE INDEX idx_users_is_active ON users(is_active);\nCREATE INDEX idx_users_created_at ON users(created_at);\n\n-- Permissions: granular permissions (e.g. read_reports, admin_users)\nCREATE TABLE permissions (\n    id          SERIAL PRIMARY KEY,\n    code        VARCHAR(100) NOT NULL UNIQUE,\n    name        VARCHAR(255) NOT NULL,\n    description TEXT,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_permissions_code ON permissions(code);\n\n-- Users <-> Permissions: many-to-many\nCREATE TABLE users_permissions (\n    id            SERIAL PRIMARY KEY,\n    user_id       INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,\n    permission_id INTEGER NOT NULL REFERENCES permissions(id) ON DELETE CASCADE,\n    granted_at    TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,\n    granted_by    INTEGER REFERENCES users(id) ON DELETE SET NULL,\n    UNIQUE (user_id, permission_id)\n);\n\nCREATE INDEX idx_users_permissions_user_id ON users_permissions(user_id);\nCREATE INDEX idx_users_permissions_permission_id ON users_permissions(permission_id);\nCREATE INDEX idx_users_permissions_granted_at ON users_permissions(granted_at);\n\n-- Audit: login attempts (success/failure) for security\nCREATE TABLE audit_login (\n    id         SERIAL PRIMARY KEY,\n    user_id    INTEGER REFERENCES users(id) ON DELETE SET NULL,\n    email_used VARCHAR(255),\n    ip_address INET,\n    user_agent TEXT,\n    success    BOOLEAN NOT NULL,\n    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_audit_login_user_id ON audit_login(user_id);\nCREATE INDEX idx_audit_login_email ON audit_login(email_used);\nCREATE INDEX idx_audit_login_success ON audit_login(success);\nCREATE INDEX idx_audit_login_created_at ON audit_login(created_at);\n\n-- Comment for RAG: tables and relationships\nCOMMENT ON TABLE users IS 'SSO users: email, display_name, active flag';\nCOMMENT ON TABLE permissions IS 'Permission definitions: code (e.g. admin_users), name, description';\nCOMMENT ON TABLE users_permissions IS 'Junction: which user has which permission; granted_at, granted_by';\nCOMMENT ON TABLE audit_login IS 'Login audit: user_id, email_used, ip, success, created_at';\n\n\n---\n\nCREATE TABLE permissions (\n    id          SERIAL PRIMARY KEY,\n    code        VARCHAR(100) NOT NULL UNIQUE,\n    name        VARCHAR(255) NOT NULL,\n    description TEXT,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\n---\n\nCREATE TABLE permissions (\n    id          SERIAL PRIMARY KEY,\n    code        VARCHAR(100) NOT NULL UNIQUE,\n    name        VARCHAR(255) NOT NULL,\n    description TEXT,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);",
+        "additional_kwargs": {
+          "name": "get_schema"
+        },
+        "response_metadata": {}
+      }
+    }
+  ]
+}
+[chain/start] [1:chain:AgentExecutor > 9:chain:ToolCallingAgent > **11:prompt:ChatPromptTemplate**] Entering Chain run with input: {
+  "input": "how much resources you have?",
+  "steps": [
+    {
+      "action": {
+        "tool": "get_schema",
+        "toolInput": {
+          "input": "resources"
+        },
+        "toolCallId": "call_uGaImuoOFtYMBBbo1OD4dwhw",
+        "log": "Invoking \"get_schema\" with {\"input\":\"resources\"}\n",
+        "messageLog": [
+          {
+            "lc": 1,
+            "type": "constructor",
+            "id": [
+              "langchain_core",
+              "messages",
+              "AIMessageChunk"
+            ],
+            "kwargs": {
+              "content": "",
+              "additional_kwargs": {
+                "tool_calls": [
+                  {
+                    "index": 0,
+                    "id": "call_uGaImuoOFtYMBBbo1OD4dwhw",
+                    "type": "function",
+                    "function": {
+                      "name": "get_schema",
+                      "arguments": "{\"input\":\"resources\"}"
+                    }
+                  }
+                ]
+              },
+              "response_metadata": {
+                "prompt": 0,
+                "completion": 0,
+                "usage": {
+                  "prompt_tokens": 386,
+                  "completion_tokens": 14,
+                  "total_tokens": 400,
+                  "cost": 0.0000663,
+                  "is_byok": false,
+                  "prompt_tokens_details": {
+                    "cached_tokens": 0,
+                    "audio_tokens": 0
+                  },
+                  "cost_details": {
+                    "upstream_inference_cost": 0.0000663,
+                    "upstream_inference_prompt_cost": 0.0000579,
+                    "upstream_inference_completions_cost": 0.0000084
+                  },
+                  "completion_tokens_details": {
+                    "reasoning_tokens": 0,
+                    "audio_tokens": 0
+                  }
+                },
+                "finish_reason": "tool_calls",
+                "system_fingerprint": "fp_3ee6fe3e89",
+                "model_name": "openai/gpt-4o-mini"
+              },
+              "tool_call_chunks": [
+                {
+                  "name": "get_schema",
+                  "args": "{\"input\":\"resources\"}",
+                  "id": "call_uGaImuoOFtYMBBbo1OD4dwhw",
+                  "index": 0,
+                  "type": "tool_call_chunk"
+                }
+              ],
+              "id": "gen-1772046646-YPUlOAe7BM2VB4wpkaWW",
+              "usage_metadata": {
+                "input_tokens": 386,
+                "output_tokens": 14,
+                "total_tokens": 400,
+                "input_token_details": {
+                  "audio": 0,
+                  "cache_read": 0
+                },
+                "output_token_details": {
+                  "audio": 0,
+                  "reasoning": 0
+                }
+              },
+              "tool_calls": [
+                {
+                  "name": "get_schema",
+                  "args": {
+                    "input": "resources"
+                  },
+                  "id": "call_uGaImuoOFtYMBBbo1OD4dwhw",
+                  "type": "tool_call"
+                }
+              ],
+              "invalid_tool_calls": []
+            }
+          }
+        ]
+      },
+      "observation": "CREATE TABLE resource (\n    id          SERIAL PRIMARY KEY,\n    name        VARCHAR(255) NOT NULL,\n    type        VARCHAR(100) NOT NULL,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\n---\n\nCREATE TABLE resource_booking (\n    id          SERIAL PRIMARY KEY,\n    resource_id INTEGER NOT NULL REFERENCES resource(id) ON DELETE CASCADE,\n    user_id     INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,\n    start_time  TIMESTAMPTZ NOT NULL,\n    end_time    TIMESTAMPTZ NOT NULL,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\n---\n\n-- SSO application schema for lab_7_SQL\n-- Tables: users, permissions, users_permissions, audit_login\n\n-- Required for schema RAG (vector embeddings)\nCREATE EXTENSION IF NOT EXISTS vector;\n-- CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\";\n\n-- Drop tables if they exist (reverse dependency order for clean rerun)\nDROP TABLE IF EXISTS resource_booking;\nDROP TABLE IF EXISTS resource;\nDROP TABLE IF EXISTS audit_login;\nDROP TABLE IF EXISTS users_permissions;\nDROP TABLE IF EXISTS permissions;\nDROP TABLE IF EXISTS users;\n\n-- Users: core identity for SSO\nCREATE TABLE users (\n    id              SERIAL PRIMARY KEY,\n    email           VARCHAR(255) NOT NULL UNIQUE,\n    display_name    VARCHAR(255),\n    password_hash   VARCHAR(255),\n    is_active       BOOLEAN DEFAULT true,\n    created_at      TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,\n    updated_at      TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_users_email ON users(email);\nCREATE INDEX idx_users_is_active ON users(is_active);\nCREATE INDEX idx_users_created_at ON users(created_at);\n\n-- Permissions: granular permissions (e.g. read_reports, admin_users)\nCREATE TABLE permissions (\n    id          SERIAL PRIMARY KEY,\n    code        VARCHAR(100) NOT NULL UNIQUE,\n    name        VARCHAR(255) NOT NULL,\n    description TEXT,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_permissions_code ON permissions(code);\n\n-- Users <-> Permissions: many-to-many\nCREATE TABLE users_permissions (\n    id            SERIAL PRIMARY KEY,\n    user_id       INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,\n    permission_id INTEGER NOT NULL REFERENCES permissions(id) ON DELETE CASCADE,\n    granted_at    TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,\n    granted_by    INTEGER REFERENCES users(id) ON DELETE SET NULL,\n    UNIQUE (user_id, permission_id)\n);\n\nCREATE INDEX idx_users_permissions_user_id ON users_permissions(user_id);\nCREATE INDEX idx_users_permissions_permission_id ON users_permissions(permission_id);\nCREATE INDEX idx_users_permissions_granted_at ON users_permissions(granted_at);\n\n-- Audit: login attempts (success/failure) for security\nCREATE TABLE audit_login (\n    id         SERIAL PRIMARY KEY,\n    user_id    INTEGER REFERENCES users(id) ON DELETE SET NULL,\n    email_used VARCHAR(255),\n    ip_address INET,\n    user_agent TEXT,\n    success    BOOLEAN NOT NULL,\n    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_audit_login_user_id ON audit_login(user_id);\nCREATE INDEX idx_audit_login_email ON audit_login(email_used);\nCREATE INDEX idx_audit_login_success ON audit_login(success);\nCREATE INDEX idx_audit_login_created_at ON audit_login(created_at);\n\n-- Resource: sports facilities (football, tennis, basketball)\nCREATE TABLE resource (\n    id          SERIAL PRIMARY KEY,\n    name        VARCHAR(255) NOT NULL,\n    type        VARCHAR(100) NOT NULL,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_resource_type ON resource(type);\nCREATE INDEX idx_resource_name ON resource(name);\n\n-- Resource booking: user bookings for resources (start/end time)\nCREATE TABLE resource_booking (\n    id          SERIAL PRIMARY KEY,\n    resource_id INTEGER NOT NULL REFERENCES resource(id) ON DELETE CASCADE,\n    user_id     INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,\n    start_time  TIMESTAMPTZ NOT NULL,\n    end_time    TIMESTAMPTZ NOT NULL,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_resource_booking_resource_id ON resource_booking(resource_id);\nCREATE INDEX idx_resource_booking_user_id ON resource_booking(user_id);\nCREATE INDEX idx_resource_booking_start_time ON resource_booking(start_time);\n\n-- Comment for RAG: tables and relationships\nCOMMENT ON TABLE users IS 'SSO users: email, display_name, active flag';\nCOMMENT ON TABLE permissions IS 'Permission definitions: code (e.g. admin_users), name, description';\nCOMMENT ON TABLE users_permissions IS 'Junction: which user has which permission; granted_at, granted_by';\nCOMMENT ON TABLE audit_login IS 'Login audit: user_id, email_used, ip, success, created_at';\nCOMMENT ON TABLE resource IS 'Sports resources: name, type (football, tennis, basketball)';\nCOMMENT ON TABLE resource_booking IS 'Bookings: resource_id, user_id, start_time, end_time';\n\n\n---\n\nTable resource: Sports resources: name, type (football, tennis, basketball)\n\n---\n\nTable resource_booking: Bookings: resource_id, user_id, start_time, end_time\n\n---\n\n-- SSO application schema for lab_7_SQL\n-- Tables: users, permissions, users_permissions, audit_login\n\n-- Required for schema RAG (vector embeddings)\nCREATE EXTENSION IF NOT EXISTS vector;\n-- CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\";\n\n-- Users: core identity for SSO\nCREATE TABLE users (\n    id              SERIAL PRIMARY KEY,\n    email           VARCHAR(255) NOT NULL UNIQUE,\n    display_name    VARCHAR(255),\n    password_hash   VARCHAR(255),\n    is_active       BOOLEAN DEFAULT true,\n    created_at      TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,\n    updated_at      TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_users_email ON users(email);\nCREATE INDEX idx_users_is_active ON users(is_active);\nCREATE INDEX idx_users_created_at ON users(created_at);\n\n-- Permissions: granular permissions (e.g. read_reports, admin_users)\nCREATE TABLE permissions (\n    id          SERIAL PRIMARY KEY,\n    code        VARCHAR(100) NOT NULL UNIQUE,\n    name        VARCHAR(255) NOT NULL,\n    description TEXT,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_permissions_code ON permissions(code);\n\n-- Users <-> Permissions: many-to-many\nCREATE TABLE users_permissions (\n    id            SERIAL PRIMARY KEY,\n    user_id       INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,\n    permission_id INTEGER NOT NULL REFERENCES permissions(id) ON DELETE CASCADE,\n    granted_at    TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,\n    granted_by    INTEGER REFERENCES users(id) ON DELETE SET NULL,\n    UNIQUE (user_id, permission_id)\n);\n\nCREATE INDEX idx_users_permissions_user_id ON users_permissions(user_id);\nCREATE INDEX idx_users_permissions_permission_id ON users_permissions(permission_id);\nCREATE INDEX idx_users_permissions_granted_at ON users_permissions(granted_at);\n\n-- Audit: login attempts (success/failure) for security\nCREATE TABLE audit_login (\n    id         SERIAL PRIMARY KEY,\n    user_id    INTEGER REFERENCES users(id) ON DELETE SET NULL,\n    email_used VARCHAR(255),\n    ip_address INET,\n    user_agent TEXT,\n    success    BOOLEAN NOT NULL,\n    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_audit_login_user_id ON audit_login(user_id);\nCREATE INDEX idx_audit_login_email ON audit_login(email_used);\nCREATE INDEX idx_audit_login_success ON audit_login(success);\nCREATE INDEX idx_audit_login_created_at ON audit_login(created_at);\n\n-- Comment for RAG: tables and relationships\nCOMMENT ON TABLE users IS 'SSO users: email, display_name, active flag';\nCOMMENT ON TABLE permissions IS 'Permission definitions: code (e.g. admin_users), name, description';\nCOMMENT ON TABLE users_permissions IS 'Junction: which user has which permission; granted_at, granted_by';\nCOMMENT ON TABLE audit_login IS 'Login audit: user_id, email_used, ip, success, created_at';\n\n\n---\n\nCREATE TABLE permissions (\n    id          SERIAL PRIMARY KEY,\n    code        VARCHAR(100) NOT NULL UNIQUE,\n    name        VARCHAR(255) NOT NULL,\n    description TEXT,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\n---\n\nCREATE TABLE permissions (\n    id          SERIAL PRIMARY KEY,\n    code        VARCHAR(100) NOT NULL UNIQUE,\n    name        VARCHAR(255) NOT NULL,\n    description TEXT,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);"
+    }
+  ],
+  "agent_scratchpad": [
+    {
+      "lc": 1,
+      "type": "constructor",
+      "id": [
+        "langchain_core",
+        "messages",
+        "AIMessageChunk"
+      ],
+      "kwargs": {
+        "content": "",
+        "additional_kwargs": {
+          "tool_calls": [
+            {
+              "index": 0,
+              "id": "call_uGaImuoOFtYMBBbo1OD4dwhw",
+              "type": "function",
+              "function": {
+                "name": "get_schema",
+                "arguments": "{\"input\":\"resources\"}"
+              }
+            }
+          ]
+        },
+        "response_metadata": {
+          "prompt": 0,
+          "completion": 0,
+          "usage": {
+            "prompt_tokens": 386,
+            "completion_tokens": 14,
+            "total_tokens": 400,
+            "cost": 0.0000663,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.0000663,
+              "upstream_inference_prompt_cost": 0.0000579,
+              "upstream_inference_completions_cost": 0.0000084
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "finish_reason": "tool_calls",
+          "system_fingerprint": "fp_3ee6fe3e89",
+          "model_name": "openai/gpt-4o-mini"
+        },
+        "tool_call_chunks": [
+          {
+            "name": "get_schema",
+            "args": "{\"input\":\"resources\"}",
+            "id": "call_uGaImuoOFtYMBBbo1OD4dwhw",
+            "index": 0,
+            "type": "tool_call_chunk"
+          }
+        ],
+        "id": "gen-1772046646-YPUlOAe7BM2VB4wpkaWW",
+        "usage_metadata": {
+          "input_tokens": 386,
+          "output_tokens": 14,
+          "total_tokens": 400,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 0
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 0
+          }
+        },
+        "tool_calls": [
+          {
+            "name": "get_schema",
+            "args": {
+              "input": "resources"
+            },
+            "id": "call_uGaImuoOFtYMBBbo1OD4dwhw",
+            "type": "tool_call"
+          }
+        ],
+        "invalid_tool_calls": []
+      }
+    },
+    {
+      "lc": 1,
+      "type": "constructor",
+      "id": [
+        "langchain_core",
+        "messages",
+        "ToolMessage"
+      ],
+      "kwargs": {
+        "tool_call_id": "call_uGaImuoOFtYMBBbo1OD4dwhw",
+        "content": "CREATE TABLE resource (\n    id          SERIAL PRIMARY KEY,\n    name        VARCHAR(255) NOT NULL,\n    type        VARCHAR(100) NOT NULL,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\n---\n\nCREATE TABLE resource_booking (\n    id          SERIAL PRIMARY KEY,\n    resource_id INTEGER NOT NULL REFERENCES resource(id) ON DELETE CASCADE,\n    user_id     INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,\n    start_time  TIMESTAMPTZ NOT NULL,\n    end_time    TIMESTAMPTZ NOT NULL,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\n---\n\n-- SSO application schema for lab_7_SQL\n-- Tables: users, permissions, users_permissions, audit_login\n\n-- Required for schema RAG (vector embeddings)\nCREATE EXTENSION IF NOT EXISTS vector;\n-- CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\";\n\n-- Drop tables if they exist (reverse dependency order for clean rerun)\nDROP TABLE IF EXISTS resource_booking;\nDROP TABLE IF EXISTS resource;\nDROP TABLE IF EXISTS audit_login;\nDROP TABLE IF EXISTS users_permissions;\nDROP TABLE IF EXISTS permissions;\nDROP TABLE IF EXISTS users;\n\n-- Users: core identity for SSO\nCREATE TABLE users (\n    id              SERIAL PRIMARY KEY,\n    email           VARCHAR(255) NOT NULL UNIQUE,\n    display_name    VARCHAR(255),\n    password_hash   VARCHAR(255),\n    is_active       BOOLEAN DEFAULT true,\n    created_at      TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,\n    updated_at      TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_users_email ON users(email);\nCREATE INDEX idx_users_is_active ON users(is_active);\nCREATE INDEX idx_users_created_at ON users(created_at);\n\n-- Permissions: granular permissions (e.g. read_reports, admin_users)\nCREATE TABLE permissions (\n    id          SERIAL PRIMARY KEY,\n    code        VARCHAR(100) NOT NULL UNIQUE,\n    name        VARCHAR(255) NOT NULL,\n    description TEXT,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_permissions_code ON permissions(code);\n\n-- Users <-> Permissions: many-to-many\nCREATE TABLE users_permissions (\n    id            SERIAL PRIMARY KEY,\n    user_id       INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,\n    permission_id INTEGER NOT NULL REFERENCES permissions(id) ON DELETE CASCADE,\n    granted_at    TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,\n    granted_by    INTEGER REFERENCES users(id) ON DELETE SET NULL,\n    UNIQUE (user_id, permission_id)\n);\n\nCREATE INDEX idx_users_permissions_user_id ON users_permissions(user_id);\nCREATE INDEX idx_users_permissions_permission_id ON users_permissions(permission_id);\nCREATE INDEX idx_users_permissions_granted_at ON users_permissions(granted_at);\n\n-- Audit: login attempts (success/failure) for security\nCREATE TABLE audit_login (\n    id         SERIAL PRIMARY KEY,\n    user_id    INTEGER REFERENCES users(id) ON DELETE SET NULL,\n    email_used VARCHAR(255),\n    ip_address INET,\n    user_agent TEXT,\n    success    BOOLEAN NOT NULL,\n    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_audit_login_user_id ON audit_login(user_id);\nCREATE INDEX idx_audit_login_email ON audit_login(email_used);\nCREATE INDEX idx_audit_login_success ON audit_login(success);\nCREATE INDEX idx_audit_login_created_at ON audit_login(created_at);\n\n-- Resource: sports facilities (football, tennis, basketball)\nCREATE TABLE resource (\n    id          SERIAL PRIMARY KEY,\n    name        VARCHAR(255) NOT NULL,\n    type        VARCHAR(100) NOT NULL,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_resource_type ON resource(type);\nCREATE INDEX idx_resource_name ON resource(name);\n\n-- Resource booking: user bookings for resources (start/end time)\nCREATE TABLE resource_booking (\n    id          SERIAL PRIMARY KEY,\n    resource_id INTEGER NOT NULL REFERENCES resource(id) ON DELETE CASCADE,\n    user_id     INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,\n    start_time  TIMESTAMPTZ NOT NULL,\n    end_time    TIMESTAMPTZ NOT NULL,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_resource_booking_resource_id ON resource_booking(resource_id);\nCREATE INDEX idx_resource_booking_user_id ON resource_booking(user_id);\nCREATE INDEX idx_resource_booking_start_time ON resource_booking(start_time);\n\n-- Comment for RAG: tables and relationships\nCOMMENT ON TABLE users IS 'SSO users: email, display_name, active flag';\nCOMMENT ON TABLE permissions IS 'Permission definitions: code (e.g. admin_users), name, description';\nCOMMENT ON TABLE users_permissions IS 'Junction: which user has which permission; granted_at, granted_by';\nCOMMENT ON TABLE audit_login IS 'Login audit: user_id, email_used, ip, success, created_at';\nCOMMENT ON TABLE resource IS 'Sports resources: name, type (football, tennis, basketball)';\nCOMMENT ON TABLE resource_booking IS 'Bookings: resource_id, user_id, start_time, end_time';\n\n\n---\n\nTable resource: Sports resources: name, type (football, tennis, basketball)\n\n---\n\nTable resource_booking: Bookings: resource_id, user_id, start_time, end_time\n\n---\n\n-- SSO application schema for lab_7_SQL\n-- Tables: users, permissions, users_permissions, audit_login\n\n-- Required for schema RAG (vector embeddings)\nCREATE EXTENSION IF NOT EXISTS vector;\n-- CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\";\n\n-- Users: core identity for SSO\nCREATE TABLE users (\n    id              SERIAL PRIMARY KEY,\n    email           VARCHAR(255) NOT NULL UNIQUE,\n    display_name    VARCHAR(255),\n    password_hash   VARCHAR(255),\n    is_active       BOOLEAN DEFAULT true,\n    created_at      TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,\n    updated_at      TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_users_email ON users(email);\nCREATE INDEX idx_users_is_active ON users(is_active);\nCREATE INDEX idx_users_created_at ON users(created_at);\n\n-- Permissions: granular permissions (e.g. read_reports, admin_users)\nCREATE TABLE permissions (\n    id          SERIAL PRIMARY KEY,\n    code        VARCHAR(100) NOT NULL UNIQUE,\n    name        VARCHAR(255) NOT NULL,\n    description TEXT,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_permissions_code ON permissions(code);\n\n-- Users <-> Permissions: many-to-many\nCREATE TABLE users_permissions (\n    id            SERIAL PRIMARY KEY,\n    user_id       INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,\n    permission_id INTEGER NOT NULL REFERENCES permissions(id) ON DELETE CASCADE,\n    granted_at    TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,\n    granted_by    INTEGER REFERENCES users(id) ON DELETE SET NULL,\n    UNIQUE (user_id, permission_id)\n);\n\nCREATE INDEX idx_users_permissions_user_id ON users_permissions(user_id);\nCREATE INDEX idx_users_permissions_permission_id ON users_permissions(permission_id);\nCREATE INDEX idx_users_permissions_granted_at ON users_permissions(granted_at);\n\n-- Audit: login attempts (success/failure) for security\nCREATE TABLE audit_login (\n    id         SERIAL PRIMARY KEY,\n    user_id    INTEGER REFERENCES users(id) ON DELETE SET NULL,\n    email_used VARCHAR(255),\n    ip_address INET,\n    user_agent TEXT,\n    success    BOOLEAN NOT NULL,\n    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_audit_login_user_id ON audit_login(user_id);\nCREATE INDEX idx_audit_login_email ON audit_login(email_used);\nCREATE INDEX idx_audit_login_success ON audit_login(success);\nCREATE INDEX idx_audit_login_created_at ON audit_login(created_at);\n\n-- Comment for RAG: tables and relationships\nCOMMENT ON TABLE users IS 'SSO users: email, display_name, active flag';\nCOMMENT ON TABLE permissions IS 'Permission definitions: code (e.g. admin_users), name, description';\nCOMMENT ON TABLE users_permissions IS 'Junction: which user has which permission; granted_at, granted_by';\nCOMMENT ON TABLE audit_login IS 'Login audit: user_id, email_used, ip, success, created_at';\n\n\n---\n\nCREATE TABLE permissions (\n    id          SERIAL PRIMARY KEY,\n    code        VARCHAR(100) NOT NULL UNIQUE,\n    name        VARCHAR(255) NOT NULL,\n    description TEXT,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\n---\n\nCREATE TABLE permissions (\n    id          SERIAL PRIMARY KEY,\n    code        VARCHAR(100) NOT NULL UNIQUE,\n    name        VARCHAR(255) NOT NULL,\n    description TEXT,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);",
+        "additional_kwargs": {
+          "name": "get_schema"
+        },
+        "response_metadata": {}
+      }
+    }
+  ]
+}
+[chain/end] [1:chain:AgentExecutor > 9:chain:ToolCallingAgent > **11:prompt:ChatPromptTemplate**] [4ms] Exiting Chain run with output: {
+  "lc": 1,
+  "type": "constructor",
+  "id": [
+    "langchain_core",
+    "prompt_values",
+    "ChatPromptValue"
+  ],
+  "kwargs": {
+    "messages": [
+      {
+        "lc": 1,
+        "type": "constructor",
+        "id": [
+          "langchain_core",
+          "messages",
+          "SystemMessage"
+        ],
+        "kwargs": {
+          "content": "You are a PostgreSQL expert. Your job is to write a valid PostgreSQL SELECT query for the user's question.\n\nYou have access to these tools:\n- get_schema: use it to retrieve the relevant database schema (tables and columns).\n- get_current_datetime: use it when the question involves \"today\", \"now\", \"current date/time\", \"tomorrow\", \"yesterday\", or any relative date/time. It returns the actual current date and time so you can write correct WHERE conditions.\n\nAfter using the tools you need, write exactly one SELECT statement.\n\nRules:\n- Use only tables/columns from the schema returned by get_schema.\n- For date/time filters, call get_current_datetime and use the returned values (e.g. date_today, date_tomorrow, datetime_now) in your SQL—do not guess or invent dates.\n- Prefer JOINs over subqueries when listing related data.\n- Use table aliases if helpful (e.g. u for users, p for permissions).\n- Your final answer must be ONLY the SQL statement: no explanation, no markdown, no code block wrapper.\n- Do not use INSERT, UPDATE, DELETE, or DDL. Only SELECT.",
+          "additional_kwargs": {},
+          "response_metadata": {}
+        }
+      },
+      {
+        "lc": 1,
+        "type": "constructor",
+        "id": [
+          "langchain_core",
+          "messages",
+          "HumanMessage"
+        ],
+        "kwargs": {
+          "content": "how much resources you have?",
+          "additional_kwargs": {},
+          "response_metadata": {}
+        }
+      },
+      {
+        "lc": 1,
+        "type": "constructor",
+        "id": [
+          "langchain_core",
+          "messages",
+          "AIMessageChunk"
+        ],
+        "kwargs": {
+          "content": "",
+          "additional_kwargs": {
+            "tool_calls": [
+              {
+                "index": 0,
+                "id": "call_uGaImuoOFtYMBBbo1OD4dwhw",
+                "type": "function",
+                "function": {
+                  "name": "get_schema",
+                  "arguments": "{\"input\":\"resources\"}"
+                }
+              }
+            ]
+          },
+          "response_metadata": {
+            "prompt": 0,
+            "completion": 0,
+            "usage": {
+              "prompt_tokens": 386,
+              "completion_tokens": 14,
+              "total_tokens": 400,
+              "cost": 0.0000663,
+              "is_byok": false,
+              "prompt_tokens_details": {
+                "cached_tokens": 0,
+                "audio_tokens": 0
+              },
+              "cost_details": {
+                "upstream_inference_cost": 0.0000663,
+                "upstream_inference_prompt_cost": 0.0000579,
+                "upstream_inference_completions_cost": 0.0000084
+              },
+              "completion_tokens_details": {
+                "reasoning_tokens": 0,
+                "audio_tokens": 0
+              }
+            },
+            "finish_reason": "tool_calls",
+            "system_fingerprint": "fp_3ee6fe3e89",
+            "model_name": "openai/gpt-4o-mini"
+          },
+          "tool_call_chunks": [
+            {
+              "name": "get_schema",
+              "args": "{\"input\":\"resources\"}",
+              "id": "call_uGaImuoOFtYMBBbo1OD4dwhw",
+              "index": 0,
+              "type": "tool_call_chunk"
+            }
+          ],
+          "id": "gen-1772046646-YPUlOAe7BM2VB4wpkaWW",
+          "usage_metadata": {
+            "input_tokens": 386,
+            "output_tokens": 14,
+            "total_tokens": 400,
+            "input_token_details": {
+              "audio": 0,
+              "cache_read": 0
+            },
+            "output_token_details": {
+              "audio": 0,
+              "reasoning": 0
+            }
+          },
+          "tool_calls": [
+            {
+              "name": "get_schema",
+              "args": {
+                "input": "resources"
+              },
+              "id": "call_uGaImuoOFtYMBBbo1OD4dwhw",
+              "type": "tool_call"
+            }
+          ],
+          "invalid_tool_calls": []
+        }
+      },
+      {
+        "lc": 1,
+        "type": "constructor",
+        "id": [
+          "langchain_core",
+          "messages",
+          "ToolMessage"
+        ],
+        "kwargs": {
+          "tool_call_id": "call_uGaImuoOFtYMBBbo1OD4dwhw",
+          "content": "CREATE TABLE resource (\n    id          SERIAL PRIMARY KEY,\n    name        VARCHAR(255) NOT NULL,\n    type        VARCHAR(100) NOT NULL,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\n---\n\nCREATE TABLE resource_booking (\n    id          SERIAL PRIMARY KEY,\n    resource_id INTEGER NOT NULL REFERENCES resource(id) ON DELETE CASCADE,\n    user_id     INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,\n    start_time  TIMESTAMPTZ NOT NULL,\n    end_time    TIMESTAMPTZ NOT NULL,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\n---\n\n-- SSO application schema for lab_7_SQL\n-- Tables: users, permissions, users_permissions, audit_login\n\n-- Required for schema RAG (vector embeddings)\nCREATE EXTENSION IF NOT EXISTS vector;\n-- CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\";\n\n-- Drop tables if they exist (reverse dependency order for clean rerun)\nDROP TABLE IF EXISTS resource_booking;\nDROP TABLE IF EXISTS resource;\nDROP TABLE IF EXISTS audit_login;\nDROP TABLE IF EXISTS users_permissions;\nDROP TABLE IF EXISTS permissions;\nDROP TABLE IF EXISTS users;\n\n-- Users: core identity for SSO\nCREATE TABLE users (\n    id              SERIAL PRIMARY KEY,\n    email           VARCHAR(255) NOT NULL UNIQUE,\n    display_name    VARCHAR(255),\n    password_hash   VARCHAR(255),\n    is_active       BOOLEAN DEFAULT true,\n    created_at      TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,\n    updated_at      TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_users_email ON users(email);\nCREATE INDEX idx_users_is_active ON users(is_active);\nCREATE INDEX idx_users_created_at ON users(created_at);\n\n-- Permissions: granular permissions (e.g. read_reports, admin_users)\nCREATE TABLE permissions (\n    id          SERIAL PRIMARY KEY,\n    code        VARCHAR(100) NOT NULL UNIQUE,\n    name        VARCHAR(255) NOT NULL,\n    description TEXT,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_permissions_code ON permissions(code);\n\n-- Users <-> Permissions: many-to-many\nCREATE TABLE users_permissions (\n    id            SERIAL PRIMARY KEY,\n    user_id       INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,\n    permission_id INTEGER NOT NULL REFERENCES permissions(id) ON DELETE CASCADE,\n    granted_at    TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,\n    granted_by    INTEGER REFERENCES users(id) ON DELETE SET NULL,\n    UNIQUE (user_id, permission_id)\n);\n\nCREATE INDEX idx_users_permissions_user_id ON users_permissions(user_id);\nCREATE INDEX idx_users_permissions_permission_id ON users_permissions(permission_id);\nCREATE INDEX idx_users_permissions_granted_at ON users_permissions(granted_at);\n\n-- Audit: login attempts (success/failure) for security\nCREATE TABLE audit_login (\n    id         SERIAL PRIMARY KEY,\n    user_id    INTEGER REFERENCES users(id) ON DELETE SET NULL,\n    email_used VARCHAR(255),\n    ip_address INET,\n    user_agent TEXT,\n    success    BOOLEAN NOT NULL,\n    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_audit_login_user_id ON audit_login(user_id);\nCREATE INDEX idx_audit_login_email ON audit_login(email_used);\nCREATE INDEX idx_audit_login_success ON audit_login(success);\nCREATE INDEX idx_audit_login_created_at ON audit_login(created_at);\n\n-- Resource: sports facilities (football, tennis, basketball)\nCREATE TABLE resource (\n    id          SERIAL PRIMARY KEY,\n    name        VARCHAR(255) NOT NULL,\n    type        VARCHAR(100) NOT NULL,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_resource_type ON resource(type);\nCREATE INDEX idx_resource_name ON resource(name);\n\n-- Resource booking: user bookings for resources (start/end time)\nCREATE TABLE resource_booking (\n    id          SERIAL PRIMARY KEY,\n    resource_id INTEGER NOT NULL REFERENCES resource(id) ON DELETE CASCADE,\n    user_id     INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,\n    start_time  TIMESTAMPTZ NOT NULL,\n    end_time    TIMESTAMPTZ NOT NULL,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_resource_booking_resource_id ON resource_booking(resource_id);\nCREATE INDEX idx_resource_booking_user_id ON resource_booking(user_id);\nCREATE INDEX idx_resource_booking_start_time ON resource_booking(start_time);\n\n-- Comment for RAG: tables and relationships\nCOMMENT ON TABLE users IS 'SSO users: email, display_name, active flag';\nCOMMENT ON TABLE permissions IS 'Permission definitions: code (e.g. admin_users), name, description';\nCOMMENT ON TABLE users_permissions IS 'Junction: which user has which permission; granted_at, granted_by';\nCOMMENT ON TABLE audit_login IS 'Login audit: user_id, email_used, ip, success, created_at';\nCOMMENT ON TABLE resource IS 'Sports resources: name, type (football, tennis, basketball)';\nCOMMENT ON TABLE resource_booking IS 'Bookings: resource_id, user_id, start_time, end_time';\n\n\n---\n\nTable resource: Sports resources: name, type (football, tennis, basketball)\n\n---\n\nTable resource_booking: Bookings: resource_id, user_id, start_time, end_time\n\n---\n\n-- SSO application schema for lab_7_SQL\n-- Tables: users, permissions, users_permissions, audit_login\n\n-- Required for schema RAG (vector embeddings)\nCREATE EXTENSION IF NOT EXISTS vector;\n-- CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\";\n\n-- Users: core identity for SSO\nCREATE TABLE users (\n    id              SERIAL PRIMARY KEY,\n    email           VARCHAR(255) NOT NULL UNIQUE,\n    display_name    VARCHAR(255),\n    password_hash   VARCHAR(255),\n    is_active       BOOLEAN DEFAULT true,\n    created_at      TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,\n    updated_at      TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_users_email ON users(email);\nCREATE INDEX idx_users_is_active ON users(is_active);\nCREATE INDEX idx_users_created_at ON users(created_at);\n\n-- Permissions: granular permissions (e.g. read_reports, admin_users)\nCREATE TABLE permissions (\n    id          SERIAL PRIMARY KEY,\n    code        VARCHAR(100) NOT NULL UNIQUE,\n    name        VARCHAR(255) NOT NULL,\n    description TEXT,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_permissions_code ON permissions(code);\n\n-- Users <-> Permissions: many-to-many\nCREATE TABLE users_permissions (\n    id            SERIAL PRIMARY KEY,\n    user_id       INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,\n    permission_id INTEGER NOT NULL REFERENCES permissions(id) ON DELETE CASCADE,\n    granted_at    TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,\n    granted_by    INTEGER REFERENCES users(id) ON DELETE SET NULL,\n    UNIQUE (user_id, permission_id)\n);\n\nCREATE INDEX idx_users_permissions_user_id ON users_permissions(user_id);\nCREATE INDEX idx_users_permissions_permission_id ON users_permissions(permission_id);\nCREATE INDEX idx_users_permissions_granted_at ON users_permissions(granted_at);\n\n-- Audit: login attempts (success/failure) for security\nCREATE TABLE audit_login (\n    id         SERIAL PRIMARY KEY,\n    user_id    INTEGER REFERENCES users(id) ON DELETE SET NULL,\n    email_used VARCHAR(255),\n    ip_address INET,\n    user_agent TEXT,\n    success    BOOLEAN NOT NULL,\n    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_audit_login_user_id ON audit_login(user_id);\nCREATE INDEX idx_audit_login_email ON audit_login(email_used);\nCREATE INDEX idx_audit_login_success ON audit_login(success);\nCREATE INDEX idx_audit_login_created_at ON audit_login(created_at);\n\n-- Comment for RAG: tables and relationships\nCOMMENT ON TABLE users IS 'SSO users: email, display_name, active flag';\nCOMMENT ON TABLE permissions IS 'Permission definitions: code (e.g. admin_users), name, description';\nCOMMENT ON TABLE users_permissions IS 'Junction: which user has which permission; granted_at, granted_by';\nCOMMENT ON TABLE audit_login IS 'Login audit: user_id, email_used, ip, success, created_at';\n\n\n---\n\nCREATE TABLE permissions (\n    id          SERIAL PRIMARY KEY,\n    code        VARCHAR(100) NOT NULL UNIQUE,\n    name        VARCHAR(255) NOT NULL,\n    description TEXT,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\n---\n\nCREATE TABLE permissions (\n    id          SERIAL PRIMARY KEY,\n    code        VARCHAR(100) NOT NULL UNIQUE,\n    name        VARCHAR(255) NOT NULL,\n    description TEXT,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);",
+          "additional_kwargs": {
+            "name": "get_schema"
+          },
+          "response_metadata": {}
+        }
+      }
+    ]
+  }
+}
+[llm/start] [1:chain:AgentExecutor > 9:chain:ToolCallingAgent > **13:llm:ChatOpenAI**] Entering LLM run with input: {
+  "messages": [
+    [
+      {
+        "lc": 1,
+        "type": "constructor",
+        "id": [
+          "langchain_core",
+          "messages",
+          "SystemMessage"
+        ],
+        "kwargs": {
+          "content": "You are a PostgreSQL expert. Your job is to write a valid PostgreSQL SELECT query for the user's question.\n\nYou have access to these tools:\n- get_schema: use it to retrieve the relevant database schema (tables and columns).\n- get_current_datetime: use it when the question involves \"today\", \"now\", \"current date/time\", \"tomorrow\", \"yesterday\", or any relative date/time. It returns the actual current date and time so you can write correct WHERE conditions.\n\nAfter using the tools you need, write exactly one SELECT statement.\n\nRules:\n- Use only tables/columns from the schema returned by get_schema.\n- For date/time filters, call get_current_datetime and use the returned values (e.g. date_today, date_tomorrow, datetime_now) in your SQL—do not guess or invent dates.\n- Prefer JOINs over subqueries when listing related data.\n- Use table aliases if helpful (e.g. u for users, p for permissions).\n- Your final answer must be ONLY the SQL statement: no explanation, no markdown, no code block wrapper.\n- Do not use INSERT, UPDATE, DELETE, or DDL. Only SELECT.",
+          "additional_kwargs": {},
+          "response_metadata": {}
+        }
+      },
+      {
+        "lc": 1,
+        "type": "constructor",
+        "id": [
+          "langchain_core",
+          "messages",
+          "HumanMessage"
+        ],
+        "kwargs": {
+          "content": "how much resources you have?",
+          "additional_kwargs": {},
+          "response_metadata": {}
+        }
+      },
+      {
+        "lc": 1,
+        "type": "constructor",
+        "id": [
+          "langchain_core",
+          "messages",
+          "AIMessageChunk"
+        ],
+        "kwargs": {
+          "content": "",
+          "additional_kwargs": {
+            "tool_calls": [
+              {
+                "index": 0,
+                "id": "call_uGaImuoOFtYMBBbo1OD4dwhw",
+                "type": "function",
+                "function": {
+                  "name": "get_schema",
+                  "arguments": "{\"input\":\"resources\"}"
+                }
+              }
+            ]
+          },
+          "response_metadata": {
+            "prompt": 0,
+            "completion": 0,
+            "usage": {
+              "prompt_tokens": 386,
+              "completion_tokens": 14,
+              "total_tokens": 400,
+              "cost": 0.0000663,
+              "is_byok": false,
+              "prompt_tokens_details": {
+                "cached_tokens": 0,
+                "audio_tokens": 0
+              },
+              "cost_details": {
+                "upstream_inference_cost": 0.0000663,
+                "upstream_inference_prompt_cost": 0.0000579,
+                "upstream_inference_completions_cost": 0.0000084
+              },
+              "completion_tokens_details": {
+                "reasoning_tokens": 0,
+                "audio_tokens": 0
+              }
+            },
+            "finish_reason": "tool_calls",
+            "system_fingerprint": "fp_3ee6fe3e89",
+            "model_name": "openai/gpt-4o-mini"
+          },
+          "tool_call_chunks": [
+            {
+              "name": "get_schema",
+              "args": "{\"input\":\"resources\"}",
+              "id": "call_uGaImuoOFtYMBBbo1OD4dwhw",
+              "index": 0,
+              "type": "tool_call_chunk"
+            }
+          ],
+          "id": "gen-1772046646-YPUlOAe7BM2VB4wpkaWW",
+          "usage_metadata": {
+            "input_tokens": 386,
+            "output_tokens": 14,
+            "total_tokens": 400,
+            "input_token_details": {
+              "audio": 0,
+              "cache_read": 0
+            },
+            "output_token_details": {
+              "audio": 0,
+              "reasoning": 0
+            }
+          },
+          "tool_calls": [
+            {
+              "name": "get_schema",
+              "args": {
+                "input": "resources"
+              },
+              "id": "call_uGaImuoOFtYMBBbo1OD4dwhw",
+              "type": "tool_call"
+            }
+          ],
+          "invalid_tool_calls": []
+        }
+      },
+      {
+        "lc": 1,
+        "type": "constructor",
+        "id": [
+          "langchain_core",
+          "messages",
+          "ToolMessage"
+        ],
+        "kwargs": {
+          "tool_call_id": "call_uGaImuoOFtYMBBbo1OD4dwhw",
+          "content": "CREATE TABLE resource (\n    id          SERIAL PRIMARY KEY,\n    name        VARCHAR(255) NOT NULL,\n    type        VARCHAR(100) NOT NULL,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\n---\n\nCREATE TABLE resource_booking (\n    id          SERIAL PRIMARY KEY,\n    resource_id INTEGER NOT NULL REFERENCES resource(id) ON DELETE CASCADE,\n    user_id     INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,\n    start_time  TIMESTAMPTZ NOT NULL,\n    end_time    TIMESTAMPTZ NOT NULL,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\n---\n\n-- SSO application schema for lab_7_SQL\n-- Tables: users, permissions, users_permissions, audit_login\n\n-- Required for schema RAG (vector embeddings)\nCREATE EXTENSION IF NOT EXISTS vector;\n-- CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\";\n\n-- Drop tables if they exist (reverse dependency order for clean rerun)\nDROP TABLE IF EXISTS resource_booking;\nDROP TABLE IF EXISTS resource;\nDROP TABLE IF EXISTS audit_login;\nDROP TABLE IF EXISTS users_permissions;\nDROP TABLE IF EXISTS permissions;\nDROP TABLE IF EXISTS users;\n\n-- Users: core identity for SSO\nCREATE TABLE users (\n    id              SERIAL PRIMARY KEY,\n    email           VARCHAR(255) NOT NULL UNIQUE,\n    display_name    VARCHAR(255),\n    password_hash   VARCHAR(255),\n    is_active       BOOLEAN DEFAULT true,\n    created_at      TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,\n    updated_at      TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_users_email ON users(email);\nCREATE INDEX idx_users_is_active ON users(is_active);\nCREATE INDEX idx_users_created_at ON users(created_at);\n\n-- Permissions: granular permissions (e.g. read_reports, admin_users)\nCREATE TABLE permissions (\n    id          SERIAL PRIMARY KEY,\n    code        VARCHAR(100) NOT NULL UNIQUE,\n    name        VARCHAR(255) NOT NULL,\n    description TEXT,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_permissions_code ON permissions(code);\n\n-- Users <-> Permissions: many-to-many\nCREATE TABLE users_permissions (\n    id            SERIAL PRIMARY KEY,\n    user_id       INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,\n    permission_id INTEGER NOT NULL REFERENCES permissions(id) ON DELETE CASCADE,\n    granted_at    TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,\n    granted_by    INTEGER REFERENCES users(id) ON DELETE SET NULL,\n    UNIQUE (user_id, permission_id)\n);\n\nCREATE INDEX idx_users_permissions_user_id ON users_permissions(user_id);\nCREATE INDEX idx_users_permissions_permission_id ON users_permissions(permission_id);\nCREATE INDEX idx_users_permissions_granted_at ON users_permissions(granted_at);\n\n-- Audit: login attempts (success/failure) for security\nCREATE TABLE audit_login (\n    id         SERIAL PRIMARY KEY,\n    user_id    INTEGER REFERENCES users(id) ON DELETE SET NULL,\n    email_used VARCHAR(255),\n    ip_address INET,\n    user_agent TEXT,\n    success    BOOLEAN NOT NULL,\n    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_audit_login_user_id ON audit_login(user_id);\nCREATE INDEX idx_audit_login_email ON audit_login(email_used);\nCREATE INDEX idx_audit_login_success ON audit_login(success);\nCREATE INDEX idx_audit_login_created_at ON audit_login(created_at);\n\n-- Resource: sports facilities (football, tennis, basketball)\nCREATE TABLE resource (\n    id          SERIAL PRIMARY KEY,\n    name        VARCHAR(255) NOT NULL,\n    type        VARCHAR(100) NOT NULL,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_resource_type ON resource(type);\nCREATE INDEX idx_resource_name ON resource(name);\n\n-- Resource booking: user bookings for resources (start/end time)\nCREATE TABLE resource_booking (\n    id          SERIAL PRIMARY KEY,\n    resource_id INTEGER NOT NULL REFERENCES resource(id) ON DELETE CASCADE,\n    user_id     INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,\n    start_time  TIMESTAMPTZ NOT NULL,\n    end_time    TIMESTAMPTZ NOT NULL,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_resource_booking_resource_id ON resource_booking(resource_id);\nCREATE INDEX idx_resource_booking_user_id ON resource_booking(user_id);\nCREATE INDEX idx_resource_booking_start_time ON resource_booking(start_time);\n\n-- Comment for RAG: tables and relationships\nCOMMENT ON TABLE users IS 'SSO users: email, display_name, active flag';\nCOMMENT ON TABLE permissions IS 'Permission definitions: code (e.g. admin_users), name, description';\nCOMMENT ON TABLE users_permissions IS 'Junction: which user has which permission; granted_at, granted_by';\nCOMMENT ON TABLE audit_login IS 'Login audit: user_id, email_used, ip, success, created_at';\nCOMMENT ON TABLE resource IS 'Sports resources: name, type (football, tennis, basketball)';\nCOMMENT ON TABLE resource_booking IS 'Bookings: resource_id, user_id, start_time, end_time';\n\n\n---\n\nTable resource: Sports resources: name, type (football, tennis, basketball)\n\n---\n\nTable resource_booking: Bookings: resource_id, user_id, start_time, end_time\n\n---\n\n-- SSO application schema for lab_7_SQL\n-- Tables: users, permissions, users_permissions, audit_login\n\n-- Required for schema RAG (vector embeddings)\nCREATE EXTENSION IF NOT EXISTS vector;\n-- CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\";\n\n-- Users: core identity for SSO\nCREATE TABLE users (\n    id              SERIAL PRIMARY KEY,\n    email           VARCHAR(255) NOT NULL UNIQUE,\n    display_name    VARCHAR(255),\n    password_hash   VARCHAR(255),\n    is_active       BOOLEAN DEFAULT true,\n    created_at      TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,\n    updated_at      TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_users_email ON users(email);\nCREATE INDEX idx_users_is_active ON users(is_active);\nCREATE INDEX idx_users_created_at ON users(created_at);\n\n-- Permissions: granular permissions (e.g. read_reports, admin_users)\nCREATE TABLE permissions (\n    id          SERIAL PRIMARY KEY,\n    code        VARCHAR(100) NOT NULL UNIQUE,\n    name        VARCHAR(255) NOT NULL,\n    description TEXT,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_permissions_code ON permissions(code);\n\n-- Users <-> Permissions: many-to-many\nCREATE TABLE users_permissions (\n    id            SERIAL PRIMARY KEY,\n    user_id       INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,\n    permission_id INTEGER NOT NULL REFERENCES permissions(id) ON DELETE CASCADE,\n    granted_at    TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,\n    granted_by    INTEGER REFERENCES users(id) ON DELETE SET NULL,\n    UNIQUE (user_id, permission_id)\n);\n\nCREATE INDEX idx_users_permissions_user_id ON users_permissions(user_id);\nCREATE INDEX idx_users_permissions_permission_id ON users_permissions(permission_id);\nCREATE INDEX idx_users_permissions_granted_at ON users_permissions(granted_at);\n\n-- Audit: login attempts (success/failure) for security\nCREATE TABLE audit_login (\n    id         SERIAL PRIMARY KEY,\n    user_id    INTEGER REFERENCES users(id) ON DELETE SET NULL,\n    email_used VARCHAR(255),\n    ip_address INET,\n    user_agent TEXT,\n    success    BOOLEAN NOT NULL,\n    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE INDEX idx_audit_login_user_id ON audit_login(user_id);\nCREATE INDEX idx_audit_login_email ON audit_login(email_used);\nCREATE INDEX idx_audit_login_success ON audit_login(success);\nCREATE INDEX idx_audit_login_created_at ON audit_login(created_at);\n\n-- Comment for RAG: tables and relationships\nCOMMENT ON TABLE users IS 'SSO users: email, display_name, active flag';\nCOMMENT ON TABLE permissions IS 'Permission definitions: code (e.g. admin_users), name, description';\nCOMMENT ON TABLE users_permissions IS 'Junction: which user has which permission; granted_at, granted_by';\nCOMMENT ON TABLE audit_login IS 'Login audit: user_id, email_used, ip, success, created_at';\n\n\n---\n\nCREATE TABLE permissions (\n    id          SERIAL PRIMARY KEY,\n    code        VARCHAR(100) NOT NULL UNIQUE,\n    name        VARCHAR(255) NOT NULL,\n    description TEXT,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);\n\n---\n\nCREATE TABLE permissions (\n    id          SERIAL PRIMARY KEY,\n    code        VARCHAR(100) NOT NULL UNIQUE,\n    name        VARCHAR(255) NOT NULL,\n    description TEXT,\n    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP\n);",
+          "additional_kwargs": {
+            "name": "get_schema"
+          },
+          "response_metadata": {}
+        }
+      }
+    ]
+  ]
+}
+[llm/end] [1:chain:AgentExecutor > 9:chain:ToolCallingAgent > **13:llm:ChatOpenAI**] [709ms] Exiting LLM run with output: {
+  "generations": [
+    [
+      {
+        "text": "SELECT COUNT(*) AS total_resources FROM resource;",
+        "generationInfo": {
+          "prompt": 0,
+          "completion": 0,
+          "finish_reason": "stop",
+          "system_fingerprint": "fp_3ee6fe3e89",
+          "model_name": "openai/gpt-4o-mini"
+        },
+        "message": {
+          "lc": 1,
+          "type": "constructor",
+          "id": [
+            "langchain_core",
+            "messages",
+            "AIMessageChunk"
+          ],
+          "kwargs": {
+            "content": "SELECT COUNT(*) AS total_resources FROM resource;",
+            "additional_kwargs": {},
+            "response_metadata": {
+              "prompt": 0,
+              "completion": 0,
+              "usage": {
+                "prompt_tokens": 2170,
+                "completion_tokens": 10,
+                "total_tokens": 2180,
+                "cost": 0.0001779,
+                "is_byok": false,
+                "prompt_tokens_details": {
+                  "cached_tokens": 2048,
+                  "audio_tokens": 0
+                },
+                "cost_details": {
+                  "upstream_inference_cost": 0.0001779,
+                  "upstream_inference_prompt_cost": 0.0001719,
+                  "upstream_inference_completions_cost": 0.000006
+                },
+                "completion_tokens_details": {
+                  "reasoning_tokens": 0,
+                  "audio_tokens": 0
+                }
+              },
+              "finish_reason": "stop",
+              "system_fingerprint": "fp_3ee6fe3e89",
+              "model_name": "openai/gpt-4o-mini"
+            },
+            "tool_call_chunks": [],
+            "id": "gen-1772046648-vaqeJjjf0zWdTu0W1jl0",
+            "usage_metadata": {
+              "input_tokens": 2170,
+              "output_tokens": 10,
+              "total_tokens": 2180,
+              "input_token_details": {
+                "audio": 0,
+                "cache_read": 2048
+              },
+              "output_token_details": {
+                "audio": 0,
+                "reasoning": 0
+              }
+            },
+            "tool_calls": [],
+            "invalid_tool_calls": []
+          }
+        }
+      }
+    ]
+  ],
+  "llmOutput": {
+    "tokenUsage": {
+      "promptTokens": 2170,
+      "completionTokens": 10,
+      "totalTokens": 2180
+    }
+  }
+}
+[chain/start] [1:chain:AgentExecutor > 9:chain:ToolCallingAgent > **14:parser:ToolCallingAgentOutputParser**] Entering Chain run with input: {
+  "lc": 1,
+  "type": "constructor",
+  "id": [
+    "langchain_core",
+    "messages",
+    "AIMessageChunk"
+  ],
+  "kwargs": {
+    "content": "SELECT COUNT(*) AS total_resources FROM resource;",
+    "additional_kwargs": {},
+    "response_metadata": {
+      "prompt": 0,
+      "completion": 0,
+      "usage": {
+        "prompt_tokens": 2170,
+        "completion_tokens": 10,
+        "total_tokens": 2180,
+        "cost": 0.0001779,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 2048,
+          "audio_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.0001779,
+          "upstream_inference_prompt_cost": 0.0001719,
+          "upstream_inference_completions_cost": 0.000006
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0
+        }
+      },
+      "finish_reason": "stop",
+      "system_fingerprint": "fp_3ee6fe3e89",
+      "model_name": "openai/gpt-4o-mini"
+    },
+    "tool_call_chunks": [],
+    "id": "gen-1772046648-vaqeJjjf0zWdTu0W1jl0",
+    "usage_metadata": {
+      "input_tokens": 2170,
+      "output_tokens": 10,
+      "total_tokens": 2180,
+      "input_token_details": {
+        "audio": 0,
+        "cache_read": 2048
+      },
+      "output_token_details": {
+        "audio": 0,
+        "reasoning": 0
+      }
+    },
+    "tool_calls": [],
+    "invalid_tool_calls": []
+  }
+}
+[chain/end] [1:chain:AgentExecutor > 9:chain:ToolCallingAgent > **14:parser:ToolCallingAgentOutputParser**] [1ms] Exiting Chain run with output: {
+  "returnValues": {
+    "output": "SELECT COUNT(*) AS total_resources FROM resource;"
+  },
+  "log": "SELECT COUNT(*) AS total_resources FROM resource;"
+}
+[chain/end] [1:chain:AgentExecutor > **9:chain:ToolCallingAgent**] [722ms] Exiting Chain run with output: {
+  "returnValues": {
+    "output": "SELECT COUNT(*) AS total_resources FROM resource;"
+  },
+  "log": "SELECT COUNT(*) AS total_resources FROM resource;"
+}
+[chain/end] [**1:chain:AgentExecutor**] [2.08s] Exiting Chain run with output: {
+  "input": "how much resources you have?",
+  "output": "SELECT COUNT(*) AS total_resources FROM resource;"
+}
+
+=== Executor run 2026-02-25T19:15:20.247Z | question: how much resources you have? ===
+[chain/start] [**1:chain:AgentExecutor**] Entering Chain run with input: {
+  "input": "how much resources you have?"
+}
+[chain/start] [1:chain:AgentExecutor > **2:chain:ToolCallingAgent**] Entering Chain run with input: {
+  "input": "how much resources you have?",
+  "steps": []
+}
+[chain/start] [1:chain:AgentExecutor > 2:chain:ToolCallingAgent > **3:chain:RunnableAssign**] Entering Chain run with input: {
+  "input": ""
+}
+[chain/start] [1:chain:AgentExecutor > 2:chain:ToolCallingAgent > 3:chain:RunnableAssign > **4:chain:RunnableMap**] Entering Chain run with input: {
+  "input": ""
+}
+[chain/start] [1:chain:AgentExecutor > 2:chain:ToolCallingAgent > 3:chain:RunnableAssign > 4:chain:RunnableMap > **5:chain:RunnableLambda**] Entering Chain run with input: {
+  "input": ""
+}
+[chain/end] [1:chain:AgentExecutor > 2:chain:ToolCallingAgent > 3:chain:RunnableAssign > 4:chain:RunnableMap > **5:chain:RunnableLambda**] [2ms] Exiting Chain run with output: {
+  "output": []
+}
+[chain/end] [1:chain:AgentExecutor > 2:chain:ToolCallingAgent > 3:chain:RunnableAssign > **4:chain:RunnableMap**] [3ms] Exiting Chain run with output: {
+  "agent_scratchpad": []
+}
+[chain/end] [1:chain:AgentExecutor > 2:chain:ToolCallingAgent > **3:chain:RunnableAssign**] [4ms] Exiting Chain run with output: {
+  "input": "how much resources you have?",
+  "steps": [],
+  "agent_scratchpad": []
+}
+[chain/start] [1:chain:AgentExecutor > 2:chain:ToolCallingAgent > **4:prompt:ChatPromptTemplate**] Entering Chain run with input: {
+  "input": "how much resources you have?",
+  "steps": [],
+  "agent_scratchpad": []
+}
+[chain/end] [1:chain:AgentExecutor > 2:chain:ToolCallingAgent > **4:prompt:ChatPromptTemplate**] [2ms] Exiting Chain run with output: {
+  "lc": 1,
+  "type": "constructor",
+  "id": [
+    "langchain_core",
+    "prompt_values",
+    "ChatPromptValue"
+  ],
+  "kwargs": {
+    "messages": [
+      {
+        "lc": 1,
+        "type": "constructor",
+        "id": [
+          "langchain_core",
+          "messages",
+          "SystemMessage"
+        ],
+        "kwargs": {
+          "content": "You are a PostgreSQL expert. Your job is to write a valid PostgreSQL SELECT query for the user's question.\n\nYou have access to these tools:\n- get_schema: use it to retrieve the relevant database schema (tables and columns).\n- get_current_datetime: use it when the question involves \"today\", \"now\", \"current date/time\", \"tomorrow\", \"yesterday\", or any relative date/time. It returns the actual current date and time so you can write correct WHERE conditions.\n\nAfter using the tools you need, write exactly one SELECT statement.\n\nRules:\n- Use only tables/columns from the schema returned by get_schema.\n- For date/time filters, call get_current_datetime and use the returned values (e.g. date_today, date_tomorrow, datetime_now) in your SQL—do not guess or invent dates.\n- Prefer JOINs over subqueries when listing related data.\n- Use table aliases if helpful (e.g. u for users, p for permissions).\n- Your final answer must be ONLY the SQL statement: no explanation, no markdown, no code block wrapper.\n- Do not use INSERT, UPDATE, DELETE, or DDL. Only SELECT.",
+          "additional_kwargs": {},
+          "response_metadata": {}
+        }
+      },
+      {
+        "lc": 1,
+        "type": "constructor",
+        "id": [
+          "langchain_core",
+          "messages",
+          "HumanMessage"
+        ],
+        "kwargs": {
+          "content": "how much resources you have?",
+          "additional_kwargs": {},
+          "response_metadata": {}
+        }
+      }
+    ]
+  }
+}
+[llm/start] [1:chain:AgentExecutor > 2:chain:ToolCallingAgent > **6:llm:ChatOpenAI**] Entering LLM run with input: {
+  "messages": [
+    [
+      {
+        "lc": 1,
+        "type": "constructor",
+        "id": [
+          "langchain_core",
+          "messages",
+          "SystemMessage"
+        ],
+        "kwargs": {
+          "content": "You are a PostgreSQL expert. Your job is to write a valid PostgreSQL SELECT query for the user's question.\n\nYou have access to these tools:\n- get_schema: use it to retrieve the relevant database schema (tables and columns).\n- get_current_datetime: use it when the question involves \"today\", \"now\", \"current date/time\", \"tomorrow\", \"yesterday\", or any relative date/time. It returns the actual current date and time so you can write correct WHERE conditions.\n\nAfter using the tools you need, write exactly one SELECT statement.\n\nRules:\n- Use only tables/columns from the schema returned by get_schema.\n- For date/time filters, call get_current_datetime and use the returned values (e.g. date_today, date_tomorrow, datetime_now) in your SQL—do not guess or invent dates.\n- Prefer JOINs over subqueries when listing related data.\n- Use table aliases if helpful (e.g. u for users, p for permissions).\n- Your final answer must be ONLY the SQL statement: no explanation, no markdown, no code block wrapper.\n- Do not use INSERT, UPDATE, DELETE, or DDL. Only SELECT.",
+          "additional_kwargs": {},
+          "response_metadata": {}
+        }
+      },
+      {
+        "lc": 1,
+        "type": "constructor",
+        "id": [
+          "langchain_core",
+          "messages",
+          "HumanMessage"
+        ],
+        "kwargs": {
+          "content": "how much resources you have?",
+          "additional_kwargs": {},
+          "response_metadata": {}
+        }
+      }
+    ]
+  ]
+}
+[llm/end] [1:chain:AgentExecutor > 2:chain:ToolCallingAgent > **6:llm:ChatOpenAI**] [852ms] Exiting LLM run with output: {
+  "generations": [
+    [
+      {
+        "text": "",
+        "generationInfo": {
+          "prompt": 0,
+          "completion": 0,
+          "finish_reason": "tool_calls",
+          "system_fingerprint": "fp_3ee6fe3e89",
+          "model_name": "openai/gpt-4o-mini"
+        },
+        "message": {
+          "lc": 1,
+          "type": "constructor",
+          "id": [
+            "langchain_core",
+            "messages",
+            "AIMessageChunk"
+          ],
+          "kwargs": {
+            "content": "",
+            "additional_kwargs": {
+              "tool_calls": [
+                {
+                  "index": 0,
+                  "id": "call_4FGzeQ1eDP5FWIcT0iXxMnku",
+                  "type": "function",
+                  "function": {
+                    "name": "get_schema",
+                    "arguments": "{\"input\":\"resources\"}"
+                  }
+                }
+              ]
+            },
+            "response_metadata": {
+              "prompt": 0,
+              "completion": 0,
+              "usage": {
+                "prompt_tokens": 386,
+                "completion_tokens": 14,
+                "total_tokens": 400,
+                "cost": 0.0000663,
+                "is_byok": false,
+                "prompt_tokens_details": {
+                  "cached_tokens": 0,
+                  "audio_tokens": 0
+                },
+                "cost_details": {
+                  "upstream_inference_cost": 0.0000663,
+                  "upstream_inference_prompt_cost": 0.0000579,
+                  "upstream_inference_completions_cost": 0.0000084
+                },
+                "completion_tokens_details": {
+                  "reasoning_tokens": 0,
+                  "audio_tokens": 0
+                }
+              },
+              "finish_reason": "tool_calls",
+              "system_fingerprint": "fp_3ee6fe3e89",
+              "model_name": "openai/gpt-4o-mini"
+            },
+            "tool_call_chunks": [
+              {
+                "name": "get_schema",
+                "args": "{\"input\":\"resources\"}",
+                "id": "call_4FGzeQ1eDP5FWIcT0iXxMnku",
+                "index": 0,
+                "type": "tool_call_chunk"
+              }
+            ],
+            "id": "gen-1772046920-AExUC5CM7oUlkWOFG01K",
+            "usage_metadata": {
+              "input_tokens": 386,
+              "output_tokens": 14,
+              "total_tokens": 400,
+              "input_token_details": {
+                "audio": 0,
+                "cache_read": 0
+              },
+              "output_token_details": {
+                "audio": 0,
+                "reasoning": 0
+              }
+            },
+            "tool_calls": [
+              {
+                "name": "get_schema",
+                "args": {
+                  "input": "resources"
+                },
+                "id": "call_4FGzeQ1eDP5FWIcT0iXxMnku",
+                "type": "tool_call"
+              }
+            ],
+            "invalid_tool_calls": []
+          }
+        }
+      }
+    ]
+  ],
+  "llmOutput": {
+    "tokenUsage": {
+      "promptTokens": 386,
+      "completionTokens": 14,
+      "totalTokens": 400
+    }
+  }
+}
+[chain/start] [1:chain:AgentExecutor > 2:chain:ToolCallingAgent > **7:parser:ToolCallingAgentOutputParser**] Entering Chain run with input: {
+  "lc": 1,
+  "type": "constructor",
+  "id": [
+    "langchain_core",
+    "messages",
+    "AIMessageChunk"
+  ],
+  "kwargs": {
+    "content": "",
+    "additional_kwargs": {
+      "tool_calls": [
+        {
+          "index": 0,
+          "id": "call_4FGzeQ1eDP5FWIcT0iXxMnku",
+          "type": "function",
+          "function": {
+            "name": "get_schema",
+            "arguments": "{\"input\":\"resources\"}"
+          }
+        }
+      ]
+    },
+    "response_metadata": {
+      "prompt": 0,
+      "completion": 0,
+      "usage": {
+        "prompt_tokens": 386,
+        "completion_tokens": 14,
+        "total_tokens": 400,
+        "cost": 0.0000663,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.0000663,
+          "upstream_inference_prompt_cost": 0.0000579,
+          "upstream_inference_completions_cost": 0.0000084
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0
+        }
+      },
+      "finish_reason": "tool_calls",
+      "system_fingerprint": "fp_3ee6fe3e89",
+      "model_name": "openai/gpt-4o-mini"
+    },
+    "tool_call_chunks": [
+      {
+        "name": "get_schema",
+        "args": "{\"input\":\"resources\"}",
+        "id": "call_4FGzeQ1eDP5FWIcT0iXxMnku",
+        "index": 0,
+        "type": "tool_call_chunk"
+      }
+    ],
+    "id": "gen-1772046920-AExUC5CM7oUlkWOFG01K",
+    "usage_metadata": {
+      "input_tokens": 386,
+      "output_tokens": 14,
+      "total_tokens": 400,
+      "input_token_details": {
+        "audio": 0,
+        "cache_read": 0
+      },
+      "output_token_details": {
+        "audio": 0,
+        "reasoning": 0
+      }
+    },
+    "tool_calls": [
+      {
+        "name": "get_schema",
+        "args": {
+          "input": "resources"
+        },
+        "id": "call_4FGzeQ1eDP5FWIcT0iXxMnku",
+        "type": "tool_call"
+      }
+    ],
+    "invalid_tool_calls": []
+  }
+}
+[chain/end] [1:chain:AgentExecutor > 2:chain:ToolCallingAgent > **7:parser:ToolCallingAgentOutputParser**] [0ms] Exiting Chain run with output: {
+  "output": [
+    {
+      "tool": "get_schema",
+      "toolInput": {
+        "input": "resources"
+      },
+      "toolCallId": "call_4FGzeQ1eDP5FWIcT0iXxMnku",
+      "log": "Invoking \"get_schema\" with {\"input\":\"resources\"}\n",
+      "messageLog": [
+        {
+          "lc": 1,
+          "type": "constructor",
+          "id": [
+            "langchain_core",
+            "messages",
+            "AIMessageChunk"
+          ],
+          "kwargs": {
+            "content": "",
+            "additional_kwargs": {
+              "tool_calls": [
+                {
+                  "index": 0,
+                  "id": "call_4FGzeQ1eDP5FWIcT0iXxMnku",
+                  "type": "function",
+                  "function": {
+                    "name": "get_schema",
+                    "arguments": "{\"input\":\"resources\"}"
+                  }
+                }
+              ]
+            },
+            "response_metadata": {
+              "prompt": 0,
+              "completion": 0,
+              "usage": {
+                "prompt_tokens": 386,
+                "completion_tokens": 14,
+                "total_tokens": 400,
+                "cost": 0.0000663,
+                "is_byok": false,
+                "prompt_tokens_details": {
+                  "cached_tokens": 0,
+                  "audio_tokens": 0
+                },
+                "cost_details": {
+                  "upstream_inference_cost": 0.0000663,
+                  "upstream_inference_prompt_cost": 0.0000579,
+                  "upstream_inference_completions_cost": 0.0000084
+                },
+                "completion_tokens_details": {
+                  "reasoning_tokens": 0,
+                  "audio_tokens": 0
+                }
+              },
+              "finish_reason": "tool_calls",
+              "system_fingerprint": "fp_3ee6fe3e89",
+              "model_name": "openai/gpt-4o-mini"
+            },
+            "tool_call_chunks": [
+              {
+                "name": "get_schema",
+                "args": "{\"input\":\"resources\"}",
+                "id": "call_4FGzeQ1eDP5FWIcT0iXxMnku",
+                "index": 0,
+                "type": "tool_call_chunk"
+              }
+            ],
+            "id": "gen-1772046920-AExUC5CM7oUlkWOFG01K",
+            "usage_metadata": {
+              "input_tokens": 386,
+              "output_tokens": 14,
+              "total_tokens": 400,
+              "input_token_details": {
+                "audio": 0,
+                "cache_read": 0
+              },
+              "output_token_details": {
+                "audio": 0,
+                "reasoning": 0
+              }
+            },
+            "tool_calls": [
+              {
+                "name": "get_schema",
+                "args": {
+                  "input": "resources"
+                },
+                "id": "call_4FGzeQ1eDP5FWIcT0iXxMnku",
+                "type": "tool_call"
+              }
+            ],
+            "invalid_tool_calls": []
+          }
+        }
+      ]
+    }
+  ]
+}
+[chain/end] [1:chain:AgentExecutor > **2:chain:ToolCallingAgent**] [862ms] Exiting Chain run with output: {
+  "output": [
+    {
+      "tool": "get_schema",
+      "toolInput": {
+        "input": "resources"
+      },
+      "toolCallId": "call_4FGzeQ1eDP5FWIcT0iXxMnku",
+      "log": "Invoking \"get_schema\" with {\"input\":\"resources\"}\n",
+      "messageLog": [
+        {
+          "lc": 1,
+          "type": "constructor",
+          "id": [
+            "langchain_core",
+            "messages",
+            "AIMessageChunk"
+          ],
+          "kwargs": {
+            "content": "",
+            "additional_kwargs": {
+              "tool_calls": [
+                {
+                  "index": 0,
+                  "id": "call_4FGzeQ1eDP5FWIcT0iXxMnku",
+                  "type": "function",
+                  "function": {
+                    "name": "get_schema",
+                    "arguments": "{\"input\":\"resources\"}"
+                  }
+                }
+              ]
+            },
+            "response_metadata": {
+              "prompt": 0,
+              "completion": 0,
+              "usage": {
+                "prompt_tokens": 386,
+                "completion_tokens": 14,
+                "total_tokens": 400,
+                "cost": 0.0000663,
+                "is_byok": false,
+                "prompt_tokens_details": {
+                  "cached_tokens": 0,
+                  "audio_tokens": 0
+                },
+                "cost_details": {
+                  "upstream_inference_cost": 0.0000663,
+                  "upstream_inference_prompt_cost": 0.0000579,
+                  "upstream_inference_completions_cost": 0.0000084
+                },
+                "completion_tokens_details": {
+                  "reasoning_tokens": 0,
+                  "audio_tokens": 0
+                }
+              },
+              "finish_reason": "tool_calls",
+              "system_fingerprint": "fp_3ee6fe3e89",
+              "model_name": "openai/gpt-4o-mini"
+            },
+            "tool_call_chunks": [
+              {
+                "name": "get_schema",
+                "args": "{\"input\":\"resources\"}",
+                "id": "call_4FGzeQ1eDP5FWIcT0iXxMnku",
+                "index": 0,
+                "type": "tool_call_chunk"
+              }
+            ],
+            "id": "gen-1772046920-AExUC5CM7oUlkWOFG01K",
+            "usage_metadata": {
+              "input_tokens": 386,
+              "output_tokens": 14,
+              "total_tokens": 400,
+              "input_token_details": {
+                "audio": 0,
+                "cache_read": 0
+              },
+              "output_token_details": {
+                "audio": 0,
+                "reasoning": 0
+              }
+            },
+            "tool_calls": [
+              {
+                "name": "get_schema",
+                "args": {
+                  "input": "resources"
+                },
+                "id": "call_4FGzeQ1eDP5FWIcT0iXxMnku",
+                "type": "tool_call"
+              }
+            ],
+            "invalid_tool_calls": []
+          }
+        }
+      ]
+    }
+  ]
+}
+[agent/action] [**1:chain:AgentExecutor**] Agent selected action: {
+  "tool": "get_schema",
+  "toolInput": {
+    "input": "resources"
+  },
+  "toolCallId": "call_4FGzeQ1eDP5FWIcT0iXxMnku",
+  "log": "Invoking \"get_schema\" with {\"input\":\"resources\"}\n",
+  "messageLog": [
+    {
+      "lc": 1,
+      "type": "constructor",
+      "id": [
+        "langchain_core",
+        "messages",
+        "AIMessageChunk"
+      ],
+      "kwargs": {
+        "content": "",
+        "additional_kwargs": {
+          "tool_calls": [
+            {
+              "index": 0,
+              "id": "call_4FGzeQ1eDP5FWIcT0iXxMnku",
+              "type": "function",
+              "function": {
+                "name": "get_schema",
+                "arguments": "{\"input\":\"resources\"}"
+              }
+            }
+          ]
+        },
+        "response_metadata": {
+          "prompt": 0,
+          "completion": 0,
+          "usage": {
+            "prompt_tokens": 386,
+            "completion_tokens": 14,
+            "total_tokens": 400,
+            "cost": 0.0000663,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.0000663,
+              "upstream_inference_prompt_cost": 0.0000579,
+              "upstream_inference_completions_cost": 0.0000084
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "finish_reason": "tool_calls",
+          "system_fingerprint": "fp_3ee6fe3e89",
+          "model_name": "openai/gpt-4o-mini"
+        },
+        "tool_call_chunks": [
+          {
+            "name": "get_schema",
+            "args": "{\"input\":\"resources\"}",
+            "id": "call_4FGzeQ1eDP5FWIcT0iXxMnku",
+            "index": 0,
+            "type": "tool_call_chunk"
+          }
+        ],
+        "id": "gen-1772046920-AExUC5CM7oUlkWOFG01K",
+        "usage_metadata": {
+          "input_tokens": 386,
+          "output_tokens": 14,
+          "total_tokens": 400,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 0
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 0
+          }
+        },
+        "tool_calls": [
+          {
+            "name": "get_schema",
+            "args": {
+              "input": "resources"
+            },
+            "id": "call_4FGzeQ1eDP5FWIcT0iXxMnku",
+            "type": "tool_call"
+          }
+        ],
+        "invalid_tool_calls": []
+      }
+    }
+  ]
+}
+[tool/start] [1:chain:AgentExecutor > **8:tool:get_schema**] Entering Tool run with input: "{"input":"resources"}"
+[tool/end] [1:chain:AgentExecutor > **8:tool:get_schema**] [1ms] Exiting Tool run with output: "CREATE TABLE resource (
+    id          SERIAL PRIMARY KEY,
+    name        VARCHAR(255) NOT NULL,
+    type        VARCHAR(100) NOT NULL,
+    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+);
+
+---
+
+CREATE TABLE resource_booking (
+    id          SERIAL PRIMARY KEY,
+    resource_id INTEGER NOT NULL REFERENCES resource(id) ON DELETE CASCADE,
+    user_id     INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    start_time  TIMESTAMPTZ NOT NULL,
+    end_time    TIMESTAMPTZ NOT NULL,
+    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+);
+
+---
+
+-- SSO application schema for lab_7_SQL
+-- Tables: users, permissions, users_permissions, audit_login
+
+-- Required for schema RAG (vector embeddings)
+CREATE EXTENSION IF NOT EXISTS vector;
+-- CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+-- Drop tables if they exist (reverse dependency order for clean rerun)
+DROP TABLE IF EXISTS resource_booking;
+DROP TABLE IF EXISTS resource;
+DROP TABLE IF EXISTS audit_login;
+DROP TABLE IF EXISTS users_permissions;
+DROP TABLE IF EXISTS permissions;
+DROP TABLE IF EXISTS users;
+
+-- Users: core identity for SSO
+CREATE TABLE users (
+    id              SERIAL PRIMARY KEY,
+    email           VARCHAR(255) NOT NULL UNIQUE,
+    display_name    VARCHAR(255),
+    password_hash   VARCHAR(255),
+    is_active       BOOLEAN DEFAULT true,
+    created_at      TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    updated_at      TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_users_email ON users(email);
+CREATE INDEX idx_users_is_active ON users(is_active);
+CREATE INDEX idx_users_created_at ON users(created_at);
+
+-- Permissions: granular permissions (e.g. read_reports, admin_users)
+CREATE TABLE permissions (
+    id          SERIAL PRIMARY KEY,
+    code        VARCHAR(100) NOT NULL UNIQUE,
+    name        VARCHAR(255) NOT NULL,
+    description TEXT,
+    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_permissions_code ON permissions(code);
+
+-- Users <-> Permissions: many-to-many
+CREATE TABLE users_permissions (
+    id            SERIAL PRIMARY KEY,
+    user_id       INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    permission_id INTEGER NOT NULL REFERENCES permissions(id) ON DELETE CASCADE,
+    granted_at    TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    granted_by    INTEGER REFERENCES users(id) ON DELETE SET NULL,
+    UNIQUE (user_id, permission_id)
+);
+
+CREATE INDEX idx_users_permissions_user_id ON users_permissions(user_id);
+CREATE INDEX idx_users_permissions_permission_id ON users_permissions(permission_id);
+CREATE INDEX idx_users_permissions_granted_at ON users_permissions(granted_at);
+
+-- Audit: login attempts (success/failure) for security
+CREATE TABLE audit_login (
+    id         SERIAL PRIMARY KEY,
+    user_id    INTEGER REFERENCES users(id) ON DELETE SET NULL,
+    email_used VARCHAR(255),
+    ip_address INET,
+    user_agent TEXT,
+    success    BOOLEAN NOT NULL,
+    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_audit_login_user_id ON audit_login(user_id);
+CREATE INDEX idx_audit_login_email ON audit_login(email_used);
+CREATE INDEX idx_audit_login_success ON audit_login(success);
+CREATE INDEX idx_audit_login_created_at ON audit_login(created_at);
+
+-- Resource: sports facilities (football, tennis, basketball)
+CREATE TABLE resource (
+    id          SERIAL PRIMARY KEY,
+    name        VARCHAR(255) NOT NULL,
+    type        VARCHAR(100) NOT NULL,
+    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_resource_type ON resource(type);
+CREATE INDEX idx_resource_name ON resource(name);
+
+-- Resource booking: user bookings for resources (start/end time)
+CREATE TABLE resource_booking (
+    id          SERIAL PRIMARY KEY,
+    resource_id INTEGER NOT NULL REFERENCES resource(id) ON DELETE CASCADE,
+    user_id     INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    start_time  TIMESTAMPTZ NOT NULL,
+    end_time    TIMESTAMPTZ NOT NULL,
+    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_resource_booking_resource_id ON resource_booking(resource_id);
+CREATE INDEX idx_resource_booking_user_id ON resource_booking(user_id);
+CREATE INDEX idx_resource_booking_start_time ON resource_booking(start_time);
+
+-- Comment for RAG: tables and relationships
+COMMENT ON TABLE users IS 'SSO users: email, display_name, active flag';
+COMMENT ON TABLE permissions IS 'Permission definitions: code (e.g. admin_users), name, description';
+COMMENT ON TABLE users_permissions IS 'Junction: which user has which permission; granted_at, granted_by';
+COMMENT ON TABLE audit_login IS 'Login audit: user_id, email_used, ip, success, created_at';
+COMMENT ON TABLE resource IS 'Sports resources: name, type (football, tennis, basketball)';
+COMMENT ON TABLE resource_booking IS 'Bookings: resource_id, user_id, start_time, end_time';
+
+
+---
+
+Table resource: Sports resources: name, type (football, tennis, basketball)
+
+---
+
+Table resource_booking: Bookings: resource_id, user_id, start_time, end_time
+
+---
+
+-- SSO application schema for lab_7_SQL
+-- Tables: users, permissions, users_permissions, audit_login
+
+-- Required for schema RAG (vector embeddings)
+CREATE EXTENSION IF NOT EXISTS vector;
+-- CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+-- Users: core identity for SSO
+CREATE TABLE users (
+    id              SERIAL PRIMARY KEY,
+    email           VARCHAR(255) NOT NULL UNIQUE,
+    display_name    VARCHAR(255),
+    password_hash   VARCHAR(255),
+    is_active       BOOLEAN DEFAULT true,
+    created_at      TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    updated_at      TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_users_email ON users(email);
+CREATE INDEX idx_users_is_active ON users(is_active);
+CREATE INDEX idx_users_created_at ON users(created_at);
+
+-- Permissions: granular permissions (e.g. read_reports, admin_users)
+CREATE TABLE permissions (
+    id          SERIAL PRIMARY KEY,
+    code        VARCHAR(100) NOT NULL UNIQUE,
+    name        VARCHAR(255) NOT NULL,
+    description TEXT,
+    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_permissions_code ON permissions(code);
+
+-- Users <-> Permissions: many-to-many
+CREATE TABLE users_permissions (
+    id            SERIAL PRIMARY KEY,
+    user_id       INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    permission_id INTEGER NOT NULL REFERENCES permissions(id) ON DELETE CASCADE,
+    granted_at    TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    granted_by    INTEGER REFERENCES users(id) ON DELETE SET NULL,
+    UNIQUE (user_id, permission_id)
+);
+
+CREATE INDEX idx_users_permissions_user_id ON users_permissions(user_id);
+CREATE INDEX idx_users_permissions_permission_id ON users_permissions(permission_id);
+CREATE INDEX idx_users_permissions_granted_at ON users_permissions(granted_at);
+
+-- Audit: login attempts (success/failure) for security
+CREATE TABLE audit_login (
+    id         SERIAL PRIMARY KEY,
+    user_id    INTEGER REFERENCES users(id) ON DELETE SET NULL,
+    email_used VARCHAR(255),
+    ip_address INET,
+    user_agent TEXT,
+    success    BOOLEAN NOT NULL,
+    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_audit_login_user_id ON audit_login(user_id);
+CREATE INDEX idx_audit_login_email ON audit_login(email_used);
+CREATE INDEX idx_audit_login_success ON audit_login(success);
+CREATE INDEX idx_audit_login_created_at ON audit_login(created_at);
+
+-- Comment for RAG: tables and relationships
+COMMENT ON TABLE users IS 'SSO users: email, display_name, active flag';
+COMMENT ON TABLE permissions IS 'Permission definitions: code (e.g. admin_users), name, description';
+COMMENT ON TABLE users_permissions IS 'Junction: which user has which permission; granted_at, granted_by';
+COMMENT ON TABLE audit_login IS 'Login audit: user_id, email_used, ip, success, created_at';
+
+
+---
+
+CREATE TABLE permissions (
+    id          SERIAL PRIMARY KEY,
+    code        VARCHAR(100) NOT NULL UNIQUE,
+    name        VARCHAR(255) NOT NULL,
+    description TEXT,
+    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+);
+
+---
+
+CREATE TABLE permissions (
+    id          SERIAL PRIMARY KEY,
+    code        VARCHAR(100) NOT NULL UNIQUE,
+    name        VARCHAR(255) NOT NULL,
+    description TEXT,
+    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+);"
+[chain/end] [**1:chain:AgentExecutor**] [870ms] Exiting Chain run with output: {
+  "input": "how much resources you have?",
+  "output": "Agent stopped due to max iterations."
+}

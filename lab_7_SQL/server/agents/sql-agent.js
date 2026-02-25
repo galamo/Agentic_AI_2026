@@ -4,10 +4,20 @@
  * - get_schema: returns the retrieved schema context so the agent can reason over it
  * Output: SQL query only (and optionally parameters)
  */
+import path from "path";
+import { fileURLToPath } from "url";
 import { DynamicTool } from "@langchain/core/tools";
 import { ChatPromptTemplate, MessagesPlaceholder } from "@langchain/core/prompts";
 import { ChatOpenAI } from "@langchain/openai";
 import { createToolCallingAgent, AgentExecutor } from "langchain/agents";
+import fs from "fs";
+import { VerboseFileHandler } from "./verbose-file-handler.js";
+
+process.env.TZ = "UTC";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+/** Log file for executor verbose output (project root: lab_7_SQL) */
+const VERBOSE_LOG_PATH = path.resolve(__dirname, "..", "..", "agent-executor-log.txt");
 
 function createModel() {
   const openRouterKey = process.env.OPENROUTER_API_KEY;
@@ -27,14 +37,44 @@ function createModel() {
 
 const SYSTEM_PROMPT = `You are a PostgreSQL expert. Your job is to write a valid PostgreSQL SELECT query for the user's question.
 
-You have access to the tool get_schema: use it to retrieve the relevant database schema (tables and columns). Then write exactly one SELECT statement.
+You have access to these tools:
+- get_schema: use it to retrieve the relevant database schema (tables and columns).
+- get_current_datetime: use it when the question involves "today", "now", "current date/time", "tomorrow", "yesterday", or any relative date/time. It returns the actual current date and time so you can write correct WHERE conditions.
+
+After using the tools you need, write exactly one SELECT statement.
 
 Rules:
 - Use only tables/columns from the schema returned by get_schema.
+- For date/time filters, call get_current_datetime and use the returned values (e.g. date_today, date_tomorrow, datetime_now) in your SQL—do not guess or invent dates.
 - Prefer JOINs over subqueries when listing related data.
 - Use table aliases if helpful (e.g. u for users, p for permissions).
 - Your final answer must be ONLY the SQL statement: no explanation, no markdown, no code block wrapper.
 - Do not use INSERT, UPDATE, DELETE, or DDL. Only SELECT.`;
+// make this prompt better
+/**
+ * Returns current date/time for use in SQL (today, tomorrow, now).
+ * Call this when the user question involves relative dates or times.
+ * @returns {string}
+ */
+function getCurrentDateTimeContext() {
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const tomorrow = new Date(today);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  const yesterday = new Date(today);
+  yesterday.setDate(yesterday.getDate() - 1);
+
+  const fmt = (d) => d.toISOString().slice(0, 10); // YYYY-MM-DD
+  const fmtDateTime = (d) => d.toISOString().slice(0, 19).replace("T", " "); // YYYY-MM-DD HH:MM:SS
+
+  return [
+    `date_today: ${fmt(today)} (use for "today", "current date")`,
+    `date_tomorrow: ${fmt(tomorrow)} (use for "tomorrow")`,
+    `date_yesterday: ${fmt(yesterday)} (use for "yesterday")`,
+    `datetime_now: ${fmtDateTime(now)} (use for "now", "current time")`,
+    `time_now: ${now.toISOString().slice(11, 19)} (HH:MM:SS)`,
+  ].join("\n");
+}
 
 /**
  * Builds tools that close over the given schema context.
@@ -48,7 +88,15 @@ function createTools(schemaContext) {
       "Returns the relevant database schema (tables, columns, types) to use for writing SQL. Call this to see available tables and columns before writing your query.",
     func: async () => schemaContext,
   });
-  return [getSchemaTool];
+
+  const getCurrentDateTimeTool = new DynamicTool({
+    name: "get_current_datetime",
+    description:
+      "Returns the current date and time (today, tomorrow, yesterday, now) in formats ready for SQL. Call this when the user asks about 'today', 'now', 'current date', 'tomorrow', 'yesterday', or any relative date/time so you can write correct WHERE conditions.",
+    func: async () => getCurrentDateTimeContext(),
+  });
+
+  return [getSchemaTool, getCurrentDateTimeTool];
 }
 
 /**
@@ -89,15 +137,28 @@ export async function generateSQLWithAgent(question, schemaContext) {
     prompt,
   });
 
+  
+
   const executor = new AgentExecutor({
     agent,
     tools,
+    verbose: true,
     returnIntermediateSteps: false,
-    maxIterations: 5,
+    maxIterations: 5, // 10 // 20 // 30 improve prompt vs increase iterations 
     handleParsingErrors: true,
+    
   });
 
-  const result = await executor.invoke({ input: question });
+  const runStarted = new Date().toISOString();
+  fs.appendFileSync(
+    VERBOSE_LOG_PATH,
+    `\n=== Executor run ${runStarted} | question: ${question.slice(0, 80)}${question.length > 80 ? "..." : ""} ===\n`,
+    "utf8"
+  );
+  const result = await executor.invoke(
+    { input: question },
+    { callbacks: [new VerboseFileHandler(VERBOSE_LOG_PATH)] }
+  );
   const rawOutput = result.output ?? "";
   const sql = extractSQL(rawOutput);
 
