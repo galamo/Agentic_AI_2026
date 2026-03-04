@@ -116,10 +116,9 @@ The project must include
 - RAG process
 - Script to execute the different flows / client
 
-
-
 # Ex 4.3.2026
+
 1. Run the MCP server and the agent(mcp client + host)
-2. Add new tool to the MCP server 
-3. Tool will calc tax according to the given salary 
-4. check the Agent - see if the agent knows how to calc taxes of 2 salaries 
+2. Add new tool to the MCP server
+3. Tool will calc tax according to the given salary
+4. check the Agent - see if the agent knows how to calc taxes of 2 salaries
