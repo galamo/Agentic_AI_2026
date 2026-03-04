@@ -122,3 +122,12 @@ The project must include
 2. Add new tool to the MCP server
 3. Tool will calc tax according to the given salary
 4. check the Agent - see if the agent knows how to calc taxes of 2 salaries
+
+# Homework 4.3.2026
+
+1. Create new MCP server using the modulecontextprotocol lib
+2. check the api https://www.apicountries.com/
+3. select at 5 apis and create tools from them
+4. tools
+5. resources
+6. propmt - optionsl ( for documenation )
