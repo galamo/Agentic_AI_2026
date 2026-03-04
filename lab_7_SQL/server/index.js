@@ -18,11 +18,16 @@ app.use(cors());
 app.use(express.json());
 
 app.post("/query", async (req, res) => {
-  const { question } = req.body || {};
+  const { question, permission } = req.body || {};
   if (!question || typeof question !== "string") {
     return res.status(400).json({ error: "Missing or invalid 'question' in body" });
   }
-
+  
+  const permissionsMap = {
+    1: "read",
+    2: "write"
+  }
+  
   const mapAgentToContext = {
     "agent_1": { table: "schemas_vector" }, 
     "agent_2": { table: "html_city_page" }
@@ -35,7 +40,7 @@ app.post("/query", async (req, res) => {
     const { schemaContext } = await retrieveSchemaContext(question);
 
     // 2. SQL Generator
-    const { sql } = await generateSQLWithAgent(question, schemaContext);
+    const { sql } = await generateSQLWithAgent(question, schemaContext, permissionsMap[permission || 1]);
     if (!sql) {
       return res.json({
         answer: "I couldn't generate a SQL query for that question.",

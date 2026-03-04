@@ -81,12 +81,14 @@ function getCurrentDateTimeContext() {
  * @param {string} schemaContext
  * @returns {import("@langchain/core/tools").StructuredToolInterface[]}
  */
+
+
 function createTools(schemaContext) {
   const getSchemaTool = new DynamicTool({
     name: "get_schema",
     description:
       "Returns the relevant database schema (tables, columns, types) to use for writing SQL. Call this to see available tables and columns before writing your query.",
-    func: async () => schemaContext,
+    func: async () => schemaContext, // possible to refactor and use here the retriver
   });
 
   const getCurrentDateTimeTool = new DynamicTool({
@@ -121,7 +123,8 @@ function extractSQL(raw) {
  * @param {string} schemaContext
  * @returns {Promise<{ sql: string, parameters?: any[] }>}
  */
-export async function generateSQLWithAgent(question, schemaContext) {
+export async function generateSQLWithAgent(question, schemaContext,permission) {
+  console.log(permission)
   const model = createModel();
   const tools = createTools(schemaContext);
 
@@ -137,7 +140,7 @@ export async function generateSQLWithAgent(question, schemaContext) {
     prompt,
   });
 
-  
+
 
   const executor = new AgentExecutor({
     agent,

@@ -1,0 +1,22 @@
+{
+  "name": "lab10-mcp-agent",
+  "version": "1.0.0",
+  "description": "Agent that connects to Lab 10 MCP via HTTP and can answer about its tools",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "ask": "node run-agent.js",
+    "agent": "node run-agent.js"
+  },
+  "dependencies": {
+    "@langchain/core": "^0.3.0",
+    "@langchain/openai": "^0.3.0",
+    "@modelcontextprotocol/sdk": "^1.26.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "langchain": "^0.3.0",
+    "zod": "^3.25.0"
+  }
+}
