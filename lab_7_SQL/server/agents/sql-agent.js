@@ -146,7 +146,6 @@ export async function generateSQLWithAgent(question, schemaContext) {
     returnIntermediateSteps: false,
     maxIterations: 5, // 10 // 20 // 30 improve prompt vs increase iterations 
     handleParsingErrors: true,
-    
   });
 
   const runStarted = new Date().toISOString();
