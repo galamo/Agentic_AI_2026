@@ -13,6 +13,7 @@ export async function listSchemas() {
 }
 
 export async function listTables(schema) {
+  console.log("listTables, schema=>>>", schema );
   const result = await query(
     `SELECT table_name FROM information_schema.tables
      WHERE table_schema = $1 AND table_type = 'BASE TABLE'

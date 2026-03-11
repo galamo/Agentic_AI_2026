@@ -6,7 +6,7 @@
 import "dotenv/config";
 import { runPostgresAgentStdio } from "./postgres_agent_stdio.js";
 
-const question = process.argv.slice(2).join(" ") || "How many users are in the database?";
+const question = process.argv.slice(2).join(" ") || "how much tables you have in the schema public?";
 console.log("Question:", question);
 console.log("—".repeat(50));
 try {

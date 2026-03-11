@@ -47,6 +47,7 @@ async function connectStdioClient() {
     command: "node",
     args: ["server-stdio.js"],
     cwd: MCP_STDIO_CWD,
+    stderr: "pipe", // capture stderr so we can print it to console
     env: {
       ...process.env,
       PG_HOST: process.env.PG_HOST || "127.0.0.1",
@@ -56,10 +57,15 @@ async function connectStdioClient() {
       PG_DATABASE: process.env.PG_DATABASE || "sso_db",
     },
   });
+  // Forward MCP server stderr to agent console
+  if (transport.stderr) {
+    transport.stderr.on("data", (chunk) => console.log("[MCP server]", chunk.toString().trimEnd()));
+  }
   const client = new Client(
     { name: "lab8-postgres-agent-stdio", version: "1.0.0" },
     { capabilities: {} }
   );
+
   await client.connect(transport);
   return { client, transport };
 }
