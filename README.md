@@ -132,8 +132,10 @@ The project must include
 5. resources
 6. propmt - optionsl ( for documenation )
 
+# Ex 11.3
 
-
-MCP example
-n8n with mcp
-langgraph
+1. lab lab_8_SQL_FULL_ACCESS
+2. run `docker-compose up -d`
+3. run `npm i` in each folder, api and mcp-server
+4. try to run the relevant agent with stdio, `node ./api/agents/run-postgres-agent-stdio.js`
+5. figure out what is the issue and fix it in case there is no response from the mcp server.
