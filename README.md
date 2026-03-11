@@ -138,4 +138,5 @@ The project must include
 2. run `docker-compose up -d`
 3. run `npm i` in each folder, api and mcp-server
 4. try to run the relevant agent with stdio, `node ./api/agents/run-postgres-agent-stdio.js`
-5. figure out what is the issue and fix it in case there is no response from the mcp server.
+5. run in the main folder `npm run init-db`
+6. figure out what is the issue and fix it in case there is no response from the mcp server.
