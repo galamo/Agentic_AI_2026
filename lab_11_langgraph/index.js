@@ -3,14 +3,15 @@
  *
  * Flow: userQuery → ResearcherAgent (writes researchNotes) → WriterAgent (writes finalAnswer)
  * Run: npm start   or   node index.js
- * Requires OPENAI_API_KEY in .env or environment.
+ * Requires OPENROUTER_API_KEY in .env or environment.
  */
-import "dotenv/config";
+import dotenv from "dotenv";
+dotenv.config();
 import { createGraph } from "./graph/orchestrator.js";
 
-const apiKey = process.env.OPENAI_API_KEY;
+const apiKey = process.env.OPENROUTER_API_KEY;
 if (!apiKey) {
-  console.error("Missing OPENAI_API_KEY in .env or environment.");
+  console.error("MISSING API KEY.");
   process.exit(1);
 }
 
@@ -28,8 +29,8 @@ console.log("Running graph...\n");
 
 try {
   const initialState = { userQuery, researchNotes: null, finalAnswer: null };
+  console.log("--- Starting graph ---");
   const finalState = await graph.invoke(initialState);
-
   console.log("--- Research notes ---");
   console.log(finalState.researchNotes || "(none)");
   console.log("\n--- Final answer ---");

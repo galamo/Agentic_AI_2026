@@ -1,6 +1,7 @@
 import { ChatOpenAI } from "@langchain/openai";
 import { HumanMessage, SystemMessage } from "@langchain/core/messages";
-
+import dotenv from "dotenv";
+dotenv.config();
 /**
  * Researcher Agent – gathers and summarizes information for a given query.
  * Used as a node in the LangGraph; reads/writes shared state.
@@ -8,9 +9,9 @@ import { HumanMessage, SystemMessage } from "@langchain/core/messages";
 export class ResearcherAgent {
   constructor(apiKey) {
     this.model = new ChatOpenAI({
-      modelName: "gpt-4o-mini",
+      modelName: "openai/gpt-4o-mini",
       temperature: 0.3,
-      openAIApiKey: apiKey,
+      configuration: { baseURL: "https://openrouter.ai/api/v1", apiKey },
     });
     this.name = "ResearcherAgent";
   }

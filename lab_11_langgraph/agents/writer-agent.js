@@ -8,9 +8,9 @@ import { HumanMessage, SystemMessage } from "@langchain/core/messages";
 export class WriterAgent {
   constructor(apiKey) {
     this.model = new ChatOpenAI({
-      modelName: "gpt-4o-mini",
+      modelName: "openai/gpt-4o-mini",
       temperature: 0.5,
-      openAIApiKey: apiKey,
+      configuration: { baseURL: "https://openrouter.ai/api/v1", apiKey: apiKey },
     });
     this.name = "WriterAgent";
   }

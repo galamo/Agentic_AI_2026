@@ -131,3 +131,9 @@ The project must include
 4. tools
 5. resources
 6. propmt - optionsl ( for documenation )
+
+
+
+MCP example
+n8n with mcp
+langgraph

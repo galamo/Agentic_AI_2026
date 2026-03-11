@@ -9,7 +9,7 @@ import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/
 import { server } from "./mcp-server.js";
 
 const __filename = fileURLToPath(import.meta.url);
-const PORT = Number(process.env.MCP_PORT || "3111");
+const PORT = Number(process.env.MCP_PORT || "3500");
 const host = process.env.MCP_HOST || "127.0.0.1";
 
 const app = createMcpExpressApp({ host });
@@ -35,12 +35,10 @@ app.post("/mcp", async (req, res) => {
     }
   }
 });
-
+console.log("tools");
 app.get("/mcp", (_req, res) => {
-  res.status(405).json({
-    jsonrpc: "2.0",
-    error: { code: -32000, message: "Method not allowed. Use POST for MCP." },
-    id: null,
+  res.status(200).json({
+   tools: ["a","b"]
   });
 });
 

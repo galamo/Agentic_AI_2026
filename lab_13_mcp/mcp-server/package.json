@@ -1,0 +1,23 @@
+{
+  "name": "lab13-mcp-server",
+  "version": "1.0.0",
+  "description": "MCP server with calculate and test tools (Express, Streamable HTTP) for remote clients and n8n",
+  "type": "module",
+  "main": "server-http.js",
+  "scripts": {
+    "start": "node server-http.js",
+    "test": "node --experimental-vm-modules node_modules/mocha/bin/mocha test/**/*.test.js",
+    "install-deps": "npm install"
+  },
+  "devDependencies": {
+    "mocha": "^10.8.2",
+    "supertest": "^7.0.0"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.26.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "selenium-webdriver": "^4.27.0",
+    "zod": "^3.25.0"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "lab-12-langgraph-starter",
+  "version": "1.0.0",
+  "description": "LangGraph orchestrator + fetch users agent + statistics agent (Random User API)",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js"
+  },
+  "keywords": ["langgraph", "multi-agent", "randomuser", "statistics"],
+  "dependencies": {
+    "@langchain/core": "^1.1.17",
+    "@langchain/langgraph": "^1.1.3",
+    "@langchain/openai": "^1.2.3",
+    "dotenv": "^17.2.3",
+    "zod": "^3.23.0"
+  }
+}
