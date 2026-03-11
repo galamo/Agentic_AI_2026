@@ -8,7 +8,7 @@ import { fileURLToPath } from "url";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
 import { ChatOpenAI } from "@langchain/openai";
-import { AgentExecutor, createOpenAIFunctionsAgent } from "langchain/agents";
+import { AgentExecutor, createToolCallingAgent } from "langchain/agents";
 import { ChatPromptTemplate, MessagesPlaceholder } from "@langchain/core/prompts";
 import { getMcpToolsAsLangChain } from "../lib/mcp-tools.js";
 
@@ -86,15 +86,24 @@ export async function runPostgresAgentStdio(question) {
       ["human", "{input}"],
       new MessagesPlaceholder("agent_scratchpad"),
     ]);
-    const agent = await createOpenAIFunctionsAgent({ llm, tools, prompt });
+    const agent = createToolCallingAgent({ llm, tools, prompt });
     const executor = new AgentExecutor({
       agent,
       tools,
       verbose: Boolean(process.env.VERBOSE),
       maxIterations: 10,
+      returnIntermediateSteps: true,
     });
     const result = await executor.invoke({ input: question });
-    return { answer: result.output };
+    let answer = (result.output ?? "").trim();
+    if (!answer && result.intermediateSteps?.length) {
+      const lastStep = result.intermediateSteps[result.intermediateSteps.length - 1];
+      const observation = lastStep?.[1];
+      if (typeof observation === "string" && observation.trim()) {
+        answer = observation.trim();
+      }
+    }
+    return { answer: answer || "(no response)" };
   } finally {
     await transport.close();
   }
