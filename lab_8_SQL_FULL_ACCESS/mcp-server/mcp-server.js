@@ -24,9 +24,9 @@ const server = new McpServer(
       inputSchema: {},
     },
     async () => {
-      console.log(`${LOG_PREFIX} list_schemas called`);
+      console.error(`${LOG_PREFIX} list_schemas called`);
       const schemas = await tools.listSchemas();
-      console.log(`${LOG_PREFIX} list_schemas result: ${Array.isArray(schemas) ? schemas.length : 0} schema(s)`);
+      console.error(`${LOG_PREFIX} list_schemas result: ${Array.isArray(schemas) ? schemas.length : 0} schema(s)`);
       return {
         content: [{ type: "text", text: JSON.stringify(schemas, null, 2) }],
       }
@@ -43,9 +43,9 @@ const server = new McpServer(
       },
     },
     async ({ schema }) => {
-      console.log(`${LOG_PREFIX} list_tables called schema="${schema}"`);
+      console.error(`${LOG_PREFIX} list_tables called schema="${schema}"`);
       const tables = await tools.listTables(schema);
-      console.log(`${LOG_PREFIX} list_tables result: ${Array.isArray(tables) ? tables.length : 0} table(s)`, tables);
+      console.error(`${LOG_PREFIX} list_tables result: ${Array.isArray(tables) ? tables.length : 0} table(s)`, tables);
       return {
         content: [{ type: "text", text: JSON.stringify(tables, null, 2) }],
       }
@@ -63,9 +63,9 @@ const server = new McpServer(
       },
     },
     async ({ schema, table }) => {
-      console.log(`${LOG_PREFIX} describe_table called schema="${schema}" table="${table}"`);
+      console.error(`${LOG_PREFIX} describe_table called schema="${schema}" table="${table}"`);
       const desc = await tools.describeTable(schema, table);
-      console.log(`${LOG_PREFIX} describe_table result:`, Array.isArray(desc) ? `${desc.length} column(s)` : desc);
+      console.error(`${LOG_PREFIX} describe_table result:`, Array.isArray(desc) ? `${desc.length} column(s)` : desc);
       return {
         content: [{ type: "text", text: JSON.stringify(desc, null, 2) }],
       }
@@ -83,10 +83,10 @@ const server = new McpServer(
       },
     },
     async ({ schema, table }) => {
-      console.log(`${LOG_PREFIX} get_create_table called schema="${schema}" table="${table}"`);
+      console.error(`${LOG_PREFIX} get_create_table called schema="${schema}" table="${table}"`);
       const createSql = await tools.getCreateTable(schema, table);
       const text = createSql ?? `Table ${schema}.${table} not found.`;
-      console.log(`${LOG_PREFIX} get_create_table result: ${text ? "OK" : "not found"}`);
+      console.error(`${LOG_PREFIX} get_create_table result: ${text ? "OK" : "not found"}`);
       return {
         content: [{ type: "text", text }],
       }
@@ -105,9 +105,9 @@ const server = new McpServer(
     },
     async ({ sql, params }) => {
       const safeParams = params ?? [];
-      console.log(`${LOG_PREFIX} sql_execute called sql="${sql.slice(0, 120)}${sql.length > 120 ? "..." : ""}" params=${JSON.stringify(safeParams)}`);
+      console.error(`${LOG_PREFIX} sql_execute called sql="${sql.slice(0, 120)}${sql.length > 120 ? "..." : ""}" params=${JSON.stringify(safeParams)}`);
       const result = await tools.sqlExecute(sql, safeParams);
-      console.log(`${LOG_PREFIX} sql_execute result: command=${result.command} rowCount=${result.rowCount}`);
+      console.error(`${LOG_PREFIX} sql_execute result: command=${result.command} rowCount=${result.rowCount}`);
       return {
         content: [
           {
