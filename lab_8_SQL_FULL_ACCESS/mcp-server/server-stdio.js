@@ -12,5 +12,5 @@ server.onerror = (err) => {
   console.error("[postgres-mcp stdio error]", err);
 };
 
-await server.connect(transport);
+await server.connect(transport)
 // Process stays alive; stdin is read for JSON-RPC messages.
