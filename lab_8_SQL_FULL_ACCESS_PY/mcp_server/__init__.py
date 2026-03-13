@@ -1,0 +1,1 @@
+# PostgreSQL MCP server (FastMCP)

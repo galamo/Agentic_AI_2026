@@ -1,0 +1,32 @@
+# Postgres + pgAdmin for lab_8_SQL_FULL_ACCESS_PY (same ports as lab_8 for compatibility)
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: lab8-py-sql-postgres
+    environment:
+      POSTGRES_USER: sso_user
+      POSTGRES_PASSWORD: sso_pass
+      POSTGRES_DB: sso_db
+    ports:
+      - "5434:5432"
+    volumes:
+      - lab8_py_pg_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: lab8-py-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5052:80"
+    volumes:
+      - lab8_py_pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      - postgres
+    restart: unless-stopped
+
+volumes:
+  lab8_py_pg_data:
+  lab8_py_pgadmin_data:
