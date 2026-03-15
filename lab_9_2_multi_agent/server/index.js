@@ -19,6 +19,8 @@ app.post("/query", async (req, res) => {
 
   try {
     const result = await routeWithTools(question);
+    console.log("result", result);
+    console.log(question)
     return res.json(result);
   } catch (err) {
     console.error(err);
