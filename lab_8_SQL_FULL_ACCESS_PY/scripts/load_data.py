@@ -26,13 +26,28 @@ conn = psycopg2.connect(
     database=os.environ.get("PG_DATABASE", "sso_db"),
 )
 
+def strip_leading_comments(stmt):
+    """Drop leading blank lines and comment-only lines so INSERT/other statements run."""
+    lines = stmt.strip().split("\n")
+    while lines and (not lines[0].strip() or lines[0].strip().startswith("--")):
+        lines.pop(0)
+    return "\n".join(lines).strip()
+
+
 try:
     print("Loading data from data.sql...")
     sql = data_path.read_text()
+    if sql and not sql.endswith("\n"):
+        sql = sql + "\n"
+    # Split only on ";\n" so we don't break on semicolons inside or at end of lines
+    raw_statements = [s.strip() for s in sql.split(";\n") if s.strip()]
     with conn.cursor() as cur:
-        for stmt in sql.split(";"):
-            stmt = stmt.strip()
-            if stmt and not stmt.startswith("--"):
+        for stmt in raw_statements:
+            stmt = strip_leading_comments(stmt)
+            if stmt:
+                # re-add the semicolon PostgreSQL expects at end of statement
+                if not stmt.rstrip().endswith(";"):
+                    stmt = stmt + ";"
                 cur.execute(stmt)
     conn.commit()
     print("Data loaded successfully.")

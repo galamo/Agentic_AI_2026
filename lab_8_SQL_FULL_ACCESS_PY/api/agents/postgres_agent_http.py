@@ -4,12 +4,17 @@ Connects to postgres MCP server at POSTGRES_MCP_URL, gets tools, runs LangChain 
 """
 import os
 from langchain_openai import ChatOpenAI
-from langchain.agents import create_tool_calling_agent, AgentExecutor
-from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain_mcp_adapters import load_mcp_tools
+from langchain.agents import create_agent
+from langchain_core.messages import HumanMessage
+from langchain_mcp_adapters.tools import load_mcp_tools
 from langchain_mcp_adapters.sessions import create_session, StreamableHttpConnection
 
 POSTGRES_MCP_URL = os.environ.get("POSTGRES_MCP_URL", "http://127.0.0.1:3101/mcp")
+# Explicit headers so MCP server transport security accepts the request (avoids 400 Bad Request)
+MCP_HEADERS = {
+    "Content-Type": "application/json",
+    "Accept": "application/json, text/event-stream",
+}
 LOG_PREFIX = "[Agent]"
 
 SYSTEM_PROMPT = """You are a PostgreSQL expert with full access to the database via tools.
@@ -37,26 +42,29 @@ def _create_llm():
 async def run_postgres_agent_http(question: str) -> dict:
     """Run the agent for one question. Creates a new MCP session per call (stateless)."""
     print(f"{LOG_PREFIX} Connecting to MCP at {POSTGRES_MCP_URL}")
-    connection = StreamableHttpConnection(transport="streamable_http", url=POSTGRES_MCP_URL)
+    connection = StreamableHttpConnection(
+        transport="streamable_http",
+        url=POSTGRES_MCP_URL,
+        headers=MCP_HEADERS,
+    )
     async with create_session(connection) as session:
         print(f"{LOG_PREFIX} Fetching MCP tools...")
         tools = await load_mcp_tools(session=session)
         print(f"{LOG_PREFIX} Got {len(tools)} tool(s):", [getattr(t, "name", t) for t in tools])
         llm = _create_llm()
-        prompt = ChatPromptTemplate.from_messages([
-            ("system", SYSTEM_PROMPT),
-            ("human", "{input}"),
-            MessagesPlaceholder("agent_scratchpad"),
-        ])
-        agent = create_tool_calling_agent(llm, tools, prompt)
-        executor = AgentExecutor(
-            agent=agent,
+        graph = create_agent(
+            model=llm,
             tools=tools,
-            verbose=bool(os.environ.get("VERBOSE")),
-            max_iterations=10,
+            system_prompt=SYSTEM_PROMPT,
+            debug=bool(os.environ.get("VERBOSE")),
         )
-        print(f'{LOG_PREFIX} Invoking executor for question: "{question[:60]}{"..." if len(question) > 60 else ""}"')
-        result = await executor.ainvoke({"input": question})
-        answer = (result.get("output") or "").strip()
-        print(f"{LOG_PREFIX} Executor finished, output length: {len(answer)}")
+        inputs = {"messages": [HumanMessage(content=question)]}
+        print(f'{LOG_PREFIX} Invoking agent for question: "{question[:60]}{"..." if len(question) > 60 else ""}"')
+        result = await graph.ainvoke(inputs)
+        messages = result.get("messages") or []
+        answer = ""
+        if messages:
+            last = messages[-1]
+            answer = (getattr(last, "content", None) or str(last) or "").strip()
+        print(f"{LOG_PREFIX} Agent finished, output length: {len(answer)}")
         return {"answer": answer or "(no response)"}

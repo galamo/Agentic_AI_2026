@@ -7,9 +7,9 @@ import sys
 from pathlib import Path
 
 from langchain_openai import ChatOpenAI
-from langchain.agents import create_tool_calling_agent, AgentExecutor
-from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain_mcp_adapters import load_mcp_tools
+from langchain.agents import create_agent
+from langchain_core.messages import HumanMessage
+from langchain_mcp_adapters.tools import load_mcp_tools
 from langchain_mcp_adapters.sessions import create_session, StdioConnection
 
 # Lab root: parent of api/
@@ -58,18 +58,17 @@ async def run_postgres_agent_stdio(question: str) -> dict:
     async with create_session(connection) as session:
         tools = await load_mcp_tools(session=session)
         llm = _create_llm()
-        prompt = ChatPromptTemplate.from_messages([
-            ("system", SYSTEM_PROMPT),
-            ("human", "{input}"),
-            MessagesPlaceholder("agent_scratchpad"),
-        ])
-        agent = create_tool_calling_agent(llm, tools, prompt)
-        executor = AgentExecutor(
-            agent=agent,
+        graph = create_agent(
+            model=llm,
             tools=tools,
-            verbose=bool(os.environ.get("VERBOSE")),
-            max_iterations=10,
+            system_prompt=SYSTEM_PROMPT,
+            debug=bool(os.environ.get("VERBOSE")),
         )
-        result = await executor.ainvoke({"input": question})
-        answer = (result.get("output") or "").strip()
+        inputs = {"messages": [HumanMessage(content=question)]}
+        result = await graph.ainvoke(inputs)
+        messages = result.get("messages") or []
+        answer = ""
+        if messages:
+            last = messages[-1]
+            answer = (getattr(last, "content", None) or str(last) or "").strip()
         return {"answer": answer or "(no response)"}

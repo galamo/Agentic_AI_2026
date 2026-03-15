@@ -2,14 +2,19 @@
 Shared MCP server definition: PostgreSQL tools (list_schemas, list_tables,
 describe_table, get_create_table, sql_execute). Single FastMCP instance.
 """
+import os
+
 from mcp.server.fastmcp import FastMCP
 from . import tools as tools_impl
 
 LOG_PREFIX = "[MCP]"
 
+# Host/port/path used when running streamable-http (server_http.py); load_dotenv before import to override
 mcp = FastMCP(
     "postgres-mcp",
-    version="1.0.0",
+    host=os.environ.get("MCP_HOST", "127.0.0.1"),
+    port=int(os.environ.get("MCP_PORT", "3101")),
+    streamable_http_path=os.environ.get("MCP_PATH", "/mcp"),
 )
 
 

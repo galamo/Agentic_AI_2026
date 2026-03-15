@@ -1,0 +1,11 @@
+{
+    "mcpServers": {
+      "mermaid-mcp": {
+        "transport": "http",
+        "url": "https://mcp.mermaid.ai/mcp",
+        "headers": {
+          "Authorization": "87e76a26-5994-44f5-807c-3690ec2d625c.38e45f9365c9da3e46c4326b067d8bddd599650d402b7dcd26f7e6c82cbc500237dc4350cc348bac14ba7708629421d7b2520ee3727a53ff2147f0f99cc206dea04e48a4842c5efac8feec610ba247201a08ab3f9a4f1cfcb9cfba77dd7f221b7e700cddf12d31fe1b2f9a5dfbb6fb07573bb123c22d4197271888130507a1199f5b3eeab22857551a42bedddcc37b1e05911ad9114144e0d257b94c9e288bb65a1f1b59cb88bd053585fe5d120ab77cfefee60e9b2b718ebed12bacba246a662593aa087df4306985d80338a8e7761bfd2ff2f7dd37501f1ce60c4e1b5bcce6d10bfaca9f7ac2ae91461d64a92b266716e5c62fc68a40af8011f4069863771a"
+        }
+      }
+    }
+  }
