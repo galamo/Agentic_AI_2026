@@ -182,3 +182,4 @@ ANSWER:
 - Connect your API TOKEN from mermaid into the lab_9_2
 - Lunch the MultiAgent system and let mermiad answer which avilable tools exists?
 - Agent => Agent => MCP Server | tools
+- https://mermaid.ai/app/use - get the api key 
