@@ -144,6 +144,10 @@ The project must include
 
 # Homework 11.3
 
+- DB management
+- GET select - stats
+- Data manipulation - AGENT_WRITE_DELETE
+
 - Extend lab_8
 - Create an priviliged agent_manager - with the following permissions to the Database:
 
@@ -154,3 +158,21 @@ The project must include
 - The agent will be able to create user & delete user
 - Create agent_stats that will create statistcs on top of the relevant table - audit_login
 - Exmple of statistic - how much logged in users we have in the current month
+
+- login - shiran, 1-10
+- login success
+
+- user prompt (toggle button) => create me a new user in the system, first name shiran las name oren, password: 1 to 10
+
+ANSWER:
+4
+
+1. route
+2. SELECT
+3. WRITE_DELETE
+4. STATS =======> 2
+
+1=>2
+1=>4=>2
+1=>3
+1=>3=>4 X

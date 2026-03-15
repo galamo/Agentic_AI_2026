@@ -33,7 +33,7 @@ Reply with exactly one word: html_rag or sql_agent. No other text.`;
  * @param {string} question
  * @returns {Promise<'html_rag' | 'sql_agent'>}
  */
-export async function route(question) {
+export async function route(question, permissionKey) {
   const model = createModel();
   const messages = [
     new SystemMessage({ content: ROUTER_PROMPT }),
@@ -44,6 +44,6 @@ export async function route(question) {
     ? response.content
     : response.content?.map((c) => (c.type === "text" ? c.text : "")).join("") || "";
   const normalized = raw.trim().toLowerCase();
-  if (normalized.includes("sql_agent") || normalized.includes("sql")) return "sql_agent";
+  if (permissionKey === "write_permission" && normalized.includes("sql_agent") || normalized.includes("sql")) return "sql_agent";
   return "html_rag";
 }

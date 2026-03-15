@@ -33,7 +33,9 @@ const SYSTEM_PROMPT = `You are a PostgreSQL expert with full access to the datab
 Use the tools to discover schemas and tables when needed, then run SQL to answer the user.
 - Prefer list_schemas then list_tables(schema) to see structure; use describe_table(schema, table) for columns.
 - Execute queries with sql_execute(sql, params). Use parameterized queries ($1, $2, ...) when you have parameters.
-- Answer in natural language based on the results.`;
+- Answer in natural language based on the results.
+- Only if you are getting a permissionKey with the following value: "write_permission" then you can write complete the task otherwise reject.
+`;
 
 /**
  * Run the agent for one question. Creates a new MCP client per call (stateless).

@@ -15,14 +15,42 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// db
+const users = [{ username: "shiran", password: "123456" }, { username: "oren", password: "123456" }];
+
+app.post("/login", async (req, res) => {
+  const { username, password } = req.body || {};
+  if (!username || !password) {
+    return res.status(400).json({ error: "Missing or invalid 'username' or 'password' in body" });
+  }
+
+  const user = users.find(user => user.username === username && user.password === password);
+  if (!user) {
+    return res.status(401).json({ error: "Invalid username or password" });
+  }
+
+  const token = jwt.sign({ username, permissionKey: "write_permission" }, "process.env.JWT_SECRET", { expiresIn: "1h" });
+  return res.json({ token });
+});
+
 app.post("/query", async (req, res) => {
   const { question } = req.body || {};
+  const headers = req.headers;
+  const token = headers.authorization;
+
+  const decoded = jwt.verify(token, "process.env.JWT_SECRET");
+  
+  if (!decoded) {
+    return res.status(401).json({ error: "Invalid token" });
+  }
   if (!question || typeof question !== "string") {
     return res.status(400).json({ error: "Missing or invalid 'question' in body" });
   }
 
   try {
-    const chosenRoute = await route(question);
+    
+   
+    const chosenRoute = await route(question, decoded.permissionKey);
 
     if (chosenRoute === "sql_agent") {
       const result = await runSqlAgent(question);
