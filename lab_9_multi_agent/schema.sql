@@ -101,3 +101,49 @@ COMMENT ON TABLE users_permissions IS 'Junction: which user has which permission
 COMMENT ON TABLE audit_login IS 'Login audit: user_id, email_used, ip, success, created_at';
 COMMENT ON TABLE resource IS 'Sports resources: name, type (football, tennis, basketball)';
 COMMENT ON TABLE resource_booking IS 'Bookings: resource_id, user_id, start_time, end_time';
+
+
+-- Create database users
+CREATE USER readonly_user WITH PASSWORD 'readonly_password';
+CREATE USER app_user WITH PASSWORD 'app_password';
+
+-- Allow both users to connect to the database (sso_db = POSTGRES_DB in docker-compose)
+GRANT CONNECT ON DATABASE sso_db TO readonly_user;
+GRANT CONNECT ON DATABASE sso_db TO app_user;
+
+-- Allow usage of schema
+GRANT USAGE ON SCHEMA public TO readonly_user;
+GRANT USAGE ON SCHEMA public TO app_user;
+
+-- =========================
+-- Read-only user privileges
+-- =========================
+GRANT SELECT ON ALL TABLES IN SCHEMA public TO readonly_user;
+
+-- allow reading sequences (sometimes required)
+GRANT SELECT ON ALL SEQUENCES IN SCHEMA public TO readonly_user;
+
+-- ensure future tables also remain readable
+ALTER DEFAULT PRIVILEGES IN SCHEMA public
+GRANT SELECT ON TABLES TO readonly_user;
+
+
+-- =========================
+-- Full access user privileges
+-- =========================
+GRANT SELECT, INSERT, UPDATE, DELETE
+ON ALL TABLES IN SCHEMA public
+TO app_user;
+
+GRANT USAGE, SELECT, UPDATE
+ON ALL SEQUENCES IN SCHEMA public
+TO app_user;
+
+-- ensure future tables also grant permissions
+ALTER DEFAULT PRIVILEGES IN SCHEMA public
+GRANT SELECT, INSERT, UPDATE, DELETE
+ON TABLES TO app_user;
+
+ALTER DEFAULT PRIVILEGES IN SCHEMA public
+GRANT USAGE, SELECT, UPDATE
+ON SEQUENCES TO app_user;

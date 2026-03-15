@@ -10,7 +10,7 @@ import { routeWithTools } from "./agents/router-agent.js";
 const app = express();
 app.use(cors());
 app.use(express.json());
-
+// let mermiad answer which avilable tools exists?
 app.post("/query", async (req, res) => {
   const { question } = req.body || {};
   if (!question || typeof question !== "string") {

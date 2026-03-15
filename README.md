@@ -176,3 +176,9 @@ ANSWER:
 1=>4=>2
 1=>3
 1=>3=>4 X
+
+# Ex 15.3
+
+- Connect your API TOKEN from mermaid into the lab_9_2
+- Lunch the MultiAgent system and let mermiad answer which avilable tools exists?
+- Agent => Agent => MCP Server | tools

@@ -1,0 +1,23 @@
+%% LangGraph orchestrator flow (lab_11_langgraph/graph/orchestrator.js)
+%% START → researcher → writer → END | State: userQuery, researchNotes, finalAnswer
+
+flowchart LR
+  subgraph state["Shared State"]
+    userQuery["userQuery"]
+    researchNotes["researchNotes"]
+    finalAnswer["finalAnswer"]
+  end
+
+  START([START]) --> researcher
+  researcher["researcher"] --> writer
+  writer["writer"] --> END([END])
+
+  userQuery --> researcher
+  researcher --> researchNotes
+  researchNotes --> writer
+  writer --> finalAnswer
+
+  style researcher fill:#e1f5fe
+  style writer fill:#f3e5f5
+  style START fill:#c8e6c9
+  style END fill:#ffccbc

@@ -4,7 +4,7 @@
  * Output: result set (rows) or error
  */
 import { executeQuery } from "../lib/db.js";
-
+//code 
 /**
  * @param {string} sql
  * @param {any[]} params
