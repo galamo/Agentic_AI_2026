@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MCP Browser Demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,600;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0f0f12;
+      --surface: #1a1a20;
+      --border: #2a2a32;
+      --text: #e8e6e3;
+      --muted: #888;
+      --accent: #7c9cf8;
+      --accent-dim: #5a7ae8;
+      --success: #6ee7b7;
+      --radius: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "DM Sans", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    .grid {
+      background-image:
+        linear-gradient(rgba(124, 156, 248, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(124, 156, 248, 0.03) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+
+    header {
+      padding: 2rem 1.5rem 3rem;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    h1 {
+      font-size: clamp(1.5rem, 4vw, 2.25rem);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+
+    .sub {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    main {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 4rem;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .card h2 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      color: var(--accent);
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 2rem;
+    }
+
+    button, .btn {
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 500;
+      padding: 0.65rem 1.25rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+    }
+
+    button:hover, .btn:hover {
+      background: var(--border);
+      border-color: var(--accent-dim);
+      color: var(--accent);
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--bg);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-dim);
+      border-color: var(--accent-dim);
+      color: var(--bg);
+    }
+
+    input[type="text"] {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.85rem;
+      width: 100%;
+      padding: 0.6rem 0.9rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--text);
+      margin-top: 0.5rem;
+    }
+
+    input[type="text"]:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(124, 156, 248, 0.2);
+    }
+
+    .status {
+      margin-top: 1.5rem;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-family: "JetBrains Mono", monospace;
+      background: rgba(110, 231, 183, 0.08);
+      border: 1px solid rgba(110, 231, 183, 0.25);
+      color: var(--success);
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      color: var(--muted);
+      font-size: 0.8rem;
+      border-top: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body class="grid">
+  <header>
+    <h1>MCP Browser Demo</h1>
+    <p class="sub">Open this page in the Cursor IDE browser to test automation</p>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>Welcome</h2>
+      <p>This page is meant to be opened via <code>browser_navigate</code> in the cursor-ide-browser MCP. You can click buttons, fill inputs, and take snapshots from the agent.</p>
+    </section>
+
+    <section class="card">
+      <h2>Try it</h2>
+      <p>Label for the input below (for accessibility and snapshot refs):</p>
+      <label for="demo-input">Your message</label>
+      <input type="text" id="demo-input" name="demo-input" placeholder="Type something…" aria-label="Your message" />
+    </section>
+
+    <section class="card">
+      <h2>Actions</h2>
+      <div class="actions">
+        <button type="button" id="btn-hello">Say hello</button>
+        <button type="button" class="btn-primary" id="btn-submit">Submit</button>
+        <button type="button" id="btn-toggle">Toggle status</button>
+      </div>
+      <div class="status" id="status" role="status" aria-live="polite" hidden>Ready. Use the MCP browser tools to interact with this page.</div>
+    </section>
+  </main>
+
+  <footer>
+    Agentic AI 2026 — MCP cursor-ide-browser demo
+  </footer>
+
+  <script>
+    (function () {
+      var status = document.getElementById("status");
+      var input = document.getElementById("demo-input");
+
+      function showStatus(msg) {
+        status.textContent = msg;
+        status.hidden = false;
+      }
+
+      document.getElementById("btn-hello").addEventListener("click", function () {
+        showStatus("Hello from the demo page! Time: " + new Date().toLocaleTimeString());
+      });
+
+      document.getElementById("btn-submit").addEventListener("click", function () {
+        var val = (input && input.value) || "(empty)";
+        showStatus("Submitted: " + val);
+      });
+
+      document.getElementById("btn-toggle").addEventListener("click", function () {
+        status.hidden = !status.hidden;
+        if (!status.hidden && !status.textContent) {
+          status.textContent = "Status visible. Use MCP browser tools to interact.";
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

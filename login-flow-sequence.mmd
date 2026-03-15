@@ -1,0 +1,30 @@
+sequenceDiagram
+    actor User
+    participant Browser
+    participant Frontend
+    participant AuthAPI
+    participant Database
+
+    User->>Browser: Open login page
+    Browser->>Frontend: GET /login
+    Frontend-->>Browser: Render login form
+    Browser-->>User: Show form
+
+    User->>Browser: Enter email & password
+    User->>Browser: Click "Sign in"
+    Browser->>Frontend: POST /login (credentials)
+    Frontend->>Frontend: Validate input
+
+    alt Valid input
+        Frontend->>AuthAPI: Authenticate(user, password)
+        AuthAPI->>Database: Lookup user / verify hash
+        Database-->>AuthAPI: User record
+        AuthAPI->>AuthAPI: Verify password / create token
+        AuthAPI-->>Frontend: JWT / session token
+        Frontend-->>Browser: Set cookie / redirect to dashboard
+        Browser-->>User: Show dashboard
+    else Invalid credentials
+        AuthAPI-->>Frontend: 401 Unauthorized
+        Frontend-->>Browser: Error message
+        Browser-->>User: Show "Invalid email or password"
+    end

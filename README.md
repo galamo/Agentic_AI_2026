@@ -4,7 +4,8 @@
 
 - rag on images
 - rag db
-  https://gamma.app/docs/AI-Agents-hlgj38btkim0stw
+- MCP: https://model-context-protocol-dz2jt4d.gamma.site/
+- Agents: https://gamma.app/docs/AI-Agents-hlgj38btkim0stw
 
 This repository is a playground for experimenting with **agentic AI** patterns and tools in 2026, using Cursor as the primary development environment.
 
@@ -142,11 +143,14 @@ The project must include
 6. figure out what is the issue and fix it in case there is no response from the mcp server.
 
 # Homework 11.3
-- Extend lab_8 
+
+- Extend lab_8
 - Create an priviliged agent_manager - with the following permissions to the Database:
+
 1. Write
 2. Read
 3. Delete
+
 - The agent will be able to create user & delete user
 - Create agent_stats that will create statistcs on top of the relevant table - audit_login
 - Exmple of statistic - how much logged in users we have in the current month
