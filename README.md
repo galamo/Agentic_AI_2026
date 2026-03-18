@@ -192,3 +192,12 @@ ANSWER:
 - the result will be translated according the user selected language
 - add to the state final_result_translate
 
+# Homework 18.3
+
+- Run lab_15 - make it work, using the new flow with translator
+- see image ![alt text](./lab_15_orchestrator_py/image.png)
+- Create a multiagent system - book a flight
+- create dummy data json - flights
+- the system recieves a flight origin and destination and date in plain text
+- the agent will pick the most relevant flights and book it
+- booking = save the flight in DB, table.
