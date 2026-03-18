@@ -184,3 +184,11 @@ ANSWER:
 - Create a flow diagram in your account based on the client prompt
 - Agent => Agent => MCP Server | tools
 - https://mermaid.ai/app/use - get the api key
+
+# Ex 18.3
+
+- reference lab_11_langgraph_py
+- add a new node, which will use agent that translate the result
+- the result will be translated according the user selected language
+- add to the state final_result_translate
+
