@@ -30,12 +30,19 @@ print("Agents:", " → ".join(a["name"] for a in get_info()["agents"]))
 print()
 
 user_query = sys.argv[1] if len(sys.argv) > 1 else "What are the main benefits of renewable energy?"
+language = sys.argv[2] if len(sys.argv) > 2 else "english"
 
 print("Query:", user_query)
+print("Language:", language)
 print("Running graph...\n")
 
 try:
-    initial_state = {"user_query": user_query, "research_notes": None, "final_answer": None}
+    initial_state = {
+        "user_query": user_query,
+        "research_notes": None,
+        "final_answer": None,
+        "language": language,
+    }
     print("--- Starting graph ---")
     final_state = graph.invoke(initial_state)
     print("--- Research notes ---")

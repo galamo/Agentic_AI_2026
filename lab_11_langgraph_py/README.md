@@ -1,15 +1,16 @@
 # Lab 11: LangGraph (Python) – Agent-to-Agent Communication
 
-Python version of Lab 11. **Two agents communicating via LangGraph**: a **Researcher** agent and a **Writer** agent. They share state in a single graph; the Researcher writes `research_notes`, and the Writer reads them and produces `final_answer`.
+Python version of Lab 11. **Three agents communicating via LangGraph**: a **Researcher** agent, a **Writer** agent, and a **Translator** agent. They share state in a single graph; the Researcher writes `research_notes`, the Writer produces `final_answer`, and the Translator optionally translates it based on `language`.
 
 ## Flow
 
 ```
-user_query → [ResearcherAgent] → research_notes → [WriterAgent] → final_answer
+user_query → [ResearcherAgent] → research_notes → [WriterAgent] → final_answer → [TranslatorAgent?] (final_answer translated)
 ```
 
 - **ResearcherAgent**: Takes `user_query` from state, calls the LLM, and writes `research_notes`.
 - **WriterAgent**: Reads `user_query` and `research_notes` from state, calls the LLM, and writes `final_answer`.
+- **TranslatorAgent**: Reads `final_answer` and `language` from state. If `language` is English, it leaves `final_answer` unchanged; otherwise it translates it.
 
 Communication happens only through the **shared graph state** (no direct agent-to-agent calls). LangGraph runs the nodes in sequence and passes the updated state between them.
 
@@ -40,11 +41,18 @@ With a custom question:
 python main.py "Why is the sky blue?"
 ```
 
+With a custom target language (example: Spanish):
+
+```bash
+python main.py "Why is the sky blue?" "spanish"
+```
+
 ## Structure
 
 - `agents/researcher_agent.py` – Researcher agent (reads `user_query`, writes `research_notes`).
 - `agents/writer_agent.py` – Writer agent (reads `user_query` + `research_notes`, writes `final_answer`).
-- `graph/orchestrator.py` – Builds the LangGraph with `StateGraph`, `TypedDict` state, and edges: `START → researcher → writer → END`.
+- `agents/translator_agent.py` – Translator agent (reads `final_answer` + `language`, writes translated `final_answer`).
+- `graph/orchestrator.py` – Builds the LangGraph with `StateGraph`, `TypedDict` state, and edges: `START → researcher → writer → (translator? ) → END`.
 - `main.py` – Entry point: creates graph, invokes with `user_query`, prints research notes and final answer.
 
 ## Dependencies
