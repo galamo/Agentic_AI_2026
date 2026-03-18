@@ -14,7 +14,7 @@ from agents.writer_agent import WriterAgent
 class State(TypedDict, total=False):
     user_query: str
     research_notes: str | None
-    final_answer: str | None
+    final_answer: str | None 
 
 
 def create_graph(api_key: str):

@@ -11,6 +11,7 @@ class WriterAgent:
         self.model = ChatOpenAI(
             model="openai/gpt-4o-mini",
             temperature=0.5,
+            # max_tokens=1000,
             base_url="https://openrouter.ai/api/v1",
             api_key=api_key,
         )
@@ -28,7 +29,7 @@ class WriterAgent:
         system_prompt = (
             "You are a writer. Using the research notes provided, write a clear, friendly, "
             "and concise answer to the user's question. Do not add made-up facts; stick to "
-            "the research. Use plain language."
+            "the research. Use plain language. write maximum 2 sentences (30 words)"
         )
         user_prompt = (
             f"User question: {user_query or 'N/A'}\n\n"
