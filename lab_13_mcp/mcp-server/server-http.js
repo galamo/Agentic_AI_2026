@@ -16,10 +16,10 @@ const PORT = Number(process.env.MCP_PORT || "3513");
 const host = process.env.MCP_HOST || "0.0.0.0";
 
 const app = createMcpExpressApp({ host });
+
 app.use((req,res,next)=>{
-  console.log(req.path)
+  console.log(req.url)
   console.log(req.method)
-  console.log("SOMEONE ACCESS THE MCP SERVER")
   next()
 })
 app.post("/mcp", async (req, res) => {
@@ -45,6 +45,7 @@ app.post("/mcp", async (req, res) => {
 });
 
 app.get("/mcp", (_req, res) => {
+  console.log("something went wrong")
   res.status(405).json({
     jsonrpc: "2.0",
     error: { code: -32000, message: "Method not allowed. Use POST for MCP." },

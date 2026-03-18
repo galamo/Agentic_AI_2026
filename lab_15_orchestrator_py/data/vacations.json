@@ -1,0 +1,51 @@
+[
+  {
+    "id": "paris-summer-7",
+    "location": "Paris, France",
+    "start_date": "2026-07-10",
+    "end_date": "2026-07-17",
+    "price_usd": 2190,
+    "highlights": ["Eiffel Tower day", "Seine cruise", "Local food tour"]
+  },
+  {
+    "id": "athens-heritage-5",
+    "location": "Athens, Greece",
+    "start_date": "2026-06-20",
+    "end_date": "2026-06-25",
+    "price_usd": 1490,
+    "highlights": ["Acropolis visit", "Plaka evening", "Museum passes"]
+  },
+  {
+    "id": "rome-romance-4",
+    "location": "Rome, Italy",
+    "start_date": "2026-09-05",
+    "end_date": "2026-09-09",
+    "price_usd": 1390,
+    "highlights": ["Colosseum tour", "Vatican day", "Gelato crawl"]
+  },
+  {
+    "id": "barcelona-beach-6",
+    "location": "Barcelona, Spain",
+    "start_date": "2026-08-01",
+    "end_date": "2026-08-07",
+    "price_usd": 1790,
+    "highlights": ["Beach day", "Sagrada Familia", "Gothic Quarter stroll"]
+  },
+  {
+    "id": "prague-old-town-5",
+    "location": "Prague, Czechia",
+    "start_date": "2026-10-12",
+    "end_date": "2026-10-17",
+    "price_usd": 1590,
+    "highlights": ["Old Town sights", "Castle walk", "Cozy cafe stops"]
+  },
+  {
+    "id": "newyork-city-break-3",
+    "location": "New York, USA",
+    "start_date": "2026-07-28",
+    "end_date": "2026-07-31",
+    "price_usd": 1890,
+    "highlights": ["Broadway night", "Central Park", "Food markets"]
+  }
+]
+
