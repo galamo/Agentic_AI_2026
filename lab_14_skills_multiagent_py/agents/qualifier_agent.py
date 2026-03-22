@@ -3,9 +3,6 @@ Qualifier Agent – uses the lead_qualification skill.
 Reads plan + companyResearch, writes leadQualification to state.
 """
 from skills.registry import run_skill
-from langgraph.executor import AgentExecutor
-
-executor = AgentExecutor(graph)
 
 
 class QualifierAgent:

@@ -23,7 +23,7 @@ class PlannerAgent:
         self.model = ChatOpenAI(
             model="openai/gpt-4o-mini",
             temperature=0.2,
-            base_url="https://openrouter.ai/api/fv1",
+            base_url="https://openrouter.ai/api/v1",
             api_key=api_key,
         )
         self.name = "PlannerAgent"
