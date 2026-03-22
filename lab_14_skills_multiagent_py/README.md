@@ -5,7 +5,7 @@ This lab is the **Python** version of `lab_14_skills_multiagent`. It shows a mul
 ## Architecture
 
 ```
-User: "Prepare a proposal for Acme Corp in manufacturing"
+User: "Prepare a proposal Sales campeign with requriements and best practices"
         ↓
    Planner Agent      (parses request → companyName, industryHint, steps)
         ↓

@@ -37,11 +37,12 @@ def create_graph(api_key: str):
     builder.add_node("researcher", researcher_node)
     builder.add_node("writer", writer_node)
     builder.add_node("translator", translator_node)
+
     builder.add_edge(START, "researcher")
     builder.add_edge("researcher", "writer")
     def route_after_writer(s: State) -> str:
         lang = (s.get("language") or "english").strip().lower()
-        if lang in {"en", "english", "en_gb", "en-gb"}: 
+        if lang in {"en", "english", "en_gb", "en-gb","enus"}: 
             return "end"
         return "translator"
     builder.add_conditional_edges(
