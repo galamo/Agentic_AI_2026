@@ -1,0 +1,33 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: lab17-pgvector-postgres
+    environment:
+      POSTGRES_USER: langchain
+      POSTGRES_PASSWORD: langchain
+      POSTGRES_DB: langchain
+    ports:
+      - "5432:5432"
+    volumes:
+      - lab17_pg_data:/var/lib/postgresql/data
+      # Initial SQL schema (used by the API + Schema-as-Vector indexing).
+      - ./schema.sql:/docker-entrypoint-initdb.d/01_expenses_schema.sql:ro
+    restart: unless-stopped
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: lab17-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5052:80"
+    volumes:
+      - lab17_pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      - postgres
+    restart: unless-stopped
+
+volumes:
+  lab17_pg_data:
+  lab17_pgadmin_data:

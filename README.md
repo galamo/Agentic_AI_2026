@@ -201,3 +201,41 @@ ANSWER:
 - the system recieves a flight origin and destination and date in plain text
 - the agent will pick the most relevant flights and book it
 - booking = save the flight in DB, table.
+
+# Ec 25.3
+
+1. Create a AI process to book room
+2. use the client in lab_21
+3. try to use MCP playright
+
+# Client side Prompt for expenses client
+
+`Create Lab_23
+
+inside lab_23 create Client applicaiton
+name: expenses-client
+client should be written in React + Typescirpt latest versions.
+
+The application context is expenses client applicaiton
+should contain 2 routes, header navigation and nice icon + background image.
+
+route 1 - upload image/reccipe for analyze in backend and then write into DB, if the image uploaded - confirm with success message modal
+
+route 2 - support presenting the expenses in table,
+using filters on date, amount, description
+
+amount and description can be input text - free text
+date should be filter by date picker
+add submit button for the filters
+
+route 2 should contain above the table 2 piecharts
+first piechart will aggregate the reciepts by type,
+second piechart will agggregate reciepts by month
+
+align the piecharts statistics above the table - centered
+
+Use Material UI design react library,
+Add mockup data to the client using the following Entity: Recipe ( amount, date, type, description )
+at least 10 reciepts in different months and amount this year.
+Dont implement any other backend capabilities
+`

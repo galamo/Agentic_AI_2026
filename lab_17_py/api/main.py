@@ -3,6 +3,7 @@ Lab 17 API: receipt upload (LangGraph stub) + expense listing with filters.
 """
 from contextlib import asynccontextmanager
 from datetime import date
+import os
 from typing import Any
 
 from dotenv import load_dotenv
@@ -15,14 +16,34 @@ from sqlalchemy.orm import Session
 
 from api.db import get_db, init_db
 from api.graph.receipt_chain import run_receipt_graph
+from api.rag.schema_rag_pgv import ensure_schema_vector_index
+from api.rag.sql_chat import run_sql_chat
 from api.models import Expense
-from api.schemas import ExpenseListResponse, ExpenseOut, ReceiptUploadResponse, SummaryResponse, TypeTotal
+from api.reports import compute_reports
+from api.schemas import (
+    ChatRequest,
+    ChatResponse,
+    ExpenseListResponse,
+    ExpenseOut,
+    ReceiptUploadResponse,
+    ReportsResponse,
+    SummaryResponse,
+    TypeTotal,
+)
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     init_db()
     _seed_demo_if_empty()
+    # Optional: eagerly build the schema-as-vector index on startup.
+    # This makes the first chat request faster, but requires the embedding API key.
+    if os.environ.get("SCHEMA_RAG_INDEX_ON_STARTUP", "1") == "1" and os.environ.get("OPENROUTER_API_KEY"):
+        try:
+            ensure_schema_vector_index()
+        except Exception:
+            # Startup must not fail if embeddings are temporarily unavailable.
+            pass
     yield
 
 
@@ -100,24 +121,50 @@ async def upload_receipt(
         raise HTTPException(status_code=400, detail="Empty file")
 
     mime = file.content_type
-    final_state = run_receipt_graph(data, mime_type=mime, filename=file.filename)
+    try:
+        final_state = run_receipt_graph(data, mime_type=mime, filename=file.filename)
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=502, detail=f"Receipt extraction failed: {e}") from e
     safe_state = _sanitize_graph_state(dict(final_state))
 
-    # Students: read parsed fields from final_state instead of placeholders.
-    today = date.today()
+    parsed_date = final_state.get("parsed_expense_date")
+    parsed_type = final_state.get("parsed_expense_type")
+    parsed_amount = final_state.get("parsed_amount")
+    parsed_notes = final_state.get("parsed_notes")
+
+    if not parsed_date or not parsed_type or parsed_amount is None:
+        raise HTTPException(
+            status_code=422,
+            detail=f"Receipt extraction failed to return required fields. graph_state keys={list(final_state.keys())}",
+        )
+
+    try:
+        expense_date = date.fromisoformat(str(parsed_date))
+    except ValueError as e:
+        raise HTTPException(status_code=422, detail=f"Invalid parsed expense_date: {parsed_date!r}") from e
+
+    try:
+        amount = float(parsed_amount)
+        if amount < 0:
+            raise ValueError("amount must be >= 0")
+    except (TypeError, ValueError) as e:
+        raise HTTPException(status_code=422, detail=f"Invalid parsed amount: {parsed_amount!r}") from e
+
     expense = Expense(
-        expense_date=today,
-        expense_type="pending",
-        amount=0.0,
+        expense_date=expense_date,
+        expense_type=str(parsed_type).strip().lower(),
+        amount=amount,
         receipt_filename=file.filename,
-        notes="Uploaded via /api/receipts; replace with graph output when implemented.",
+        notes=parsed_notes,
     )
     db.add(expense)
     db.commit()
     db.refresh(expense)
 
     return ReceiptUploadResponse(
-        message="Receipt stored; LangGraph chain is a stub — see lab README tasks.",
+        message="Receipt stored; extracted fields saved to DB.",
         expense=ExpenseOut.model_validate(expense),
         graph_state=safe_state,
     )
@@ -170,6 +217,38 @@ def expenses_summary(
 @app.get("/health")
 def health():
     return {"ok": True, "service": "lab_17_py"}
+
+
+@app.post("/api/chat", response_model=ChatResponse)
+def chat_about_expenses(
+    payload: ChatRequest,
+    db: Session = Depends(get_db),
+):
+    """
+    Ask questions about the expenses DB using:
+    - schema-as-vector retrieval
+    - LLM SQL generation (read-only)
+    - SQL execution + natural language answer
+    """
+    answer, sql, rows = run_sql_chat(
+        db=db,
+        question=payload.question,
+        date_from=payload.date_from,
+        date_to=payload.date_to,
+        expense_type=payload.expense_type,
+        limit=payload.limit,
+    )
+    return ChatResponse(answer=answer, sql=sql, row_count=len(rows), rows=rows)
+
+
+@app.get("/api/reports", response_model=ReportsResponse)
+def reports(
+    db: Session = Depends(get_db),
+    date_from: date | None = Query(None, description="Inclusive lower bound (expense_date)"),
+    date_to: date | None = Query(None, description="Inclusive upper bound (expense_date)"),
+    expense_type: str | None = Query(None, description="Filter by expense type (exact match)"),
+):
+    return compute_reports(db, date_from=date_from, date_to=date_to, expense_type=expense_type)
 
 
 if __name__ == "__main__":
