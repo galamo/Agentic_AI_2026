@@ -7,7 +7,9 @@ from sqlalchemy.orm import DeclarativeBase, Session, sessionmaker
 
 LAB_ROOT = Path(__file__).resolve().parent.parent
 (LAB_ROOT / "data").mkdir(parents=True, exist_ok=True)
-DEFAULT_DB = f"sqlite:///{LAB_ROOT / 'data' / 'expenses.db'}"
+# Default to the local pgvector Postgres container used in this repo (`lab_17_py/docker-compose.yml`).
+# You can override with DATABASE_URL in `.env`.
+DEFAULT_DB = "postgresql+psycopg2://langchain:langchain@127.0.0.1:5432/langchain"
 
 
 def _database_url() -> str:
