@@ -56,12 +56,24 @@ npm run dev
 
 The app runs on `http://localhost:3333`.
 
-## Behavior (localStorage only)
+## API (FastAPI + Data.json)
+
+```bash
+cd lab_21_client_only
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r api/requirements.txt
+uvicorn api.main:app --reload --host 0.0.0.0 --port 8000
+```
+
+## Behavior (API-backed)
 
 - The booking form collects `date/time` (1 hour), `description`, `user name`, and `room` (`1-10`).
 - Validation prevents overlap for the selected `room` and one-hour window.
-- On success, the booking is saved to `localStorage` (key: `lab_21_room_bookings_v1`) and a `requestId` is shown.
-- The bookings table updates in real time (including across tabs).
+- On success, the client calls `POST /api/bookings`, and the server persists the full bookings array into `api/Data.json`.
+- The bookings table is loaded from `GET /api/bookings`.
+
+The UI also supports an optional disk-file mode using the File System Access API (open/create a JSON file for read/write).
 
 You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 

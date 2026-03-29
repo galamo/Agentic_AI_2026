@@ -63,7 +63,7 @@ async def _read_status_banner(page) -> tuple[str, str]:
 
 
 def _extract_request_id(ui_text: str) -> str | None:
-    m = re.search(r"Request id:\s*([A-Za-z0-9_\\-:.]+)", ui_text)
+    m = re.search(r"Request id:\s*([-A-Za-z0-9_:.]+)", ui_text)
     if not m:
         return None
     return m.group(1)

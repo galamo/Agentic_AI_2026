@@ -1,18 +1,21 @@
 import './App.css'
 
 import { useEffect, useMemo, useState } from 'react'
+import type { Booking } from './bookingsFile'
+import {
+  clearPersistedFileHandle,
+  createNewBookingsFile,
+  createBookingViaApi,
+  fetchApiBookingsJson,
+  persistFileHandle,
+  pickOpenBookingsFile,
+  readBookingsFromHandle,
+  loadPersistedFileHandle,
+  requestFileAccess,
+  supportsLocalFileBookings,
+  writeBookingsToHandle,
+} from './bookingsFile'
 
-type Booking = {
-  requestId: string
-  room: number
-  startIso: string
-  endIso: string
-  description: string
-  userName: string
-  createdAtIso: string
-}
-
-const STORAGE_KEY = 'lab_21_room_bookings_v1'
 const ROOM_MIN = 1
 const ROOM_MAX = 10
 const ONE_HOUR_MS = 60 * 60 * 1000
@@ -22,7 +25,6 @@ function pad2(n: number) {
 }
 
 function toDateTimeLocalValue(d: Date) {
-  // datetime-local expects: YYYY-MM-DDTHH:mm (local time, no timezone suffix)
   return `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}T${pad2(
     d.getHours(),
   )}:${pad2(d.getMinutes())}`
@@ -31,16 +33,13 @@ function toDateTimeLocalValue(d: Date) {
 function defaultDateTimeLocalValue() {
   const d = new Date()
   d.setSeconds(0, 0)
-  d.setMinutes(0) // keep it on the hour (aligns with "one hour only")
+  d.setMinutes(0)
   d.setMilliseconds(0)
   return toDateTimeLocalValue(d)
 }
 
 function parseDateTimeLocal(value: string): Date | null {
-  // Expected format: YYYY-MM-DDTHH:mm
-  const m = value.match(
-    /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})$/,
-  )
+  const m = value.match(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})$/)
   if (!m) return null
   const year = Number(m[1])
   const monthIndex = Number(m[2]) - 1
@@ -65,43 +64,14 @@ function formatDateTime(iso: string) {
 }
 
 function rangesOverlap(aStart: Date, aEnd: Date, bStart: Date, bEnd: Date) {
-  // [aStart, aEnd) overlaps [bStart, bEnd)
   return aStart < bEnd && aEnd > bStart
 }
 
 function newRequestId() {
-  // Browser API is preferred, but keep a fallback for older environments.
   if (typeof crypto !== 'undefined' && 'randomUUID' in crypto) {
     return crypto.randomUUID()
   }
   return `req_${Math.random().toString(16).slice(2)}_${Date.now()}`
-}
-
-function loadBookings(): Booking[] {
-  if (typeof window === 'undefined') return []
-  const raw = window.localStorage.getItem(STORAGE_KEY)
-  if (!raw) return []
-  try {
-    const parsed = JSON.parse(raw)
-    if (!Array.isArray(parsed)) return []
-    return parsed.filter((x): x is Booking => {
-      if (!x || typeof x !== 'object') return false
-      if (typeof x.requestId !== 'string') return false
-      if (typeof x.room !== 'number') return false
-      if (typeof x.startIso !== 'string') return false
-      if (typeof x.endIso !== 'string') return false
-      if (typeof x.description !== 'string') return false
-      if (typeof x.userName !== 'string') return false
-      if (typeof x.createdAtIso !== 'string') return false
-      return true
-    })
-  } catch {
-    return []
-  }
-}
-
-function saveBookings(bookings: Booking[]) {
-  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(bookings))
 }
 
 export default function App() {
@@ -110,20 +80,55 @@ export default function App() {
   const [userName, setUserName] = useState('')
   const [room, setRoom] = useState<number>(1)
 
-  const [bookings, setBookings] = useState<Booking[]>(() => loadBookings())
+  const [bookings, setBookings] = useState<Booking[]>([])
+  const [ready, setReady] = useState(false)
+  const [initError, setInitError] = useState<string | null>(null)
+  const [persistenceMode, setPersistenceMode] = useState<'disk' | 'api'>('api')
+  const [fileHandle, setFileHandle] = useState<FileSystemFileHandle | null>(null)
+  const [fileLabel, setFileLabel] = useState<string | null>(null)
 
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(
     null,
   )
 
-  // "Real time": update the UI whenever another tab changes localStorage.
   useEffect(() => {
-    const onStorage = (e: StorageEvent) => {
-      if (e.key !== STORAGE_KEY) return
-      setBookings(loadBookings())
+    let cancelled = false
+    ;(async () => {
+      try {
+        if (supportsLocalFileBookings()) {
+          const stored = await loadPersistedFileHandle()
+          if (!cancelled && stored) {
+            const ok = await requestFileAccess(stored)
+            if (ok) {
+              const list = await readBookingsFromHandle(stored)
+              if (!cancelled) {
+                setFileHandle(stored)
+                setFileLabel(stored.name)
+                setPersistenceMode('disk')
+                setBookings(list)
+                setReady(true)
+                return
+              }
+            }
+          }
+        }
+
+        const fromApi = await fetchApiBookingsJson()
+        if (!cancelled) {
+          setPersistenceMode('api')
+          setBookings(fromApi)
+          setReady(true)
+        }
+      } catch (e) {
+        if (!cancelled) {
+          setInitError(e instanceof Error ? e.message : 'Failed to load bookings.')
+          setReady(true)
+        }
+      }
+    })()
+    return () => {
+      cancelled = true
     }
-    window.addEventListener('storage', onStorage)
-    return () => window.removeEventListener('storage', onStorage)
   }, [])
 
   const sortedBookings = useMemo(() => {
@@ -131,6 +136,101 @@ export default function App() {
       (a, b) => new Date(b.startIso).getTime() - new Date(a.startIso).getTime(),
     )
   }, [bookings])
+
+  async function connectOpenFile() {
+    setMessage(null)
+    if (!supportsLocalFileBookings()) {
+      setMessage({
+        type: 'error',
+        text: 'Your browser does not support opening a JSON file for read/write. Use Chrome or Edge, or rely on the API mode.',
+      })
+      return
+    }
+    const h = await pickOpenBookingsFile()
+    if (!h) return
+    if (!(await requestFileAccess(h))) {
+      setMessage({
+        type: 'error',
+        text: 'Read/write permission is required to use this bookings file.',
+      })
+      return
+    }
+    let list: Booking[]
+    try {
+      list = await readBookingsFromHandle(h)
+    } catch {
+      setMessage({ type: 'error', text: 'Could not parse JSON from this file.' })
+      return
+    }
+    await persistFileHandle(h)
+    setFileHandle(h)
+    setFileLabel(h.name)
+    setPersistenceMode('disk')
+    setBookings(list)
+  }
+
+  async function connectNewFile() {
+    setMessage(null)
+    if (!supportsLocalFileBookings()) {
+      setMessage({
+        type: 'error',
+        text: 'Your browser does not support saving a JSON file. Use Chrome or Edge.',
+      })
+      return
+    }
+    const h = await createNewBookingsFile()
+    if (!h) return
+    if (!(await requestFileAccess(h))) {
+      setMessage({ type: 'error', text: 'Read/write permission is required.' })
+      return
+    }
+    await persistFileHandle(h)
+    setFileHandle(h)
+    setFileLabel(h.name)
+    setPersistenceMode('disk')
+    setBookings([])
+  }
+
+  async function reloadFromDisk() {
+    setMessage(null)
+    if (!fileHandle) return
+    if (!(await requestFileAccess(fileHandle))) {
+      setMessage({ type: 'error', text: 'Could not obtain permission to read the file.' })
+      return
+    }
+    try {
+      const list = await readBookingsFromHandle(fileHandle)
+      setBookings(list)
+    } catch {
+      setMessage({ type: 'error', text: 'Could not read bookings from file.' })
+    }
+  }
+
+  async function disconnectDiskFile() {
+    setMessage(null)
+    await clearPersistedFileHandle()
+    setFileHandle(null)
+    setFileLabel(null)
+    const fromApi = await fetchApiBookingsJson()
+    setPersistenceMode('api')
+    setBookings(fromApi)
+  }
+
+  async function persistBookingsList(nextBookings: Booking[], nextBooking: Booking): Promise<Booking> {
+    if (persistenceMode === 'disk' && fileHandle) {
+      await writeBookingsToHandle(fileHandle, nextBookings)
+      return nextBooking
+    }
+    // API mode: let the server persist into `api/Data.json` and reject overlaps.
+    return await createBookingViaApi({
+      requestId: nextBooking.requestId,
+      room: nextBooking.room,
+      startIso: nextBooking.startIso,
+      endIso: nextBooking.endIso,
+      description: nextBooking.description,
+      userName: nextBooking.userName,
+    })
+  }
 
   function onBook(e: React.FormEvent) {
     e.preventDefault()
@@ -162,7 +262,6 @@ export default function App() {
       return
     }
 
-    // Validate: no overlap in the selected room for that one-hour window.
     const conflict = bookings.find((b) => {
       if (b.room !== room) return false
       const bStart = new Date(b.startIso)
@@ -179,7 +278,6 @@ export default function App() {
     }
 
     const requestId = newRequestId()
-
     const nextBooking: Booking = {
       requestId,
       room,
@@ -189,27 +287,77 @@ export default function App() {
       userName: trimmedUser,
       createdAtIso: new Date().toISOString(),
     }
-
     const nextBookings = [nextBooking, ...bookings]
-    saveBookings(nextBookings)
-    setBookings(nextBookings)
 
-    setMessage({
-      type: 'success',
-      text: `Booked successfully. Request id: ${requestId}`,
-    })
+    void (async () => {
+      try {
+        const persisted = await persistBookingsList(nextBookings, nextBooking)
+        setBookings(persistenceMode === 'api' ? [persisted, ...bookings] : nextBookings)
+        setMessage({
+          type: 'success',
+          text: `Booked successfully. Request id: ${persisted.requestId}`,
+        })
+        setDescription('')
+        setUserName('')
+      } catch (err) {
+        setMessage({
+          type: 'error',
+          text: `Could not save bookings: ${err instanceof Error ? err.message : String(err)}`,
+        })
+      }
+    })()
+  }
 
-    // Keep `dateTime` and `room` for quick repeat bookings; reset description/user only.
-    setDescription('')
-    setUserName('')
+  if (!ready) {
+    return (
+      <div className="booking-page">
+        <p className="subtle">Loading bookings…</p>
+      </div>
+    )
   }
 
   return (
     <div className="booking-page">
       <header className="booking-header">
         <h1>Room Booking</h1>
-        <p className="subtle">One booking per room per one-hour window (stored in your localStorage).</p>
+        <p className="subtle">
+          Bookings are loaded from the API (backed by <code className="mono-inline">api/Data.json</code>)
+          and persisted by the API on each successful booking. Use <strong>Open JSON file</strong> to
+          read/write a local disk file instead (Chrome/Edge).
+        </p>
       </header>
+
+      {initError && (
+        <div className="status status--error" role="alert">
+          {initError}
+        </div>
+      )}
+
+      <div className="booking-file-bar">
+        {persistenceMode === 'disk' && fileLabel ? (
+          <>
+            <span className="booking-file-bar__label">
+              File: <strong>{fileLabel}</strong>
+            </span>
+            <button type="button" className="btn-secondary" onClick={() => void reloadFromDisk()}>
+              Reload from file
+            </button>
+            <button type="button" className="btn-secondary" onClick={() => void disconnectDiskFile()}>
+              Use API copy instead
+            </button>
+          </>
+        ) : (
+          <>
+            <span className="booking-file-bar__label">No disk file connected (API mode).</span>
+            <button type="button" className="btn-secondary" onClick={() => void connectOpenFile()}>
+              Open JSON file…
+            </button>
+            <button type="button" className="btn-secondary" onClick={() => void connectNewFile()}>
+              Create new JSON…
+            </button>
+          </>
+        )}
+      </div>
 
       <div className="booking-layout">
         <form className="booking-form" onSubmit={onBook}>

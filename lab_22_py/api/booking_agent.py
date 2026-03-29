@@ -353,7 +353,7 @@ def _format_response_node(state: BookingAgentState) -> dict[str, Any]:
         ui_text = "Booking attempt completed, but the UI returned no message."
     return {"answer": ui_text}
 
-
+ 
 def build_booking_graph():
     builder = StateGraph(BookingAgentState)
     builder.add_node("extract_intent", _extract_intent_node)
@@ -367,7 +367,7 @@ def build_booking_graph():
     # If validation fails, we still flow to `format_response` and it will
     # craft a follow-up message.
     builder.add_edge("validate_fields", "book_room_via_playwright")
-    builder.add_edge("book_room_via_playwright", "format_response")
+    builder.add_edge("book_room_via_playwright", "format_response") 
     builder.add_edge("format_response", END)
 
     return builder.compile()

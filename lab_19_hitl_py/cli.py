@@ -68,3 +68,4 @@ def main() -> None:
 if __name__ == "__main__":
     main()
 
+# Support with chart bot instead CLi - which is not user friendly
