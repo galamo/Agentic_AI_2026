@@ -239,3 +239,12 @@ Add mockup data to the client using the following Entity: Recipe ( amount, date,
 at least 10 reciepts in different months and amount this year.
 Dont implement any other backend capabilities
 `
+
+# Ex 29.3
+
+1. Run lab_21 + lab_22
+2. try it out.
+3. Support an MCP flow instead using playwright - fallback if MCP is not working use the playwright.
+4. Build MCP for lab_21 tools: get_bookings, book_room
+5. Initiate in the graph an mcp client that will use the relevant tools
+6. split contexts using login mechanisem - based on the user history - advanced!
