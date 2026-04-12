@@ -1,5 +1,7 @@
 /** Read/write bookings as JSON via File System Access API and persist via IDB + fetch endpoints. */
 
+import axios from 'axios'
+
 export type Booking = {
   requestId: string
   room: number
@@ -177,10 +179,10 @@ export async function fetchBundledBookingsJson(url = '/lab_21_bookings.json'): P
 
 export async function fetchApiBookingsJson(url = '/api/bookings'): Promise<Booking[]> {
   try {
-    const r = await fetch(url, { cache: 'no-store' })
-    if (!r.ok) return []
-    const parsed = (await r.json()) as unknown
-    return coerceBookingsArray(parsed)
+    const { data } = await axios.get<unknown>(url, {
+      headers: { 'Cache-Control': 'no-cache', Pragma: 'no-cache' },
+    })
+    return coerceBookingsArray(data)
   } catch {
     return []
   }

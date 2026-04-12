@@ -1,0 +1,5 @@
+# Persisted n8n instance data (workflows you create in the UI, credentials, etc.)
+n8n_data/
+
+# Local overrides for secrets (copy from .env.example)
+.env
