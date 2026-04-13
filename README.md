@@ -248,3 +248,10 @@ Dont implement any other backend capabilities
 4. Build MCP for lab_21 tools: get_bookings, book_room
 5. Initiate in the graph an mcp client that will use the relevant tools
 6. split contexts using login mechanisem - based on the user history - advanced!
+
+
+# Ex 12.4
+1. Lunch n8n workflow
+2. Create a workflow in n8n which can summrize shotrly your latest email recieved
+3. when trigerring the workflow - connect an agent that will pull - recieve the latest email from your mailbox
+4. summarize the email and return it in the chat response
