@@ -261,3 +261,5 @@ Dont implement any other backend capabilities
 1. Create a workflow autmation based on AI for upload recipets and save the details in the Stylesheet ( another option is to use DB)
 2. Create another workflow that Send email every hour with the statistics on top of the stylesheet.
 3. Create add to the workflow an email approval sender - after the processes ended - an approval email that the data is saved
+
+![Alt text](./n8n_windows/n8n_example.png)
