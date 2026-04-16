@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Customer Service Reports</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --surface: #111827;
+      --card: #1f2937;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --accent: #22c55e;
+      --warn: #f59e0b;
+      --danger: #ef4444;
+      --border: #374151;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      background: linear-gradient(180deg, var(--bg), #020617);
+      color: var(--text);
+      line-height: 1.4;
+    }
+    .container {
+      width: min(1200px, 92vw);
+      margin: 24px auto 40px;
+    }
+    h1, h2, h3 { margin: 0 0 10px; }
+    h1 { font-size: 1.8rem; }
+    h2 { font-size: 1.2rem; margin-top: 30px; }
+    .sub {
+      color: var(--muted);
+      margin-bottom: 22px;
+      font-size: 0.95rem;
+    }
+    .grid {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    }
+    .card {
+      background: rgba(31, 41, 55, 0.85);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+      box-shadow: 0 5px 16px rgba(0,0,0,0.2);
+    }
+    .kpi-label { color: var(--muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em; }
+    .kpi-value { font-size: 1.5rem; font-weight: 700; margin-top: 4px; }
+    .kpi-note { color: var(--muted); font-size: 0.83rem; margin-top: 2px; }
+    .list { margin: 0; padding-left: 18px; color: var(--text); }
+    .list li { margin: 6px 0; }
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      border: 1px solid transparent;
+    }
+    .b-warn { color: #fcd34d; border-color: #92400e; background: rgba(245, 158, 11, 0.12); }
+    .b-ok { color: #86efac; border-color: #166534; background: rgba(34, 197, 94, 0.12); }
+    .bars { display: grid; gap: 8px; }
+    .bar-row { display: grid; grid-template-columns: 160px 1fr 42px; gap: 10px; align-items: center; }
+    .bar-label { color: var(--muted); font-size: 0.9rem; }
+    .bar-wrap {
+      width: 100%;
+      height: 10px;
+      border-radius: 999px;
+      background: #0b1220;
+      border: 1px solid #263244;
+      overflow: hidden;
+    }
+    .bar {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #60a5fa, #22c55e);
+      min-width: 2px;
+    }
+    .bar-value { text-align: right; color: var(--muted); font-size: 0.85rem; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: rgba(17, 24, 39, 0.7);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      font-size: 0.9rem;
+    }
+    th, td {
+      text-align: left;
+      padding: 10px;
+      border-bottom: 1px solid #253041;
+      vertical-align: top;
+    }
+    th { color: #cbd5e1; background: rgba(2, 6, 23, 0.7); }
+    tr:hover td { background: rgba(59, 130, 246, 0.07); }
+    .danger { color: #fca5a5; }
+    .muted { color: var(--muted); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Customer Service Reports</h1>
+    <p class="sub" id="datasetRange"></p>
+
+    <div class="grid" id="kpis"></div>
+
+    <h2>General Summary</h2>
+    <div class="card">
+      <ul class="list" id="generalSummary"></ul>
+    </div>
+
+    <h2>Service Request Mix</h2>
+    <div class="card">
+      <div class="bars" id="serviceBars"></div>
+    </div>
+
+    <h2>Data Quality / Follow-up Signals</h2>
+    <div class="grid">
+      <div class="card">
+        <h3 style="margin-bottom:8px">Potentially unclear requests</h3>
+        <ul class="list" id="clarificationList"></ul>
+      </div>
+      <div class="card">
+        <h3 style="margin-bottom:8px">Duplicate contacts</h3>
+        <ul class="list" id="duplicateList"></ul>
+      </div>
+    </div>
+
+    <h2>Recent Data Output (All Rows)</h2>
+    <div class="card" style="padding:0">
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Email</th>
+            <th>Service Type</th>
+            <th>Summary</th>
+            <th>Flags</th>
+          </tr>
+        </thead>
+        <tbody id="dataRows"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    const records = [
+      { date: "2026-04-15T18:32:02.985+03:00", email: "yoni@test.co.il", summary: "Yoni Test requested an \"Other\" service with the note: \"abcde.\" Contact: yoni@test.co.il, 054-444-4784.", phone: "5.44444784E8" },
+      { date: "2026-04-15T18:32:02.731+03:00", email: "yakirbar7820@gmail.com", summary: "Yakir Bar requested a consultation and provided contact info: yakirbar7820@gmail.com, 7225520. The request details appear incomplete (\"fd\"); please clarify the consultation topic and objectives.", phone: "7225520.0" },
+      { date: "2026-04-15T18:32:28.768+03:00", email: "itamar20112@gmail.com", summary: "Service request from Itamar Alon for an \"Other\" service; details provided are \"aaa\" with insufficient context. Follow-up is needed to clarify the request; contact at itamar20112@gmail.com or 0506406713.", phone: "5.06406713E8" },
+      { date: "2026-04-15T18:45:51.441+03:00", email: "galamouyal88@gmail.com", summary: "גל אמויאל (galamouyal88@gmail.com, 050-791-7433) requested Technical Support. The issue description appears incomplete (\"dfgfg\"); please provide additional details to diagnose and assist.", phone: "5.07917433E8" },
+      { date: "2026-04-15T18:49:24.696+03:00", email: "hochmaefrat@gmail.com", summary: "Efrat Hochma requested a Maintenance service with the note \"teaching.\" Contact: hochmaefrat@gmail.com, 0504245406.", phone: "5.04245406E8" },
+      { date: "2026-04-15T18:49:34.156+03:00", email: "1@1.com", summary: "Yoni requested a maintenance service and provided contact information: 0577777777 and 1@1.com. The request details are unclear (\"sdasad\") and require clarification to proceed.", phone: "5.77777777E8" },
+      { date: "2026-04-15T18:49:38.790+03:00", email: "itamar20112@gmail.com", summary: "Itamar Alon submitted a service request under \"Other.\" The request details are unclear (\"jjjj\") and require clarification. Contact: itamar20112@gmail.com, 0506406713.", phone: "5.06406713E8" },
+      { date: "2026-04-15T18:49:40.730+03:00", email: "shiran.sarusi2@gmail.com", summary: "Shiran Oren2 requested a consultation. Contact: shiran.sarusi2@gmail.com, 052-619-3546. No additional details were provided.", phone: "5.26193546E8" },
+      { date: "2026-04-15T18:45:51.441+03:00", email: "galamouyal88@gmail.com", summary: "גל אמויאל (galamouyal88@gmail.com, 050-791-7433) requested Technical Support. The issue description appears incomplete (\"dfgfg\"); please provide additional details to diagnose and assist.", phone: "5.07917433E8" },
+      { date: "2026-04-15T18:52:48.689+03:00", email: "galamouyal@hotmail.com", summary: "Gal Amouyal requested Technical Support and provided contact info (galamouyal@hotmail.com, 0507917433). The request details were \"kkk\" and are unclear; please provide more information about the issue.", phone: "5.07917433E8" },
+      { date: "2026-04-15T18:57:28.668+03:00", email: "ffff@ggggg.com", summary: "ffff requested maintenance service and reported: 111111. They can be reached at ffff@ggggg.com or 111111111199999.", phone: "1.11111111199999E14" }
+    ];
+
+    function normalizePhone(raw) {
+      if (!raw) return "";
+      const digits = String(raw).replace(/[^\d]/g, "");
+      if (!digits) return "";
+      return digits.length > 10 ? digits.slice(0, 10) : digits;
+    }
+
+    function inferServiceType(summary) {
+      const s = summary.toLowerCase();
+      if (s.includes("technical support")) return "Technical Support";
+      if (s.includes("maintenance")) return "Maintenance";
+      if (s.includes("consultation")) return "Consultation";
+      if (s.includes("\"other\"") || s.includes("other service")) return "Other";
+      return "Unspecified";
+    }
+
+    function hasClarificationFlag(summary) {
+      const s = summary.toLowerCase();
+      return [
+        "unclear",
+        "incomplete",
+        "insufficient context",
+        "no additional details",
+        "please clarify",
+        "provide more information"
+      ].some(token => s.includes(token));
+    }
+
+    const enriched = records
+      .map((r, index) => ({
+        ...r,
+        index: index + 1,
+        parsedDate: new Date(r.date),
+        serviceType: inferServiceType(r.summary),
+        normalizedPhone: normalizePhone(r.phone),
+        needsClarification: hasClarificationFlag(r.summary)
+      }))
+      .sort((a, b) => a.parsedDate - b.parsedDate);
+
+    const total = enriched.length;
+    const uniqueEmails = new Set(enriched.map(r => r.email.toLowerCase())).size;
+    const clarificationCount = enriched.filter(r => r.needsClarification).length;
+    const serviceCounts = enriched.reduce((acc, r) => {
+      acc[r.serviceType] = (acc[r.serviceType] || 0) + 1;
+      return acc;
+    }, {});
+
+    const keyByDateEmailSummary = new Map();
+    let exactDuplicateRows = 0;
+    for (const row of enriched) {
+      const key = `${row.date}__${row.email.toLowerCase()}__${row.summary}`;
+      if (keyByDateEmailSummary.has(key)) exactDuplicateRows += 1;
+      keyByDateEmailSummary.set(key, (keyByDateEmailSummary.get(key) || 0) + 1);
+    }
+
+    const contactCounts = enriched.reduce((acc, r) => {
+      const phoneKey = r.normalizedPhone || "no-phone";
+      const key = `${r.email.toLowerCase()}__${phoneKey}`;
+      acc[key] = (acc[key] || 0) + 1;
+      return acc;
+    }, {});
+    const repeatedContacts = Object.entries(contactCounts).filter(([, count]) => count > 1);
+
+    const earliest = enriched[0]?.parsedDate;
+    const latest = enriched[enriched.length - 1]?.parsedDate;
+    const dateFmt = new Intl.DateTimeFormat("en-GB", { dateStyle: "medium", timeStyle: "short" });
+
+    document.getElementById("datasetRange").textContent =
+      `Dataset window: ${dateFmt.format(earliest)} - ${dateFmt.format(latest)} (${total} requests)`;
+
+    const kpiData = [
+      { label: "Total Requests", value: total, note: "All submitted records" },
+      { label: "Unique Emails", value: uniqueEmails, note: "Distinct customer contacts" },
+      { label: "Needs Clarification", value: clarificationCount, note: `${Math.round((clarificationCount / total) * 100)}% of requests` },
+      { label: "Exact Duplicate Rows", value: exactDuplicateRows, note: "Same date + email + summary" }
+    ];
+
+    document.getElementById("kpis").innerHTML = kpiData.map(k => `
+      <div class="card">
+        <div class="kpi-label">${k.label}</div>
+        <div class="kpi-value">${k.value}</div>
+        <div class="kpi-note">${k.note}</div>
+      </div>
+    `).join("");
+
+    const topService = Object.entries(serviceCounts).sort((a, b) => b[1] - a[1])[0];
+    const generalItems = [
+      `Most frequent request type: <strong>${topService?.[0] || "N/A"}</strong> (${topService?.[1] || 0} requests).`,
+      `${clarificationCount} requests include language that indicates missing or unclear details, so follow-up questions should be prioritized.`,
+      `${repeatedContacts.length} customer contact keys appear more than once, suggesting repeat tickets or unresolved issues.`,
+      `Data includes English + Hebrew customer text, so reporting should remain UTF-8 safe.`
+    ];
+    document.getElementById("generalSummary").innerHTML = generalItems.map(i => `<li>${i}</li>`).join("");
+
+    const maxServiceCount = Math.max(...Object.values(serviceCounts));
+    document.getElementById("serviceBars").innerHTML = Object.entries(serviceCounts)
+      .sort((a, b) => b[1] - a[1])
+      .map(([service, count]) => `
+        <div class="bar-row">
+          <div class="bar-label">${service}</div>
+          <div class="bar-wrap"><div class="bar" style="width:${(count / maxServiceCount) * 100}%"></div></div>
+          <div class="bar-value">${count}</div>
+        </div>
+      `).join("");
+
+    const clarificationItems = enriched.filter(r => r.needsClarification).slice(0, 8);
+    document.getElementById("clarificationList").innerHTML = clarificationItems.length
+      ? clarificationItems.map(r => `
+        <li>
+          <strong>${r.email}</strong> <span class="muted">(${dateFmt.format(r.parsedDate)})</span><br/>
+          ${r.summary.slice(0, 110)}${r.summary.length > 110 ? "..." : ""}
+        </li>
+      `).join("")
+      : "<li>No clarification signals found.</li>";
+
+    document.getElementById("duplicateList").innerHTML = repeatedContacts.length
+      ? repeatedContacts.map(([key, count]) => {
+        const [email, phone] = key.split("__");
+        return `<li><strong>${email}</strong> / ${phone} - <span class="badge b-warn">${count} entries</span></li>`;
+      }).join("")
+      : "<li><span class='badge b-ok'>No repeated contacts</span></li>";
+
+    document.getElementById("dataRows").innerHTML = enriched
+      .sort((a, b) => b.parsedDate - a.parsedDate)
+      .map(r => `
+        <tr>
+          <td>${dateFmt.format(r.parsedDate)}</td>
+          <td>${r.email}</td>
+          <td>${r.serviceType}</td>
+          <td>${r.summary}</td>
+          <td>${r.needsClarification ? "<span class='badge b-warn'>Clarify</span>" : "<span class='badge b-ok'>Good</span>"}</td>
+        </tr>
+      `).join("");
+  </script>
+</body>
+</html>
