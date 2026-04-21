@@ -259,7 +259,22 @@ Dont implement any other backend capabilities
 # EX 15-4
 
 1. Create a workflow autmation based on AI for upload recipets and save the details in the Stylesheet ( another option is to use DB)
+
 2. Create another workflow that Send email every hour with the statistics on top of the stylesheet.
+
 3. Create add to the workflow an email approval sender - after the processes ended - an approval email that the data is saved
 
 ![Alt text](./n8n_windows/n8n_example.png)
+
+
+
+<!--  10 files -->
+<!-- 10 results -->
+
+<!-- file => result -->
+
+<!-- file_1 => 200k X - validation >100k  100m^2  -->
+<!-- file_2 => 4k X - Jude llm non reasonable price -->
+<!-- file_3 => 30k X - human review  -->
+<!-- file_4 => 12k V - 9 --> 
+

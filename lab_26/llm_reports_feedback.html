@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LLM report results — feedback</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #1f2937;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --border: #374151;
+      --accent: #38bdf8;
+      --accent-dim: rgba(56, 189, 248, 0.15);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      background: linear-gradient(180deg, var(--bg), #020617);
+      color: var(--text);
+      line-height: 1.45;
+      min-height: 100vh;
+    }
+    .container {
+      width: min(900px, 92vw);
+      margin: 28px auto 48px;
+    }
+    h1 { font-size: 1.65rem; margin: 0 0 8px; }
+    .lead {
+      color: var(--muted);
+      margin: 0 0 28px;
+      font-size: 0.95rem;
+    }
+    .report {
+      background: rgba(31, 41, 55, 0.9);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px 18px 16px;
+      margin-bottom: 18px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    }
+    .report-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .report-title { font-weight: 700; font-size: 1.05rem; }
+    .badge {
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: var(--accent-dim);
+      color: var(--accent);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+    }
+    .report-body {
+      font-size: 0.92rem;
+      color: #d1d5db;
+      white-space: pre-wrap;
+      margin-bottom: 14px;
+      padding: 12px 14px;
+      background: rgba(15, 23, 42, 0.55);
+      border-radius: 10px;
+      border: 1px solid #334155;
+    }
+    .feedback-block {
+      border-top: 1px solid var(--border);
+      padding-top: 14px;
+      margin-top: 4px;
+    }
+    .feedback-label {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 8px;
+      display: block;
+    }
+    .scale {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .scale button {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: #111827;
+      color: var(--text);
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s, transform 0.1s;
+    }
+    .scale button:hover {
+      border-color: var(--accent);
+      background: rgba(56, 189, 248, 0.12);
+    }
+    .scale button.selected {
+      border-color: var(--accent);
+      background: rgba(56, 189, 248, 0.22);
+      color: #fff;
+    }
+    .scale span.hint {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-left: 4px;
+    }
+    textarea.notes {
+      width: 100%;
+      min-height: 64px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: #0f172a;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.88rem;
+      resize: vertical;
+      margin-bottom: 10px;
+    }
+    textarea.notes::placeholder { color: #64748b; }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+    .btn-primary {
+      padding: 10px 18px;
+      border-radius: 10px;
+      border: none;
+      background: linear-gradient(135deg, #0ea5e9, #0284c7);
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    .btn-primary:hover { filter: brightness(1.08); }
+    .btn-primary:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      filter: none;
+    }
+    .status {
+      font-size: 0.85rem;
+      color: #86efac;
+      min-height: 1.2em;
+    }
+    .status.err { color: #fca5a5; }
+    footer.note {
+      margin-top: 28px;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>LLM-generated report examples</h1>
+    <p class="lead">
+      Below are sample outputs an LLM might produce for support analytics. Rate how accurate each result is (1 = not accurate, 10 = fully accurate) and submit feedback. Ratings are stored locally in your browser for demo purposes.
+    </p>
+
+    <div id="reports"></div>
+
+    <footer class="note">
+      Feedback is saved to <code style="color:#94a3b8">localStorage</code> under key <code style="color:#94a3b8">llm_report_feedback_v1</code>. Wire this form to your API by replacing the submit handler in the script.
+    </footer>
+  </div>
+
+  <script>
+    const STORAGE_KEY = "llm_report_feedback_v1";
+
+    const examples = [
+      {
+        id: "r1",
+        title: "Executive summary",
+        kind: "Summary",
+        text:
+          "Across 11 customer contacts on 15 Apr 2026, the most common intent was technical support (4 tickets). " +
+          "About 64% of summaries flagged unclear or incomplete issue descriptions, suggesting a follow-up workflow would reduce queue time."
+      },
+      {
+        id: "r2",
+        title: "Request categorization",
+        kind: "Classification",
+        text:
+          "Suggested labels:\n" +
+          "- Maintenance: 3\n" +
+          "- Technical Support: 4\n" +
+          "- Consultation: 2\n" +
+          "- Other: 2\n" +
+          "Unlabeled or ambiguous: 0 (all rows mapped to one of the above)."
+      },
+      {
+        id: "r3",
+        title: "Risk / ops recommendation",
+        kind: "Recommendation",
+        text:
+          "Priority: route tickets containing phrases like 'unclear', 'incomplete', or 'no additional details' to a triage queue. " +
+          "Consider adding a required 'issue description' field with a minimum length of 40 characters to cut clarification back-and-forth."
+      }
+    ];
+
+    function loadStored() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+      } catch {
+        return {};
+      }
+    }
+
+    function saveStored(data) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    }
+
+    function render() {
+      const stored = loadStored();
+      const root = document.getElementById("reports");
+      root.innerHTML = examples
+        .map((ex) => {
+          const prev = stored[ex.id] || {};
+          const selected = prev.accuracy != null ? Number(prev.accuracy) : null;
+          const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+          const buttons = numbers
+            .map(
+              (n) =>
+                `<button type="button" data-report="${ex.id}" data-value="${n}" class="acc-btn${selected === n ? " selected" : ""}" aria-pressed="${selected === n}">${n}</button>`
+            )
+            .join("");
+          return `
+            <article class="report" data-report-id="${ex.id}">
+              <div class="report-header">
+                <span class="report-title">${escapeHtml(ex.title)}</span>
+                <span class="badge">${escapeHtml(ex.kind)}</span>
+              </div>
+              <div class="report-body">${escapeHtml(ex.text)}</div>
+              <div class="feedback-block">
+                <label class="feedback-label" for="notes-${ex.id}">Accuracy of this result (1–10)</label>
+                <div class="scale" role="group" aria-label="Accuracy 1 to 10">
+                  ${buttons}
+                  <span class="hint">1 = poor · 10 = excellent</span>
+                </div>
+                <label class="feedback-label" for="notes-${ex.id}">Optional notes</label>
+                <textarea class="notes" id="notes-${ex.id}" data-report="${ex.id}" placeholder="What was wrong or right?">${escapeHtml(prev.notes || "")}</textarea>
+                <div class="actions">
+                  <button type="button" class="btn-primary submit-btn" data-report="${ex.id}">Submit feedback</button>
+                  <span class="status" id="status-${ex.id}"></span>
+                </div>
+              </div>
+            </article>
+          `;
+        })
+        .join("");
+
+      root.querySelectorAll(".acc-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const id = btn.getAttribute("data-report");
+          const val = Number(btn.getAttribute("data-value"));
+          const block = root.querySelector(`[data-report-id="${id}"]`);
+          block.querySelectorAll(".acc-btn").forEach((b) => {
+            b.classList.toggle("selected", b === btn);
+            b.setAttribute("aria-pressed", b === btn ? "true" : "false");
+          });
+          const storedNow = loadStored();
+          storedNow[id] = { ...storedNow[id], accuracy: val, submittedAt: storedNow[id]?.submittedAt };
+          saveStored(storedNow);
+        });
+      });
+
+      root.querySelectorAll(".submit-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const id = btn.getAttribute("data-report");
+          const block = root.querySelector(`[data-report-id="${id}"]`);
+          const selectedBtn = block.querySelector(".acc-btn.selected");
+          const statusEl = document.getElementById(`status-${id}`);
+          const notes = block.querySelector(`textarea[data-report="${id}"]`).value.trim();
+
+          if (!selectedBtn) {
+            statusEl.textContent = "Please choose an accuracy score from 1 to 10.";
+            statusEl.classList.add("err");
+            return;
+          }
+
+          const accuracy = Number(selectedBtn.getAttribute("data-value"));
+          const payload = {
+            reportId: id,
+            accuracy,
+            notes,
+            submittedAt: new Date().toISOString()
+          };
+
+          const all = loadStored();
+          all[id] = { ...all[id], accuracy, notes, submittedAt: payload.submittedAt };
+          saveStored(all);
+
+          statusEl.classList.remove("err");
+          statusEl.textContent = `Saved: accuracy ${accuracy}/10 — ${new Date().toLocaleString()}`;
+
+          // Example: send to your backend
+          // fetch('/api/feedback', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+        });
+      });
+    }
+
+    function escapeHtml(s) {
+      return String(s)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    render();
+  </script>
+</body>
+</html>
