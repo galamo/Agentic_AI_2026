@@ -1,0 +1,83 @@
+[
+  {
+    "id": "issue-0001-0000-0000-000000000001",
+    "courtId": 2,
+    "description": "Large crack in the clay surface near the baseline on the north side. Needs repair before it becomes a tripping hazard.",
+    "imageBase64": null,
+    "reporterName": "Emma Wilson",
+    "reportedAt": "2026-04-24T14:30:00.000Z",
+    "status": "open"
+  },
+  {
+    "id": "issue-0002-0000-0000-000000000001",
+    "courtId": 1,
+    "description": "Net is sagging significantly in the middle. The tension wire may be broken.",
+    "imageBase64": null,
+    "reporterName": "John Smith",
+    "reportedAt": "2026-04-25T10:15:00.000Z",
+    "status": "in-progress"
+  },
+  {
+    "id": "issue-0003-0000-0000-000000000001",
+    "courtId": 3,
+    "description": "Lighting on the east side is flickering and sometimes goes out completely during evening play.",
+    "imageBase64": null,
+    "reporterName": "David Lee",
+    "reportedAt": "2026-04-25T20:00:00.000Z",
+    "status": "open"
+  },
+  {
+    "id": "2a42965e-35a3-4c0c-bea2-2d790cbdc8ab",
+    "courtId": 1,
+    "description": "light issues",
+    "imageBase64": null,
+    "reporterName": "efrat",
+    "reportedAt": "2026-04-26T15:48:46.254Z",
+    "status": "open"
+  },
+  {
+    "id": "ebb8601f-bcbd-4fa8-bec7-362ae78b3463",
+    "courtId": 2,
+    "description": "light issuesrrrrrr",
+    "imageBase64": null,
+    "reporterName": "galamo",
+    "reportedAt": "2026-04-26T15:50:06.358Z",
+    "status": "open"
+  },
+  {
+    "id": "49cd34c0-b3f2-4e69-bfd3-f22dda75a91e",
+    "courtId": 1,
+    "description": "sdsdssafsadfdafadf",
+    "imageBase64": null,
+    "reporterName": "asd",
+    "reportedAt": "2026-04-26T15:50:16.425Z",
+    "status": "open"
+  },
+  {
+    "id": "ed4931df-6d55-4da0-a5a7-91c2b6ec3d01",
+    "courtId": 4,
+    "description": "dirty court",
+    "imageBase64": null,
+    "reporterName": "yakir",
+    "reportedAt": "2026-04-26T15:50:35.451Z",
+    "status": "open"
+  },
+  {
+    "id": "d93526e7-406b-4d82-a083-7a3e55c4ff53",
+    "courtId": 4,
+    "description": "dirty court2",
+    "imageBase64": null,
+    "reporterName": "yakir2",
+    "reportedAt": "2026-04-26T15:50:42.905Z",
+    "status": "open"
+  },
+  {
+    "id": "bacda09d-2e05-4ff3-bd34-4d6a1763d671",
+    "courtId": 4,
+    "description": "dirty court3",
+    "imageBase64": null,
+    "reporterName": "yakir3",
+    "reportedAt": "2026-04-26T15:50:50.605Z",
+    "status": "open"
+  }
+]

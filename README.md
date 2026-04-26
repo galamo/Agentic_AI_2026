@@ -266,15 +266,19 @@ Dont implement any other backend capabilities
 
 ![Alt text](./n8n_windows/n8n_example.png)
 
+# Lesson 26-4
 
+- Project & questions
+- n8n, capabilities
+- Skills + claude, and exercise
+- Show ready application
+- Integrations between systems - n8n backend, front,+ webhook, lovable/base44/webflow
+- Going to production?
 
-<!--  10 files -->
-<!-- 10 results -->
+# Ex 26-4
 
-<!-- file => result -->
-
-<!-- file_1 => 200k X - validation >100k  100m^2  -->
-<!-- file_2 => 4k X - Jude llm non reasonable price -->
-<!-- file_3 => 30k X - human review  -->
-<!-- file_4 => 12k V - 9 --> 
-
+- Create a FullStack application for managing a Tennis court booking
+- Requirements
+- Support tennis court - selection and booking
+- Support bugs reports
+- Use n8n to create chatbot avialble and running for the

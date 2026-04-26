@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Code Review Statistics — expenses-client</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --critical: #d32f2f;
+      --high:     #e64a19;
+      --medium:   #f57c00;
+      --low:      #1976d2;
+      --bg:       #0f1117;
+      --surface:  #1a1d27;
+      --card:     #22263a;
+      --border:   #2e3350;
+      --text:     #e8eaf6;
+      --muted:    #9091a4;
+      --accent:   #7c83f5;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 2rem;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: -0.02em;
+    }
+
+    header p {
+      color: var(--muted);
+      margin-top: 0.4rem;
+      font-size: 0.9rem;
+    }
+
+    .badge-row {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+    }
+
+    .badge {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem 1.8rem;
+      min-width: 110px;
+    }
+
+    .badge .num {
+      font-size: 2.2rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .badge .label {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 0.3rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .badge.critical .num { color: var(--critical); }
+    .badge.high     .num { color: var(--high); }
+    .badge.medium   .num { color: var(--medium); }
+    .badge.low      .num { color: var(--low); }
+    .badge.total    .num { color: var(--accent); }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.5rem;
+    }
+
+    .card h2 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      margin-bottom: 1.2rem;
+    }
+
+    .card.wide {
+      grid-column: span 2;
+    }
+
+    .chart-wrap {
+      position: relative;
+      height: 320px;
+    }
+
+    .chart-wrap.tall {
+      height: 380px;
+    }
+
+    .chart-wrap.xlarge {
+      height: 420px;
+    }
+
+    /* Priority list */
+    .priority-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+
+    .priority-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.8rem;
+      background: var(--surface);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      font-size: 0.85rem;
+    }
+
+    .priority-list .sev {
+      font-weight: 700;
+      font-size: 0.72rem;
+      padding: 2px 7px;
+      border-radius: 4px;
+      white-space: nowrap;
+      margin-top: 1px;
+    }
+
+    .sev.H { background: #e64a1930; color: var(--high); }
+    .sev.M { background: #f57c0030; color: var(--medium); }
+    .sev.L { background: #1976d230; color: var(--low); }
+
+    .priority-list .id {
+      font-family: monospace;
+      color: var(--accent);
+      font-size: 0.78rem;
+      white-space: nowrap;
+    }
+
+    /* Gauge row */
+    .gauge-row {
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+    }
+
+    .gauge-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .gauge-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.82rem;
+    }
+
+    .gauge-header .cat { color: var(--text); }
+    .gauge-header .cnt { color: var(--muted); }
+
+    .gauge-bar {
+      height: 8px;
+      background: var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .gauge-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.6s ease;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 3rem;
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Code Review Statistics</h1>
+  <p>expenses-client · Reviewed 2026-04-26 · 18 issues across 10 files</p>
+</header>
+
+<!-- Summary badges -->
+<div class="badge-row">
+  <div class="badge total">
+    <span class="num">18</span>
+    <span class="label">Total Issues</span>
+  </div>
+  <div class="badge critical">
+    <span class="num">0</span>
+    <span class="label">Critical</span>
+  </div>
+  <div class="badge high">
+    <span class="num">2</span>
+    <span class="label">High</span>
+  </div>
+  <div class="badge medium">
+    <span class="num">8</span>
+    <span class="label">Medium</span>
+  </div>
+  <div class="badge low">
+    <span class="num">8</span>
+    <span class="label">Low</span>
+  </div>
+</div>
+
+<div class="grid">
+
+  <!-- Pie: by severity -->
+  <div class="card wide" style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:start;">
+    <div>
+      <h2>Issues by Severity</h2>
+      <div class="chart-wrap">
+        <canvas id="severityPie"></canvas>
+      </div>
+    </div>
+    <div>
+      <h2>Issues by Category</h2>
+      <div class="chart-wrap">
+        <canvas id="categoryPie"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bar: issues per file -->
+  <div class="card wide">
+    <h2>Issues per File</h2>
+    <div class="chart-wrap xlarge">
+      <canvas id="fileBar"></canvas>
+    </div>
+  </div>
+
+  <!-- Bar: severity × category heatmap-style stacked bar -->
+  <div class="card wide">
+    <h2>Severity Distribution per Category</h2>
+    <div class="chart-wrap tall">
+      <canvas id="stackedBar"></canvas>
+    </div>
+  </div>
+
+  <!-- Horizontal gauge bars by category -->
+  <div class="card">
+    <h2>Category Breakdown</h2>
+    <div class="gauge-row" id="gaugeRow"></div>
+  </div>
+
+  <!-- Priority list -->
+  <div class="card">
+    <h2>Top 5 Priorities</h2>
+    <ul class="priority-list">
+      <li>
+        <span class="sev H">HIGH</span>
+        <div>
+          <span class="id">H-02</span>
+          Fix <code>&amp;amp;</code> → <code>&amp;</code> in UploadPage button — one-line rendering bug visible to all users.
+        </div>
+      </li>
+      <li>
+        <span class="sev H">HIGH</span>
+        <div>
+          <span class="id">H-01</span>
+          Add <code>aria-label</code> to hidden file input — blocks screen-reader and keyboard users from uploading.
+        </div>
+      </li>
+      <li>
+        <span class="sev M">MED</span>
+        <div>
+          <span class="id">M-04</span>
+          Add <code>&lt;ErrorBoundary&gt;</code> around routes — prevents full blank-screen crashes on runtime errors.
+        </div>
+      </li>
+      <li>
+        <span class="sev M">MED</span>
+        <div>
+          <span class="id">M-01 / M-02</span>
+          Extract duplicated PieChart config and data-mapping — reduces maintenance surface.
+        </div>
+      </li>
+      <li>
+        <span class="sev L">LOW</span>
+        <div>
+          <span class="id">L-01</span>
+          Guard <code>document.getElementById('root')!</code> with a meaningful error message.
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Doughnut: fixability effort -->
+  <div class="card">
+    <h2>Estimated Fix Effort</h2>
+    <div class="chart-wrap">
+      <canvas id="effortDoughnut"></canvas>
+    </div>
+  </div>
+
+  <!-- Radar: quality dimensions -->
+  <div class="card">
+    <h2>Quality Dimensions (score / 10)</h2>
+    <div class="chart-wrap">
+      <canvas id="radarChart"></canvas>
+    </div>
+  </div>
+
+</div>
+
+<footer>Generated by Claude Code · expenses-client code review · 2026-04-26</footer>
+
+<script>
+  Chart.defaults.color = '#9091a4';
+  Chart.defaults.borderColor = '#2e3350';
+
+  const CRITICAL = '#d32f2f';
+  const HIGH     = '#e64a19';
+  const MEDIUM   = '#f57c00';
+  const LOW      = '#1976d2';
+  const ACCENT   = '#7c83f5';
+
+  const PALETTE = [
+    '#7c83f5','#f57c00','#26a69a','#e64a19',
+    '#ab47bc','#42a5f5','#66bb6a','#ef5350',
+  ];
+
+  // ── Severity Pie ──────────────────────────────────────────────
+  new Chart(document.getElementById('severityPie'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Critical', 'High', 'Medium', 'Low'],
+      datasets: [{
+        data: [0, 2, 8, 8],
+        backgroundColor: [CRITICAL, HIGH, MEDIUM, LOW],
+        borderWidth: 2,
+        borderColor: '#22263a',
+        hoverOffset: 8,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      cutout: '60%',
+      plugins: {
+        legend: { position: 'bottom', labels: { padding: 16, font: { size: 12 } } },
+        tooltip: { callbacks: { label: ctx => ` ${ctx.label}: ${ctx.raw} issues` } }
+      }
+    }
+  });
+
+  // ── Category Pie ──────────────────────────────────────────────
+  new Chart(document.getElementById('categoryPie'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Accessibility', 'Code Quality', 'Architecture', 'Configuration', 'Error Handling', 'Type Safety', 'Rendering', 'Security'],
+      datasets: [{
+        data: [5, 4, 2, 2, 2, 1, 1, 1],
+        backgroundColor: PALETTE,
+        borderWidth: 2,
+        borderColor: '#22263a',
+        hoverOffset: 8,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      cutout: '55%',
+      plugins: {
+        legend: { position: 'bottom', labels: { padding: 10, font: { size: 11 }, boxWidth: 12 } },
+        tooltip: { callbacks: { label: ctx => ` ${ctx.label}: ${ctx.raw}` } }
+      }
+    }
+  });
+
+  // ── Issues per File (Bar) ─────────────────────────────────────
+  new Chart(document.getElementById('fileBar'), {
+    type: 'bar',
+    data: {
+      labels: [
+        'ExpensesPage.tsx',
+        'UploadPage.tsx',
+        'mockReceipts.ts',
+        'AppLayout.tsx',
+        'main.tsx',
+        'vite.config.ts',
+        'tsconfig.app.json',
+        'eslint.config.js',
+        'App.tsx',
+        'index.html',
+      ],
+      datasets: [{
+        label: 'Issues',
+        data: [7, 4, 2, 2, 1, 1, 1, 1, 1, 1],
+        backgroundColor: ACCENT,
+        borderRadius: 6,
+        hoverBackgroundColor: '#a5aaff',
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      indexAxis: 'y',
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: ctx => ` ${ctx.raw} issue${ctx.raw !== 1 ? 's' : ''}` } }
+      },
+      scales: {
+        x: { grid: { color: '#2e3350' }, ticks: { stepSize: 1 }, beginAtZero: true },
+        y: { grid: { display: false }, ticks: { font: { size: 11 } } }
+      }
+    }
+  });
+
+  // ── Stacked Bar: severity × category ─────────────────────────
+  new Chart(document.getElementById('stackedBar'), {
+    type: 'bar',
+    data: {
+      labels: ['Accessibility', 'Code Quality', 'Architecture', 'Configuration', 'Error Handling', 'Type Safety', 'Rendering', 'Security'],
+      datasets: [
+        {
+          label: 'High',
+          data: [1, 1, 0, 0, 0, 0, 1, 0],
+          backgroundColor: HIGH,
+          borderRadius: { topLeft: 4, topRight: 4 },
+        },
+        {
+          label: 'Medium',
+          data: [2, 3, 2, 2, 1, 0, 0, 0],
+          backgroundColor: MEDIUM,
+        },
+        {
+          label: 'Low',
+          data: [2, 0, 0, 0, 1, 1, 0, 1],
+          backgroundColor: LOW,
+          borderRadius: { topLeft: 0, topRight: 0 },
+        },
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'bottom', labels: { padding: 16, font: { size: 12 } } },
+      },
+      scales: {
+        x: { stacked: true, grid: { display: false }, ticks: { font: { size: 11 } } },
+        y: { stacked: true, grid: { color: '#2e3350' }, ticks: { stepSize: 1 }, beginAtZero: true },
+      }
+    }
+  });
+
+  // ── Gauge bars ────────────────────────────────────────────────
+  const categories = [
+    { name: 'Accessibility',  count: 5, color: PALETTE[0] },
+    { name: 'Code Quality',   count: 4, color: PALETTE[1] },
+    { name: 'Architecture',   count: 2, color: PALETTE[2] },
+    { name: 'Configuration',  count: 2, color: PALETTE[3] },
+    { name: 'Error Handling', count: 2, color: PALETTE[4] },
+    { name: 'Type Safety',    count: 1, color: PALETTE[5] },
+    { name: 'Rendering',      count: 1, color: PALETTE[6] },
+    { name: 'Security',       count: 1, color: PALETTE[7] },
+  ];
+  const maxCount = Math.max(...categories.map(c => c.count));
+  const gaugeRow = document.getElementById('gaugeRow');
+  categories.forEach(c => {
+    const pct = Math.round((c.count / maxCount) * 100);
+    gaugeRow.innerHTML += `
+      <div class="gauge-item">
+        <div class="gauge-header">
+          <span class="cat">${c.name}</span>
+          <span class="cnt">${c.count} issue${c.count !== 1 ? 's' : ''}</span>
+        </div>
+        <div class="gauge-bar">
+          <div class="gauge-fill" style="width:${pct}%;background:${c.color}"></div>
+        </div>
+      </div>`;
+  });
+
+  // ── Effort Doughnut ───────────────────────────────────────────
+  new Chart(document.getElementById('effortDoughnut'), {
+    type: 'doughnut',
+    data: {
+      labels: ['< 5 min (trivial)', '< 30 min (easy)', '1–2 hrs (moderate)', '> 2 hrs (complex)'],
+      datasets: [{
+        data: [3, 8, 5, 2],
+        backgroundColor: ['#26a69a', '#66bb6a', MEDIUM, HIGH],
+        borderWidth: 2,
+        borderColor: '#22263a',
+        hoverOffset: 8,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      cutout: '55%',
+      plugins: {
+        legend: { position: 'bottom', labels: { padding: 12, font: { size: 11 }, boxWidth: 12 } },
+        tooltip: { callbacks: { label: ctx => ` ${ctx.label}: ${ctx.raw} fixes` } }
+      }
+    }
+  });
+
+  // ── Radar: quality dimensions ─────────────────────────────────
+  new Chart(document.getElementById('radarChart'), {
+    type: 'radar',
+    data: {
+      labels: ['Type Safety', 'Accessibility', 'Error Handling', 'Performance', 'Code Quality', 'Security', 'Architecture', 'Config'],
+      datasets: [{
+        label: 'Current',
+        data: [8, 5, 6, 8, 6, 9, 6, 7],
+        backgroundColor: ACCENT + '33',
+        borderColor: ACCENT,
+        pointBackgroundColor: ACCENT,
+        borderWidth: 2,
+      }, {
+        label: 'Target',
+        data: [9, 9, 9, 9, 9, 9, 9, 9],
+        backgroundColor: 'transparent',
+        borderColor: '#2e3350',
+        borderDash: [4, 4],
+        pointBackgroundColor: '#2e3350',
+        borderWidth: 1,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        r: {
+          min: 0,
+          max: 10,
+          ticks: { stepSize: 2, backdropColor: 'transparent', font: { size: 10 } },
+          grid: { color: '#2e3350' },
+          angleLines: { color: '#2e3350' },
+          pointLabels: { font: { size: 11 }, color: '#9091a4' },
+        }
+      },
+      plugins: {
+        legend: { position: 'bottom', labels: { padding: 16, font: { size: 12 } } },
+      }
+    }
+  });
+</script>
+</body>
+</html>
