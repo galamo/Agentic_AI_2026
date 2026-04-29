@@ -282,3 +282,8 @@ Dont implement any other backend capabilities
 - Support tennis court - selection and booking
 - Support bugs reports
 - Use n8n to create chatbot avialble and running for the
+
+- Skills + claude, and exercise
+- Going to production?
+- Integrations between systems - n8n backend, front,+ webhook, lovable/base44/webflow
+- workflow
