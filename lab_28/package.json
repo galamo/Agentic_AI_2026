@@ -1,0 +1,12 @@
+{
+  "name": "lab-28-static-html-api",
+  "version": "1.0.0",
+  "description": "Single-script Express API to serve static index.html",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
