@@ -3,9 +3,14 @@
  * The LLM chooses which tool to call (HTML RAG or SQL agent); no if/else dispatch in code.
  */
 import "dotenv/config";
+import path from "path";
+import { fileURLToPath } from "url";
 import express from "express";
 import cors from "cors";
 import { routeWithTools } from "./agents/router-agent.js";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const clientDist = path.join(__dirname, "public");
 
 const app = express();
 app.use(cors());
@@ -29,6 +34,8 @@ app.post("/query", async (req, res) => {
 });
 
 app.get("/health", (_, res) => res.json({ ok: true }));
+
+app.use(express.static(clientDist));
 
 const PORT = process.env.PORT || 3002;
 app.listen(PORT, () => console.log("Lab 9.2 Multi-Agent server (router with tools) on http://localhost:" + PORT));
