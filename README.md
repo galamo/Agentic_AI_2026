@@ -292,3 +292,18 @@ Dont implement any other backend capabilities
 Hosting multiAgent_92 
 Skills
 TelegramBot
+
+
+
+# 6-5-2026
+
+Create a skill named video-arrival-pipeline.
+The skill must handle an uploaded video_file from an HTTP endpoint.
+Validate that the upload is not empty and has MIME type video/*.
+Save the original video in the uploads/ folder with a unique deterministic filename.
+Extract audio from the video and save it in the audio/ folder.
+Use OpenRouter speech-to-text model to create a raw transcript.
+Use OpenRouter chat model to clean the transcript without summarizing it.
+If transcript refinement fails, use the raw transcript as the final transcript.
+Save the final transcript as a .txt file in the transcripts/ folder.
+Return JSON containing OUTPUT with the full transcript and transcript_file_path with the saved file path.
