@@ -13,6 +13,19 @@
 4. Write transcript into dedicated `transcripts/` folder
 5. Return `OUTPUT` text to the client
 
+## LangGraph pipeline (`build_video_pipeline`)
+
+Defined in `backend/app/graph.py`:
+
+```mermaid
+flowchart LR
+    START([START]) --> intake[intake_and_extract_agent]
+    intake --> stt[speech_to_text_agent]
+    stt --> refine[transcript_refiner_agent]
+    refine --> writer[writer_agent]
+    writer --> END([END])
+```
+
 ## Run backend
 
 See `backend/README.md`.

@@ -92,3 +92,22 @@ The graph should pass state between steps and produce a final output object for 
 - Add basic file-size/type validation
 - Add retry/failure handling for transcription
 - Add simple tests for API endpoint and pipeline functions
+
+// Video 1
+// Audio 1
+// Text 1
+// MetaData: length, language,
+
+// This lecture is about skills
+// Skills are great
+// use Skills
+// If yakir will handle issues in production he will not finish the course
+// if you are usually turn down fire in production - your system is Bad!
+
+// summrize the video -
+// Skills matter, and if you’re always firefighting production issues, your system needs better design.
+
+// do i have tips for development?
+// yes
+// where?
+// at the end

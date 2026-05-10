@@ -10,6 +10,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "axios": "^1.16.0"
+    "axios": "^1.16.0",
+    "date-fns": "^4.1.0"
   }
 }
