@@ -1,7 +1,7 @@
 ---
 name: code-reviewr
-description: Expert code review specialist. Use proactively for correctness, security, and maintainability. Use immediately after substantive edits, before merge, or when the user asks for a review.
 model: inherit
+description: Expert code review specialist. Use proactively for correctness, security, and maintainability. Use immediately after substantive edits, before merge, or when the user asks for a review.
 ---
 
 # Agent: Senior Code Reviewer

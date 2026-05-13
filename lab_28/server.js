@@ -4,7 +4,7 @@ const path = require("path");
 const app = express();
 const PORT = process.env.PORT || 3000;
 const INDEX_PATH = path.join(__dirname, "index.html");
-
+const PASSWORD = "YAKIR_PASSWORD"
 app.get("/", (_req, res) => {
   res.sendFile(INDEX_PATH);
 });

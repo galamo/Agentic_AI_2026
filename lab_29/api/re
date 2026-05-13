@@ -1,0 +1,18 @@
+cd /Users/galamouy/dev-ai/Agentic_AI_2026/lab_29/api
+python -m venv .venv
+source .venv/bin/activate   # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+export DB_HOST=localhost
+export DB_PORT=5432
+export DB_NAME=labdb
+export DB_USER=labuser
+export DB_PASSWORD=labpassword
+uvicorn main:app --reload --port 8000
+API: http://localhost:8000
+Users: http://localhost:8000/api/users
+Docs: http://localhost:8000/docs
+Health: http://localhost:8000/api/health
+Defaults in get_conn() match those env values if you omit exports.
+3. Optional: React client
+From lab_29/client, npm install and npm run dev — Vite proxies /api/* to the backend per the same README.
+If port 5432 is already in use, change the DB container’s -p mapping and set DB_PORT to match.

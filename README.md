@@ -316,6 +316,13 @@ Return JSON containing OUTPUT with the full transcript and transcript_file_path 
 # 13-5
 1. Skills - e2e test for our application
 2. rules.
-3. 
 
+
+# Subagent
+1. Build a Dependency Auditor Subagent in Claude Code
+Detect which package manager(s) the project uses (npm, pip, cargo, etc.)
+Read the relevant manifest file(s)
+Identify outdated, deprecated, and vulnerable packages
+Recommend upgrade paths grouped by risk (safe / minor / breaking)
+Produce a written report — not just chat output - file
 

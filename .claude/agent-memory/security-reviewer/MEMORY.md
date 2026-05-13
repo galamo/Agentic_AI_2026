@@ -1,0 +1,2 @@
+- [Repo uses lab_NN demo servers](project_lab_demo_servers.md) — small Express demos under lab_*/ directories; treat hardening gaps as findings, not just style.
+- [Hardcoded password pattern seen in lab_28](project_hardcoded_password_pattern.md) — watch for stray `PASSWORD = "..."` constants in lab demos.
