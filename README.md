@@ -308,3 +308,14 @@ If transcript refinement fails, use the raw transcript as the final transcript.
 Save the final transcript as a .txt file in the transcripts/ folder.
 Return JSON containing OUTPUT with the full transcript and transcript_file_path with the saved file path.
 
+
+
+3,7,10,13,20,24
+
+
+# 13-5
+1. Skills - e2e test for our application
+2. rules.
+3. 
+
+

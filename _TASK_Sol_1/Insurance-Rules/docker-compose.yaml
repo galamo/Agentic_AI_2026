@@ -1,0 +1,54 @@
+services:
+  # client:
+  #   restart: always
+  #   build: ./client
+  #   container_name: client
+  #   ports:
+  #     - 8080:80
+  #   depends_on:
+  #     - server
+  #   environment:
+  #     - VITE_API_URL=http://server:3000
+
+  # server:
+  #   restart: always
+  #   build: ./server
+  #   container_name: server
+  #   ports:
+  #     - 3000:3000
+  #   depends_on:
+  #     - pgvector
+  #   environment:
+  #     PG_HOST: pgvector
+  #     PG_PORT: 5432
+
+  pgvector:
+    restart: always
+    image: pgvector/pgvector:pg16
+    container_name: pgvector
+    ports:
+      - 5432:5432
+    volumes:
+      - pgvector_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: insurance
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: StrongPassword
+
+  pgadmin:
+    restart: always
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin
+    ports:
+      - 8081:80
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      - pgvector
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: SecretPassword
+
+volumes:
+  pgadmin_data:
+  pgvector_data:
