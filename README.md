@@ -288,18 +288,15 @@ Dont implement any other backend capabilities
 - Integrations between systems - n8n backend, front,+ webhook, lovable/base44/webflow
 - workflow
 
-
-Hosting multiAgent_92 
+Hosting multiAgent_92
 Skills
 TelegramBot
-
-
 
 # 6-5-2026
 
 Create a skill named video-arrival-pipeline.
 The skill must handle an uploaded video_file from an HTTP endpoint.
-Validate that the upload is not empty and has MIME type video/*.
+Validate that the upload is not empty and has MIME type video/\*.
 Save the original video in the uploads/ folder with a unique deterministic filename.
 Extract audio from the video and save it in the audio/ folder.
 Use OpenRouter speech-to-text model to create a raw transcript. AI
@@ -308,21 +305,33 @@ If transcript refinement fails, use the raw transcript as the final transcript.
 Save the final transcript as a .txt file in the transcripts/ folder.
 Return JSON containing OUTPUT with the full transcript and transcript_file_path with the saved file path.
 
-
-
 3,7,10,13,20,24
 
-
 # 13-5
+
 1. Skills - e2e test for our application
 2. rules.
 
-
 # Subagent
-1. Build a Dependency Auditor Subagent in Claude Code
-Detect which package manager(s) the project uses (npm, pip, cargo, etc.)
-Read the relevant manifest file(s)
-Identify outdated, deprecated, and vulnerable packages
-Recommend upgrade paths grouped by risk (safe / minor / breaking)
-Produce a written report — not just chat output - file
 
+1. Build a Dependency Auditor Subagent in Claude Code
+   Detect which package manager(s) the project uses (npm, pip, cargo, etc.)
+   Read the relevant manifest file(s)
+   Identify outdated, deprecated, and vulnerable packages
+   Recommend upgrade paths grouped by risk (safe / minor / breaking)
+   Produce a written report — not just chat output - file
+
+# Support index for labs for each subject - Shiran
+
+# Upload links for all lectures from Gamma.app
+
+# Shiran is a good student in the course AI agentic solutions 2026
+=
+# Shiran is a good student in the course
+# the course AI agentic solutions 2026
+
+entities: Shiran, course, AI agentic solutions
+relation: student 
+
+Shiran =Student=> Course
+Course =Name=>  AI agentic solutions

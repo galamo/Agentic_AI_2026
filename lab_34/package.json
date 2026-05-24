@@ -1,0 +1,22 @@
+{
+  "name": "lab-34-raggraph",
+  "version": "1.0.0",
+  "description": "RAG comparison: Vector retrieval vs Graph retrieval (Neo4j) orchestrated with LangGraph + OpenRouter",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "ingest": "node src/ingest.js",
+    "up": "docker compose up -d",
+    "down": "docker compose down",
+    "reset": "docker compose down -v"
+  },
+  "keywords": ["rag", "graph-rag", "vector-rag", "langgraph", "neo4j", "openrouter"],
+  "dependencies": {
+    "@langchain/core": "^1.1.17",
+    "@langchain/langgraph": "^1.1.3",
+    "@langchain/openai": "^1.2.3",
+    "dotenv": "^17.2.3",
+    "neo4j-driver": "^5.27.0"
+  }
+}
